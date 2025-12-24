@@ -1,0 +1,137 @@
+
+import React, { useState } from 'react';
+import Sidebar from './components/Sidebar';
+import Header from './components/Header';
+import Dashboard from './components/Dashboard';
+import ReportCover from './components/ReportCover';
+import AIChat from './components/AIChat';
+import { FinanceProvider, useFinance } from './context/FinanceContext';
+import { jsPDF } from 'jspdf';
+import html2canvas from 'html2canvas';
+
+const AppContent: React.FC = () => {
+  const { filtros, kpis } = useFinance();
+  const [isExporting, setIsExporting] = useState(false);
+
+  const handleExportPDF = async () => {
+    setIsExporting(true);
+    
+    await new Promise(resolve => setTimeout(resolve, 800));
+
+    const pdf = new jsPDF('p', 'mm', 'a4');
+    const pageWidth = pdf.internal.pageSize.getWidth();
+    const pageHeight = pdf.internal.pageSize.getHeight();
+    const margin = 12;
+    const innerWidth = pageWidth - (margin * 2);
+
+    try {
+      const coverElement = document.getElementById('pdf-cover');
+      if (coverElement) {
+        const coverCanvas = await html2canvas(coverElement, {
+          scale: 2,
+          useCORS: true,
+          backgroundColor: '#111814',
+          logging: false
+        });
+        const coverImg = coverCanvas.toDataURL('image/png');
+        pdf.addImage(coverImg, 'PNG', 0, 0, pageWidth, pageHeight);
+      }
+
+      const sections = [
+        'pdf-section-kpis',
+        'pdf-section-middle',
+        'pdf-section-waterfall',
+        'pdf-section-bottom'
+      ];
+
+      pdf.addPage();
+      pdf.setFillColor(17, 24, 20);
+      pdf.rect(0, 0, pageWidth, pageHeight, 'F');
+
+      let currentY = margin;
+
+      for (const sectionId of sections) {
+        const element = document.getElementById(sectionId);
+        if (!element) continue;
+
+        const canvas = await html2canvas(element, {
+          scale: 2,
+          backgroundColor: '#111814',
+          useCORS: true,
+          logging: false
+        });
+
+        const imgData = canvas.toDataURL('image/png');
+        const imgProps = pdf.getImageProperties(imgData);
+        const imgHeight = (imgProps.height * innerWidth) / imgProps.width;
+
+        if (currentY + imgHeight > pageHeight - margin) {
+          pdf.addPage();
+          pdf.setFillColor(17, 24, 20);
+          pdf.rect(0, 0, pageWidth, pageHeight, 'F');
+          currentY = margin;
+        }
+
+        pdf.addImage(imgData, 'PNG', margin, currentY, innerWidth, imgHeight);
+        currentY += imgHeight + 6;
+      }
+
+      const timestamp = new Date().toISOString().split('T')[0];
+      const fileName = `FinanceFlow_Report_${filtros.empresa === 'Todas' ? 'Global' : filtros.empresa}_${timestamp}.pdf`;
+      pdf.save(fileName);
+    } catch (error) {
+      console.error("Erro ao gerar PDF:", error);
+      alert("Houve um erro ao gerar o relatório. Por favor, tente novamente.");
+    } finally {
+      setIsExporting(false);
+    }
+  };
+
+  const periodoTexto = filtros.meses.length === 0 
+    ? 'Período Completo' 
+    : filtros.meses.length === 12 
+      ? 'Anual Consolidado' 
+      : filtros.meses.sort((a, b) => a.localeCompare(b)).join(', ');
+
+  return (
+    <div className="flex h-screen bg-background-dark overflow-hidden">
+      <Sidebar onExport={handleExportPDF} />
+      <div className="flex-1 flex flex-col min-w-0">
+        <Header />
+        <Dashboard />
+        
+        {/* Hidden Cover Component for Capture */}
+        <ReportCover 
+          empresa={filtros.empresa === 'Todas' ? 'Consolidado FinanceFlow' : filtros.empresa} 
+          periodo={periodoTexto}
+          kpis={kpis}
+        />
+        
+        {/* IA Chat Component */}
+        <AIChat />
+        
+        {/* Export Loading Overlay */}
+        {isExporting && (
+          <div className="fixed inset-0 bg-background-dark/95 backdrop-blur-xl z-[100] flex flex-col items-center justify-center animate-in fade-in duration-300">
+            <div className="relative mb-8">
+              <div className="w-16 h-16 border-4 border-primary/20 rounded-full"></div>
+              <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin absolute inset-0"></div>
+            </div>
+            <h3 className="text-lg font-bold text-white mb-2 tracking-tight">Gerando Relatório de Alta Performance</h3>
+            <p className="text-[10px] text-text-muted uppercase tracking-widest font-bold animate-pulse">Otimizando layout e renderizando gráficos...</p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+const App: React.FC = () => {
+  return (
+    <FinanceProvider>
+      <AppContent />
+    </FinanceProvider>
+  );
+};
+
+export default App;

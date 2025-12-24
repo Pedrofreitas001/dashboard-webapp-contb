@@ -1,0 +1,136 @@
+
+import React, { createContext, useContext, useState, useMemo } from 'react';
+import { DadosFinanceiros, KPIs } from '../types';
+import { limparValor, getMesNumero } from '../utils/financeUtils';
+
+interface FinanceContextType {
+  dados: DadosFinanceiros[];
+  empresas: string[];
+  mesesDisponiveis: string[];
+  filtros: {
+    empresa: string;
+    meses: string[];
+  };
+  setFiltroEmpresa: (empresa: string) => void;
+  setFiltroMeses: (meses: string[]) => void;
+  carregarDados: (json: any[]) => void;
+  dadosFiltrados: DadosFinanceiros[];
+  kpis: KPIs;
+  agregadoMensal: any[];
+  agregadoCategoria: any[];
+  agregadoEmpresa: any[];
+}
+
+const FinanceContext = createContext<FinanceContextType | undefined>(undefined);
+
+export const FinanceProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [dados, setDados] = useState<DadosFinanceiros[]>([]);
+  const [filtros, setFiltros] = useState({ empresa: 'Todas', meses: [] as string[] });
+
+  const carregarDados = (json: any[]) => {
+    const processados: DadosFinanceiros[] = json.map(row => ({
+      ano: parseInt(row.Ano),
+      mes: row.Mes,
+      mesNum: getMesNumero(row.Mes),
+      categoria: String(row.Categoria || ""),
+      empresa: String(row.Empresa || ""),
+      valor: limparValor(row.Valor),
+      data: new Date(parseInt(row.Ano) || 2024, getMesNumero(row.Mes) - 1, 1)
+    })).filter(d => d.categoria && d.mes);
+    
+    setDados(processados);
+    // Explicitly typed sort parameters (a: string, b: string) to fix 'unknown' inference error
+    const uniqueMeses = Array.from(new Set(processados.map(d => d.mes))).sort((a: string, b: string) => getMesNumero(a) - getMesNumero(b));
+    setFiltros({ empresa: 'Todas', meses: uniqueMeses });
+  };
+
+  const empresas = useMemo(() => ['Todas', ...Array.from(new Set(dados.map(d => d.empresa)))], [dados]);
+  const mesesDisponiveis = useMemo(() => {
+    // Explicitly typed sort parameters (a: string, b: string) to fix 'unknown' inference error
+    return Array.from(new Set(dados.map(d => d.mes))).sort((a: string, b: string) => getMesNumero(a) - getMesNumero(b));
+  }, [dados]);
+
+  const dadosFiltrados = useMemo(() => {
+    return dados.filter(d => 
+      (filtros.empresa === 'Todas' || d.empresa === filtros.empresa) &&
+      (filtros.meses.length === 0 || filtros.meses.includes(d.mes))
+    );
+  }, [dados, filtros]);
+
+  // Agregações Dinâmicas
+  const agregadoMensal = useMemo(() => {
+    // Explicitly typed sort parameters (a: string, b: string) to fix 'unknown' inference error
+    const meses = Array.from(new Set(dadosFiltrados.map(d => d.mes))).sort((a: string, b: string) => getMesNumero(a) - getMesNumero(b));
+    return meses.map(m => {
+      const mesDados = dadosFiltrados.filter(d => d.mes === m);
+      const entrada = mesDados.filter(d => d.categoria.toUpperCase().includes("FATURAMENTO")).reduce((acc, curr) => acc + curr.valor, 0);
+      const saida = mesDados.filter(d => d.categoria.toUpperCase().includes("CUSTO") || d.categoria.toUpperCase().includes("GASTO") || d.categoria.toUpperCase().includes("IMPOSTO")).reduce((acc, curr) => acc + curr.valor, 0);
+      return { month: m, inflow: entrada, outflow: Math.abs(saida) };
+    });
+  }, [dadosFiltrados]);
+
+  const agregadoCategoria = useMemo(() => {
+    const categorias = ["Custo Variável", "Custo Fixo (R$)", "Imposto Variável", "Marketing", "Pessoal"];
+    const cores = ["#ef4444", "#f97316", "#ec4899", "#3b82f6", "#0ebe54"];
+    
+    const result = categorias.map((cat, i) => {
+      const valor = Math.abs(dadosFiltrados.filter(d => d.categoria.toUpperCase().includes(cat.toUpperCase())).reduce((acc, curr) => acc + curr.valor, 0));
+      return { name: cat, value: valor, color: cores[i % cores.length] };
+    }).filter(c => c.value > 0);
+
+    const total = result.reduce((acc, curr) => acc + curr.value, 0);
+    return result.map(c => ({ ...c, percentage: total > 0 ? Math.round((c.value / total) * 100) : 0 }));
+  }, [dadosFiltrados]);
+
+  const agregadoEmpresa = useMemo(() => {
+    const emps = Array.from(new Set(dadosFiltrados.map(d => d.empresa)));
+    const maxVal = Math.max(...emps.map(e => dadosFiltrados.filter(d => d.empresa === e && d.categoria.toUpperCase().includes("FATURAMENTO")).reduce((acc, curr) => acc + curr.valor, 0)), 1);
+    
+    return emps.map(e => {
+      const receita = dadosFiltrados.filter(d => d.empresa === e && d.categoria.toUpperCase().includes("FATURAMENTO")).reduce((acc, curr) => acc + curr.valor, 0);
+      return { name: e, performance: Math.round((receita / maxVal) * 100) };
+    }).sort((a, b) => b.performance - a.performance);
+  }, [dadosFiltrados]);
+
+  const kpis = useMemo((): KPIs => {
+    const sumCat = (cat: string) => dadosFiltrados
+      .filter(d => d.categoria.toUpperCase().includes(cat.toUpperCase()))
+      .reduce((acc, curr) => acc + curr.valor, 0);
+
+    const faturamentoBruto = sumCat("Faturamento Bruto");
+    const faturamentoLiquido = sumCat("Faturamento Líquido");
+    const custoVariavel = sumCat("Custo Variável");
+    const custoFixo = sumCat("Custo Fixo (R$)");
+    const margemContribuicao = faturamentoLiquido - Math.abs(custoVariavel);
+    const resultado = sumCat("RESULTADO (R$)");
+
+    return {
+      faturamentoBruto,
+      faturamentoLiquido,
+      custoVariavel,
+      custoFixo,
+      margemContribuicao,
+      margemContribuicaoPerc: faturamentoBruto > 0 ? (margemContribuicao / faturamentoBruto) * 100 : 0,
+      resultado,
+      margemLiquida: faturamentoLiquido > 0 ? (resultado / faturamentoLiquido) * 100 : 0
+    };
+  }, [dadosFiltrados]);
+
+  return (
+    <FinanceContext.Provider value={{ 
+      dados, empresas, mesesDisponiveis, filtros, 
+      setFiltroEmpresa: (e) => setFiltros(f => ({ ...f, empresa: e })),
+      setFiltroMeses: (m) => setFiltros(f => ({ ...f, meses: m })),
+      carregarDados, dadosFiltrados, kpis,
+      agregadoMensal, agregadoCategoria, agregadoEmpresa
+    }}>
+      {children}
+    </FinanceContext.Provider>
+  );
+};
+
+export const useFinance = () => {
+  const context = useContext(FinanceContext);
+  if (!context) throw new Error('useFinance must be used within FinanceProvider');
+  return context;
+};
