@@ -3,7 +3,7 @@ import React from 'react';
 
 const Header: React.FC = () => {
   return (
-    <header className="h-20 flex-shrink-0 border-b border-border-dark px-8 flex items-center justify-between bg-background-dark/80 backdrop-blur-md z-10">
+    <header className="h-20 flex-shrink-0 px-8 flex items-center justify-between bg-background-dark/80 backdrop-blur-md z-10">
       <div className="flex flex-col justify-center">
         <h1 className="text-xl font-bold text-white leading-tight">Relatório financeiro consolidado</h1>
         <div className="flex items-center gap-2 mt-1">
