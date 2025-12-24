@@ -5,11 +5,12 @@
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <title>FinanceFlow Principal V2</title>
-    <!-- Define process.env globalmente para evitar erro de 'process is not defined' no navegador -->
+    <!-- Shim do process.env deve vir antes de qualquer script de módulo -->
     <script>
       window.process = window.process || {};
       window.process.env = window.process.env || {};
     </script>
+    
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
     <script>
@@ -72,7 +73,8 @@
 </head>
 <body class="bg-background-dark text-white font-sans overflow-hidden">
     <div id="root"></div>
-    <!-- Script principal com caminho absoluto para reconhecimento do Vite no Vercel -->
-    <script type="module" src="/index.tsx"></script>
+    
+    <!-- Ponto de entrada relativo para o Vite processar o grafo de módulos TSX -->
+    <script type="module" src="./index.tsx"></script>
 </body>
 </html>
