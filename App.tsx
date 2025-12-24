@@ -1,11 +1,11 @@
 
 import React, { useState } from 'react';
-import Sidebar from './components/Sidebar';
-import Header from './components/Header';
-import Dashboard from './components/Dashboard';
-import ReportCover from './components/ReportCover';
-import AIChat from './components/AIChat';
-import { FinanceProvider, useFinance } from './context/FinanceContext';
+import Sidebar from './components/Sidebar.tsx';
+import Header from './components/Header.tsx';
+import Dashboard from './components/Dashboard.tsx';
+import ReportCover from './components/ReportCover.tsx';
+import AIChat from './components/AIChat.tsx';
+import { FinanceProvider, useFinance } from './context/FinanceContext.tsx';
 import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
 

@@ -1,11 +1,11 @@
 
 import React from 'react';
-import KPIGrid from './KPIGrid';
-import DREWaterfall from './Charts/DREWaterfall';
-import CashFlowChart from './Charts/CashFlowChart';
-import ExpenseDonut from './Charts/ExpenseDonut';
-import CompanyPerformance from './Charts/CompanyPerformance';
-import ExecutiveDRE from './Charts/ExecutiveDRE';
+import KPIGrid from './KPIGrid.tsx';
+import DREWaterfall from './Charts/DREWaterfall.tsx';
+import CashFlowChart from './Charts/CashFlowChart.tsx';
+import ExpenseDonut from './Charts/ExpenseDonut.tsx';
+import CompanyPerformance from './Charts/CompanyPerformance.tsx';
+import ExecutiveDRE from './Charts/ExecutiveDRE.tsx';
 
 const Dashboard: React.FC = () => {
   return (

@@ -1,7 +1,7 @@
 
 import React, { createContext, useContext, useState, useMemo } from 'react';
-import { DadosFinanceiros, KPIs } from '../types';
-import { limparValor, getMesNumero } from '../utils/financeUtils';
+import { DadosFinanceiros, KPIs } from '../types.ts';
+import { limparValor, getMesNumero } from '../utils/financeUtils.ts';
 
 interface FinanceContextType {
   dados: DadosFinanceiros[];
@@ -39,14 +39,12 @@ export const FinanceProvider: React.FC<{ children: React.ReactNode }> = ({ child
     })).filter(d => d.categoria && d.mes);
     
     setDados(processados);
-    // Explicitly typed sort parameters (a: string, b: string) to fix 'unknown' inference error
     const uniqueMeses = Array.from(new Set(processados.map(d => d.mes))).sort((a: string, b: string) => getMesNumero(a) - getMesNumero(b));
     setFiltros({ empresa: 'Todas', meses: uniqueMeses });
   };
 
   const empresas = useMemo(() => ['Todas', ...Array.from(new Set(dados.map(d => d.empresa)))], [dados]);
   const mesesDisponiveis = useMemo(() => {
-    // Explicitly typed sort parameters (a: string, b: string) to fix 'unknown' inference error
     return Array.from(new Set(dados.map(d => d.mes))).sort((a: string, b: string) => getMesNumero(a) - getMesNumero(b));
   }, [dados]);
 
@@ -59,7 +57,6 @@ export const FinanceProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
   // Agregações Dinâmicas
   const agregadoMensal = useMemo(() => {
-    // Explicitly typed sort parameters (a: string, b: string) to fix 'unknown' inference error
     const meses = Array.from(new Set(dadosFiltrados.map(d => d.mes))).sort((a: string, b: string) => getMesNumero(a) - getMesNumero(b));
     return meses.map(m => {
       const mesDados = dadosFiltrados.filter(d => d.mes === m);
