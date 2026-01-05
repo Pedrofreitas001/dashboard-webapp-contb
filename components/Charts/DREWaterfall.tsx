@@ -50,7 +50,11 @@ const DREWaterfall: React.FC = () => {
       const prev = current;
       if (s.type === 'total') {
         current = s.value;
-        return { ...s, start: 0, display: Math.abs(s.value), actual: s.value };
+        if (s.value < 0) {
+          return { ...s, start: s.value, display: Math.abs(s.value), actual: s.value };
+        } else {
+          return { ...s, start: 0, display: s.value, actual: s.value };
+        }
       } else {
         current += s.value;
         const start = s.value > 0 ? prev : current;
