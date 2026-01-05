@@ -6,6 +6,7 @@ import Dashboard from './components/Dashboard.tsx';
 import ReportCover from './components/ReportCover.tsx';
 import AIChat from './components/AIChat.tsx';
 import { FinanceProvider, useFinance } from './context/FinanceContext.tsx';
+import { ThemeProvider } from './context/ThemeContext.tsx';
 import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
 
@@ -128,9 +129,11 @@ const AppContent: React.FC = () => {
 
 const App: React.FC = () => {
   return (
-    <FinanceProvider>
-      <AppContent />
-    </FinanceProvider>
+    <ThemeProvider>
+      <FinanceProvider>
+        <AppContent />
+      </FinanceProvider>
+    </ThemeProvider>
   );
 };
 

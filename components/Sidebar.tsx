@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { useFinance } from '../context/FinanceContext';
+import { useTheme } from '../context/ThemeContext';
 import * as XLSX from 'xlsx';
 
 interface SidebarProps {
@@ -9,6 +10,7 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({ onExport }) => {
   const { empresas, mesesDisponiveis, filtros, setFiltroEmpresa, setFiltroMeses, carregarDados } = useFinance();
+  const { theme, toggleTheme } = useTheme();
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -57,6 +59,20 @@ const Sidebar: React.FC<SidebarProps> = ({ onExport }) => {
             <p className="text-white text-sm font-medium">Dashboard</p>
           </a>
         </nav>
+
+        <div className="flex flex-col gap-2">
+          <p className="px-2 text-xs font-bold text-text-muted uppercase">Aparência</p>
+          <button
+            onClick={toggleTheme}
+            className="flex items-center justify-between rounded-xl bg-surface-dark border border-border-dark p-3 hover:border-primary/50 transition-colors group"
+          >
+            <div className="flex items-center gap-3">
+              <span className="material-symbols-outlined text-primary">{theme === 'dark' ? 'dark_mode' : 'light_mode'}</span>
+              <p className="text-white text-sm font-medium">{theme === 'dark' ? 'Tema Escuro' : 'Tema Claro'}</p>
+            </div>
+            <span className="material-symbols-outlined text-text-muted text-lg group-hover:text-primary transition-colors">toggle_{theme === 'dark' ? 'off' : 'on'}</span>
+          </button>
+        </div>
 
         <div className="flex flex-col gap-4">
           <p className="px-2 text-xs font-bold text-text-muted uppercase">Filtros Globais</p>
