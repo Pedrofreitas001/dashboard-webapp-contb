@@ -28,13 +28,13 @@ const DREWaterfall: React.FC = () => {
 
   const data = React.useMemo(() => {
     const sum = (cat: string) => Math.abs(dadosFiltrados.filter(d => d.categoria.toUpperCase().includes(cat.toUpperCase())).reduce((acc, curr) => acc + curr.valor, 0));
-    
+
     const fatBruto = sum("Faturamento Bruto");
     const imposto = sum("Imposto Variável");
     const custoVar = sum("Custo Variável");
     const margem = fatBruto - imposto - custoVar;
     const custoFixo = sum("Custo Fixo (R$)");
-    const resultado = sum("RESULTADO (R$)");
+    const resultado = margem - custoFixo;
 
     const steps = [
       { name: 'Fat. Bruto', value: fatBruto, type: 'start' },

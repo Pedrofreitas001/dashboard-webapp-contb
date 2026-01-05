@@ -10,7 +10,7 @@ const ExecutiveDRE: React.FC = () => {
     { label: 'Faturamento Bruto', value: kpis.faturamentoBruto, color: 'bg-primary' },
     { label: 'Custo Variável', value: Math.abs(kpis.custoVariavel), color: 'bg-red-500/80' },
     { label: 'Margem Contribuição', value: kpis.margemContribuicao, color: 'bg-[#3b82f6]' },
-    { label: 'Resultado Final', value: kpis.resultado, color: 'bg-emerald-600' },
+    { label: 'Resultado Final', value: kpis.resultado, color: kpis.resultado >= 0 ? 'bg-emerald-600' : 'bg-red-500' },
   ];
 
   const maxValue = Math.max(...dreItems.map(i => Math.abs(i.value)), 1);
