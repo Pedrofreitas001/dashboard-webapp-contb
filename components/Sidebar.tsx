@@ -111,7 +111,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onExport }) => {
         <div className="relative border border-dashed border-border-dark rounded-xl p-6 flex flex-col items-center justify-center bg-surface-dark/50 hover:bg-surface-dark transition-colors cursor-pointer group">
           <input type="file" onChange={handleFileUpload} className="absolute inset-0 opacity-0 cursor-pointer" accept=".xlsx,.xls"/>
           <span className="material-symbols-outlined text-border-dark group-hover:text-primary mb-2">cloud_upload</span>
-          <p className="text-xs text-center text-text-muted">Carregar Excel Financeiro</p>
+          <p className="text-xs text-center text-text-muted group-hover:text-white transition-colors">Carregar Excel Financeiro</p>
         </div>
       </div>
 

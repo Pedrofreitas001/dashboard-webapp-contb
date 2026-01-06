@@ -19,6 +19,7 @@ interface FinanceContextType {
   agregadoMensal: any[];
   agregadoCategoria: any[];
   agregadoEmpresa: any[];
+  uploadDate: string | null;
 }
 
 const FinanceContext = createContext<FinanceContextType | undefined>(undefined);
@@ -26,6 +27,7 @@ const FinanceContext = createContext<FinanceContextType | undefined>(undefined);
 export const FinanceProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [dados, setDados] = useState<DadosFinanceiros[]>([]);
   const [filtros, setFiltros] = useState({ empresa: 'Todas', meses: [] as string[] });
+  const [uploadDate, setUploadDate] = useState<string | null>(null);
 
   const carregarDados = (json: any[]) => {
     const processados: DadosFinanceiros[] = json.map(row => ({
@@ -37,10 +39,15 @@ export const FinanceProvider: React.FC<{ children: React.ReactNode }> = ({ child
       valor: limparValor(row.Valor),
       data: new Date(parseInt(row.Ano) || 2024, getMesNumero(row.Mes) - 1, 1)
     })).filter(d => d.categoria && d.mes);
-    
+
     setDados(processados);
     const uniqueMeses = Array.from(new Set(processados.map(d => d.mes))).sort((a: string, b: string) => getMesNumero(a) - getMesNumero(b));
     setFiltros({ empresa: 'Todas', meses: uniqueMeses });
+
+    // Armazena a data de upload
+    const now = new Date();
+    const formattedDate = now.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+    setUploadDate(formattedDate);
   };
 
   const empresas = useMemo(() => ['Todas', ...Array.from(new Set(dados.map(d => d.empresa)))], [dados]);
@@ -114,12 +121,13 @@ export const FinanceProvider: React.FC<{ children: React.ReactNode }> = ({ child
   }, [dadosFiltrados]);
 
   return (
-    <FinanceContext.Provider value={{ 
-      dados, empresas, mesesDisponiveis, filtros, 
+    <FinanceContext.Provider value={{
+      dados, empresas, mesesDisponiveis, filtros,
       setFiltroEmpresa: (e) => setFiltros(f => ({ ...f, empresa: e })),
       setFiltroMeses: (m) => setFiltros(f => ({ ...f, meses: m })),
       carregarDados, dadosFiltrados, kpis,
-      agregadoMensal, agregadoCategoria, agregadoEmpresa
+      agregadoMensal, agregadoCategoria, agregadoEmpresa,
+      uploadDate
     }}>
       {children}
     </FinanceContext.Provider>
