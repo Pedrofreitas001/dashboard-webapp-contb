@@ -6,6 +6,7 @@ import CashFlowChart from './Charts/CashFlowChart.tsx';
 import ExpenseDonut from './Charts/ExpenseDonut.tsx';
 import CompanyPerformance from './Charts/CompanyPerformance.tsx';
 import ExecutiveDRE from './Charts/ExecutiveDRE.tsx';
+import ExpenseEvolution from './Charts/ExpenseEvolution.tsx';
 
 const Dashboard: React.FC = () => {
   return (
@@ -26,9 +27,14 @@ const Dashboard: React.FC = () => {
         </div>
 
         {/* Camada Inferior: Detalhamento */}
-        <div id="pdf-section-bottom" className="grid grid-cols-1 xl:grid-cols-2 gap-6 pb-12 w-full">
+        <div id="pdf-section-bottom" className="grid grid-cols-1 xl:grid-cols-2 gap-6 w-full">
           <ExpenseDonut />
           <CompanyPerformance />
+        </div>
+
+        {/* Evolução das Despesas: Ocupa largura total */}
+        <div id="pdf-section-expense-evolution" className="w-full pb-12">
+          <ExpenseEvolution />
         </div>
       </div>
     </main>
