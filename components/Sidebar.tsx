@@ -1,14 +1,17 @@
 
 import React from 'react';
 import { useFinance } from '../context/FinanceContext';
+import { useTheme } from '../context/ThemeContext';
 import * as XLSX from 'xlsx';
 
 interface SidebarProps {
   onExport?: () => void;
+  visible?: boolean;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ onExport }) => {
+const Sidebar: React.FC<SidebarProps> = ({ onExport, visible = true }) => {
   const { empresas, mesesDisponiveis, filtros, setFiltroEmpresa, setFiltroMeses, carregarDados } = useFinance();
+  const { theme, toggleTheme } = useTheme();
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -36,7 +39,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onExport }) => {
   };
 
   return (
-    <aside className="w-80 flex-shrink-0 flex flex-col border-r border-border-dark bg-background-dark h-screen overflow-hidden">
+    <aside className={`w-80 flex-shrink-0 flex flex-col border-r border-border-dark bg-background-dark h-screen overflow-hidden transition-all duration-300 ${visible ? 'ml-0' : '-ml-80'}`}>
       <div className="p-6 pb-2">
         <div className="flex items-center gap-4">
           <div className="h-12 w-12 rounded-full bg-gradient-to-br from-primary to-[#054d22] flex items-center justify-center shrink-0">
@@ -57,6 +60,20 @@ const Sidebar: React.FC<SidebarProps> = ({ onExport }) => {
             <p className="text-white text-sm font-medium">Dashboard</p>
           </a>
         </nav>
+
+        <div className="flex flex-col gap-2">
+          <p className="px-2 text-xs font-bold text-text-muted uppercase">Aparência</p>
+          <button
+            onClick={toggleTheme}
+            className="flex items-center justify-between rounded-xl bg-surface-dark border border-border-dark p-3 hover:border-primary/50 transition-colors group"
+          >
+            <div className="flex items-center gap-3">
+              <span className="material-symbols-outlined text-primary">{theme === 'dark' ? 'dark_mode' : 'light_mode'}</span>
+              <p className="text-white text-sm font-medium">{theme === 'dark' ? 'Tema Escuro' : 'Tema Claro'}</p>
+            </div>
+            <span className="material-symbols-outlined text-text-muted text-lg group-hover:text-primary transition-colors">toggle_{theme === 'dark' ? 'off' : 'on'}</span>
+          </button>
+        </div>
 
         <div className="flex flex-col gap-4">
           <p className="px-2 text-xs font-bold text-text-muted uppercase">Filtros Globais</p>
@@ -95,7 +112,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onExport }) => {
         <div className="relative border border-dashed border-border-dark rounded-xl p-6 flex flex-col items-center justify-center bg-surface-dark/50 hover:bg-surface-dark transition-colors cursor-pointer group">
           <input type="file" onChange={handleFileUpload} className="absolute inset-0 opacity-0 cursor-pointer" accept=".xlsx,.xls"/>
           <span className="material-symbols-outlined text-border-dark group-hover:text-primary mb-2">cloud_upload</span>
-          <p className="text-xs text-center text-text-muted">Carregar Excel Financeiro</p>
+          <p className="text-xs text-center text-text-muted group-hover:text-white transition-colors">Carregar Excel Financeiro</p>
         </div>
       </div>
 

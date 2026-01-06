@@ -6,16 +6,20 @@ import Dashboard from './components/Dashboard.tsx';
 import ReportCover from './components/ReportCover.tsx';
 import AIChat from './components/AIChat.tsx';
 import { FinanceProvider, useFinance } from './context/FinanceContext.tsx';
+import { ThemeProvider, useTheme } from './context/ThemeContext.tsx';
 import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
 
 const AppContent: React.FC = () => {
   const { filtros, kpis } = useFinance();
+  const { theme } = useTheme();
   const [isExporting, setIsExporting] = useState(false);
+  const [sidebarVisible, setSidebarVisible] = useState(true);
+  const isDark = theme === 'dark';
 
   const handleExportPDF = async () => {
     setIsExporting(true);
-    
+
     await new Promise(resolve => setTimeout(resolve, 800));
 
     const pdf = new jsPDF('p', 'mm', 'a4');
@@ -24,13 +28,17 @@ const AppContent: React.FC = () => {
     const margin = 12;
     const innerWidth = pageWidth - (margin * 2);
 
+    // Cores baseadas no tema
+    const bgColor = isDark ? '#111814' : '#f5f5f5';
+    const fillColorRGB = isDark ? [17, 24, 20] : [245, 245, 245];
+
     try {
       const coverElement = document.getElementById('pdf-cover');
       if (coverElement) {
         const coverCanvas = await html2canvas(coverElement, {
           scale: 2,
           useCORS: true,
-          backgroundColor: '#111814',
+          backgroundColor: bgColor,
           logging: false
         });
         const coverImg = coverCanvas.toDataURL('image/png');
@@ -41,11 +49,12 @@ const AppContent: React.FC = () => {
         'pdf-section-kpis',
         'pdf-section-middle',
         'pdf-section-waterfall',
-        'pdf-section-bottom'
+        'pdf-section-bottom',
+        'pdf-section-expense-evolution'
       ];
 
       pdf.addPage();
-      pdf.setFillColor(17, 24, 20);
+      pdf.setFillColor(fillColorRGB[0], fillColorRGB[1], fillColorRGB[2]);
       pdf.rect(0, 0, pageWidth, pageHeight, 'F');
 
       let currentY = margin;
@@ -56,7 +65,7 @@ const AppContent: React.FC = () => {
 
         const canvas = await html2canvas(element, {
           scale: 2,
-          backgroundColor: '#111814',
+          backgroundColor: bgColor,
           useCORS: true,
           logging: false
         });
@@ -67,7 +76,7 @@ const AppContent: React.FC = () => {
 
         if (currentY + imgHeight > pageHeight - margin) {
           pdf.addPage();
-          pdf.setFillColor(17, 24, 20);
+          pdf.setFillColor(fillColorRGB[0], fillColorRGB[1], fillColorRGB[2]);
           pdf.rect(0, 0, pageWidth, pageHeight, 'F');
           currentY = margin;
         }
@@ -95,9 +104,9 @@ const AppContent: React.FC = () => {
 
   return (
     <div className="flex h-screen bg-background-dark overflow-hidden">
-      <Sidebar onExport={handleExportPDF} />
+      <Sidebar onExport={handleExportPDF} visible={sidebarVisible} />
       <div className="flex-1 flex flex-col min-w-0">
-        <Header />
+        <Header onToggleSidebar={() => setSidebarVisible(!sidebarVisible)} sidebarVisible={sidebarVisible} />
         <Dashboard />
         
         {/* Hidden Cover Component for Capture */}
@@ -128,9 +137,11 @@ const AppContent: React.FC = () => {
 
 const App: React.FC = () => {
   return (
-    <FinanceProvider>
-      <AppContent />
-    </FinanceProvider>
+    <ThemeProvider>
+      <FinanceProvider>
+        <AppContent />
+      </FinanceProvider>
+    </ThemeProvider>
   );
 };
 
