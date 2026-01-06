@@ -2,16 +2,25 @@
 import React from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 import { useFinance } from '../../context/FinanceContext';
+import { useTheme } from '../../context/ThemeContext';
 import { formatBRL } from '../../utils/financeUtils';
 
 const ExpenseDonut: React.FC = () => {
   const { agregadoCategoria } = useFinance();
+  const { theme } = useTheme();
   const total = agregadoCategoria.reduce((acc, curr) => acc + curr.value, 0);
+
+  const isDark = theme === 'dark';
+  const colors = {
+    tooltipBg: isDark ? '#1c2720' : '#ffffff',
+    tooltipBorder: isDark ? '#3b5445' : '#d1d9d5',
+    tooltipText: isDark ? '#fff' : '#1a1a1a',
+  };
 
   return (
     <div className="bg-[#1c2720] border border-[#3b5445] rounded-xl p-6 flex flex-col h-[420px] w-full">
       <h3 className="text-white font-semibold text-base mb-8 shrink-0">Despesas por Categoria</h3>
-      
+
       <div className="flex items-center h-full min-h-0 gap-4">
         <div className="w-[45%] h-full relative min-h-[220px]">
           <ResponsiveContainer width="100%" height="100%">
@@ -30,9 +39,9 @@ const ExpenseDonut: React.FC = () => {
                   <Cell key={`cell-${index}`} fill={entry.color} />
                 ))}
               </Pie>
-              <Tooltip 
-                contentStyle={{ backgroundColor: '#1c2720', border: '1px solid #3b5445', borderRadius: '8px', color: '#fff' }}
-                itemStyle={{ fontSize: '10px', color: '#fff' }}
+              <Tooltip
+                contentStyle={{ backgroundColor: colors.tooltipBg, border: `1px solid ${colors.tooltipBorder}`, borderRadius: '8px', color: colors.tooltipText }}
+                itemStyle={{ fontSize: '10px', color: colors.tooltipText }}
                 formatter={(val: any) => formatBRL(val)}
               />
             </PieChart>
@@ -43,7 +52,7 @@ const ExpenseDonut: React.FC = () => {
             </span>
           </div>
         </div>
-        
+
         <div className="w-[55%] flex flex-col pl-4 justify-center">
           <div className="flex flex-col gap-6">
             {agregadoCategoria.map((cat) => (

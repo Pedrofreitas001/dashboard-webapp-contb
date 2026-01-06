@@ -2,9 +2,11 @@
 import React from 'react';
 import { ComposedChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, LabelList } from 'recharts';
 import { useFinance } from '../../context/FinanceContext';
+import { useTheme } from '../../context/ThemeContext';
 
 const DREWaterfall: React.FC = () => {
   const { dadosFiltrados } = useFinance();
+  const { theme } = useTheme();
 
   const formatYAxis = (value: number) => {
     const absValue = Math.abs(value);
@@ -63,32 +65,42 @@ const DREWaterfall: React.FC = () => {
     });
   }, [dadosFiltrados]);
 
+  const isDark = theme === 'dark';
+  const colors = {
+    gridStroke: isDark ? '#3b5445' : '#e5e7eb',
+    tickFill: isDark ? '#9db9a8' : '#1a1a1a',
+    tooltipBg: isDark ? '#1c2720' : '#ffffff',
+    tooltipBorder: isDark ? '#3b5445' : '#d1d9d5',
+    tooltipText: isDark ? '#fff' : '#1a1a1a',
+    labelFill: isDark ? '#fff' : '#fff',
+  };
+
   return (
     <div className="bg-surface-dark border border-border-dark rounded-xl p-6 h-[400px] w-full overflow-hidden flex flex-col">
       <h3 className="text-white font-semibold text-lg mb-6 shrink-0">Composição do Resultado (DRE)</h3>
       <div className="flex-1 w-full min-h-0">
         <ResponsiveContainer width="100%" height="100%">
           <ComposedChart data={data} margin={{ top: 10, right: 30, left: 20, bottom: 20 }}>
-            <CartesianGrid vertical={false} stroke="#3b5445" strokeDasharray="3 3" />
-            <XAxis 
-              dataKey="name" 
-              axisLine={false} 
-              tickLine={false} 
-              tick={{ fill: '#9db9a8', fontSize: 10 }}
+            <CartesianGrid vertical={false} stroke={colors.gridStroke} strokeDasharray="3 3" />
+            <XAxis
+              dataKey="name"
+              axisLine={false}
+              tickLine={false}
+              tick={{ fill: colors.tickFill, fontSize: 10 }}
               interval={0}
               dy={10}
             />
             <YAxis
               axisLine={false}
               tickLine={false}
-              tick={{ fill: '#9db9a8', fontSize: 10 }}
+              tick={{ fill: colors.tickFill, fontSize: 10 }}
               tickFormatter={formatYAxis}
             />
-            <Tooltip 
+            <Tooltip
               cursor={{ fill: '#ffffff0a' }}
-              contentStyle={{ backgroundColor: '#1c2720', border: '1px solid #3b5445', borderRadius: '8px', color: '#fff' }}
-              itemStyle={{ color: '#fff' }}
-              labelStyle={{ color: '#fff' }}
+              contentStyle={{ backgroundColor: colors.tooltipBg, border: `1px solid ${colors.tooltipBorder}`, borderRadius: '8px', color: colors.tooltipText }}
+              itemStyle={{ color: colors.tooltipText }}
+              labelStyle={{ color: colors.tooltipText }}
               formatter={(value: any, name: any, props: any) => [new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(props.payload.actual), 'Valor']}
             />
             <Bar dataKey="start" stackId="a" fill="transparent" />
@@ -103,7 +115,7 @@ const DREWaterfall: React.FC = () => {
                 dataKey="actual"
                 position="center"
                 formatter={formatLabel}
-                style={{ fill: '#fff', fontSize: '11px', fontWeight: 'bold' }}
+                style={{ fill: colors.labelFill, fontSize: '11px', fontWeight: 'bold' }}
               />
             </Bar>
           </ComposedChart>
