@@ -28,8 +28,8 @@ const AppContent: React.FC = () => {
     const innerWidth = pageWidth - (margin * 2);
 
     // Cores baseadas no tema
-    const bgColor = isDark ? '#111814' : '#ffffff';
-    const fillColorRGB = isDark ? [17, 24, 20] : [255, 255, 255];
+    const bgColor = isDark ? '#111814' : '#f5f5f5';
+    const fillColorRGB = isDark ? [17, 24, 20] : [245, 245, 245];
 
     try {
       const coverElement = document.getElementById('pdf-cover');
