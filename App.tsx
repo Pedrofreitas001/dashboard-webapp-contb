@@ -3,18 +3,23 @@ import React, { useState } from 'react';
 import Sidebar from './components/Sidebar.tsx';
 import Header from './components/Header.tsx';
 import Dashboard from './components/Dashboard.tsx';
+import DREDashboard from './components/DREDashboard.tsx';
 import ReportCover from './components/ReportCover.tsx';
 import AIChat from './components/AIChat.tsx';
 import { FinanceProvider, useFinance } from './context/FinanceContext.tsx';
+import { DREProvider } from './context/DREContext.tsx';
 import { ThemeProvider, useTheme } from './context/ThemeContext.tsx';
 import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
+
+type PageType = 'dashboard' | 'dre';
 
 const AppContent: React.FC = () => {
   const { filtros, kpis } = useFinance();
   const { theme } = useTheme();
   const [isExporting, setIsExporting] = useState(false);
   const [sidebarVisible, setSidebarVisible] = useState(true);
+  const [currentPage, setCurrentPage] = useState<PageType>('dashboard');
   const isDark = theme === 'dark';
 
   const handleExportPDF = async () => {
@@ -104,10 +109,16 @@ const AppContent: React.FC = () => {
 
   return (
     <div className="flex h-screen bg-background-dark overflow-hidden">
-      <Sidebar onExport={handleExportPDF} visible={sidebarVisible} />
+      <Sidebar
+        onExport={handleExportPDF}
+        visible={sidebarVisible}
+        currentPage={currentPage}
+        onNavigate={setCurrentPage}
+      />
       <div className="flex-1 flex flex-col min-w-0">
         <Header onToggleSidebar={() => setSidebarVisible(!sidebarVisible)} sidebarVisible={sidebarVisible} />
-        <Dashboard />
+        {currentPage === 'dashboard' && <Dashboard />}
+        {currentPage === 'dre' && <DREDashboard />}
         
         {/* Hidden Cover Component for Capture */}
         <ReportCover 
@@ -139,7 +150,9 @@ const App: React.FC = () => {
   return (
     <ThemeProvider>
       <FinanceProvider>
-        <AppContent />
+        <DREProvider>
+          <AppContent />
+        </DREProvider>
       </FinanceProvider>
     </ThemeProvider>
   );
