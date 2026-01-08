@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { useFinance } from '../context/FinanceContext';
+import { useDRE } from '../context/DREContext';
 import { useTheme } from '../context/ThemeContext';
 import * as XLSX from 'xlsx';
 
@@ -13,6 +14,7 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({ onExport, visible = true, currentPage = 'dashboard', onNavigate }) => {
   const { empresas, mesesDisponiveis, filtros, setFiltroEmpresa, setFiltroMeses, carregarDados } = useFinance();
+  const { carregarDREMensal } = useDRE();
   const { theme, toggleTheme } = useTheme();
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,6 +31,13 @@ const Sidebar: React.FC<SidebarProps> = ({ onExport, visible = true, currentPage
       carregarDados(data);
     };
     reader.readAsBinaryString(file);
+  };
+
+  const handleDREUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      carregarDREMensal(file);
+    }
   };
 
   const toggleMonth = (month: string) => {
@@ -129,11 +138,21 @@ const Sidebar: React.FC<SidebarProps> = ({ onExport, visible = true, currentPage
           </div>
         </div>
 
-        <div className="relative border border-dashed border-border-dark rounded-xl p-6 flex flex-col items-center justify-center bg-surface-dark/50 hover:bg-surface-dark transition-colors cursor-pointer group">
-          <input type="file" onChange={handleFileUpload} className="absolute inset-0 opacity-0 cursor-pointer" accept=".xlsx,.xls"/>
-          <span className="material-symbols-outlined text-border-dark group-hover:text-primary mb-2">cloud_upload</span>
-          <p className="text-xs text-center text-text-muted group-hover:text-white transition-colors">Carregar Excel Financeiro</p>
-        </div>
+        {currentPage === 'dashboard' && (
+          <div className="relative border border-dashed border-border-dark rounded-xl p-6 flex flex-col items-center justify-center bg-surface-dark/50 hover:bg-surface-dark transition-colors cursor-pointer group">
+            <input type="file" onChange={handleFileUpload} className="absolute inset-0 opacity-0 cursor-pointer" accept=".xlsx,.xls"/>
+            <span className="material-symbols-outlined text-border-dark group-hover:text-primary mb-2">cloud_upload</span>
+            <p className="text-xs text-center text-text-muted group-hover:text-white transition-colors">Carregar Excel Financeiro</p>
+          </div>
+        )}
+
+        {currentPage === 'dre' && (
+          <div className="relative border border-dashed border-border-dark rounded-xl p-6 flex flex-col items-center justify-center bg-surface-dark/50 hover:bg-surface-dark transition-colors cursor-pointer group">
+            <input type="file" onChange={handleDREUpload} className="absolute inset-0 opacity-0 cursor-pointer" accept=".xlsx,.xls"/>
+            <span className="material-symbols-outlined text-border-dark group-hover:text-primary mb-2">table_chart</span>
+            <p className="text-xs text-center text-text-muted group-hover:text-white transition-colors leading-tight">Carregar Excel DRE<br />(4 abas completas)</p>
+          </div>
+        )}
       </div>
 
       <div className="p-4 border-t border-border-dark">

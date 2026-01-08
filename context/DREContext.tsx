@@ -55,7 +55,7 @@ export const DREProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [periodoInicio, setPeriodoInicio] = useState(1); // Janeiro
   const [periodoFim, setPeriodoFim] = useState(11); // Novembro
 
-  const carregarDREMensal = async (file: File) => {
+  const carregarDRECompleto = async (file: File) => {
     setLoading(true);
     setError(null);
 
@@ -63,11 +63,16 @@ export const DREProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       const buffer = await file.arrayBuffer();
       const workbook = XLSX.read(buffer);
 
-      const sheetCaixa = workbook.Sheets['Regime de Caixa'];
-      const sheetCompetencia = workbook.Sheets['Regime de Competência'];
+      // Abas mensais
+      const sheetCaixaMensal = workbook.Sheets['Regime de Caixa'];
+      const sheetCompetenciaMensal = workbook.Sheets['Regime de Competência'];
 
-      if (!sheetCaixa || !sheetCompetencia) {
-        throw new Error('Planilha deve conter abas "Regime de Caixa" e "Regime de Competência"');
+      // Abas acumuladas
+      const sheetCaixaAcumulado = workbook.Sheets['Regime de Caixa Enxuto'];
+      const sheetCompetenciaAcumulado = workbook.Sheets['Regime de Competência Enxuto'];
+
+      if (!sheetCaixaMensal || !sheetCompetenciaMensal || !sheetCaixaAcumulado || !sheetCompetenciaAcumulado) {
+        throw new Error('Planilha deve conter as 4 abas: "Regime de Caixa", "Regime de Competência", "Regime de Caixa Enxuto" e "Regime de Competência Enxuto"');
       }
 
       const parseDREMensalSheet = (sheet: any): DREMensal[] => {
@@ -89,45 +94,6 @@ export const DREProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
         return result;
       };
-
-      const regimeCaixa = parseDREMensalSheet(sheetCaixa);
-      const regimeCompetencia = parseDREMensalSheet(sheetCompetencia);
-
-      setDreData(prev => ({
-        ...prev!,
-        regimeCaixa: {
-          mensal: regimeCaixa,
-          acumulado: prev?.regimeCaixa?.acumulado || []
-        },
-        regimeCompetencia: {
-          mensal: regimeCompetencia,
-          acumulado: prev?.regimeCompetencia?.acumulado || []
-        },
-        ano: anoSelecionado,
-        empresa: 'Bonaliment Alimentação'
-      }));
-
-    } catch (err: any) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const carregarDREAcumulado = async (file: File) => {
-    setLoading(true);
-    setError(null);
-
-    try {
-      const buffer = await file.arrayBuffer();
-      const workbook = XLSX.read(buffer);
-
-      const sheetCaixa = workbook.Sheets['Regime de Caixa Enxuto'];
-      const sheetCompetencia = workbook.Sheets['Regime de Competência Enxuto'];
-
-      if (!sheetCaixa || !sheetCompetencia) {
-        throw new Error('Planilha deve conter abas "Regime de Caixa Enxuto" e "Regime de Competência Enxuto"');
-      }
 
       const parseDREAcumuladoSheet = (sheet: any): DREAcumulado[] => {
         const data = XLSX.utils.sheet_to_json(sheet, { header: 1 }) as any[][];
@@ -160,22 +126,23 @@ export const DREProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         return result;
       };
 
-      const regimeCaixa = parseDREAcumuladoSheet(sheetCaixa);
-      const regimeCompetencia = parseDREAcumuladoSheet(sheetCompetencia);
+      const caixaMensal = parseDREMensalSheet(sheetCaixaMensal);
+      const competenciaMensal = parseDREMensalSheet(sheetCompetenciaMensal);
+      const caixaAcumulado = parseDREAcumuladoSheet(sheetCaixaAcumulado);
+      const competenciaAcumulado = parseDREAcumuladoSheet(sheetCompetenciaAcumulado);
 
-      setDreData(prev => ({
-        ...prev!,
+      setDreData({
         regimeCaixa: {
-          mensal: prev?.regimeCaixa?.mensal || [],
-          acumulado: regimeCaixa
+          mensal: caixaMensal,
+          acumulado: caixaAcumulado
         },
         regimeCompetencia: {
-          mensal: prev?.regimeCompetencia?.mensal || [],
-          acumulado: regimeCompetencia
+          mensal: competenciaMensal,
+          acumulado: competenciaAcumulado
         },
         ano: anoSelecionado,
         empresa: 'Bonaliment Alimentação'
-      }));
+      });
 
     } catch (err: any) {
       setError(err.message);
@@ -183,6 +150,9 @@ export const DREProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       setLoading(false);
     }
   };
+
+  const carregarDREMensal = carregarDRECompleto;
+  const carregarDREAcumulado = carregarDRECompleto;
 
   return (
     <DREContext.Provider value={{

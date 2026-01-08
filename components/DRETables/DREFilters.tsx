@@ -23,19 +23,9 @@ const DREFilters: React.FC = () => {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
 
-  const handleUploadMensal = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) carregarDREMensal(file);
-  };
-
-  const handleUploadAcumulado = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) carregarDREAcumulado(file);
-  };
-
   return (
     <div className={`${isDark ? 'bg-[#1c2720] border-[#3b5445]' : 'bg-white border-gray-200'} border rounded-xl p-6 space-y-6`}>
-      <h3 className={`${isDark ? 'text-white' : 'text-gray-900'} font-bold text-lg mb-4`}>Filtros DRE</h3>
+      <h3 className={`${isDark ? 'text-white' : 'text-gray-900'} font-bold text-lg mb-4`}>Filtros</h3>
 
       {/* Seletor de Ano */}
       <div>
@@ -115,21 +105,6 @@ const DREFilters: React.FC = () => {
               </span>
             </label>
           ))}
-        </div>
-      </div>
-
-      {/* Botões de Upload */}
-      <div className="space-y-3 pt-4 border-t border-border-dark">
-        <div className="relative border border-dashed border-border-dark rounded-lg p-4 flex flex-col items-center justify-center bg-surface-dark/50 hover:bg-surface-dark transition-colors cursor-pointer group">
-          <input type="file" onChange={handleUploadMensal} className="absolute inset-0 opacity-0 cursor-pointer" accept=".xlsx,.xls"/>
-          <span className="material-symbols-outlined text-border-dark group-hover:text-primary mb-1 text-sm">upload_file</span>
-          <p className="text-xs text-center text-text-muted group-hover:text-white transition-colors">DRE Mensal<br />(Projetado vs Real)</p>
-        </div>
-
-        <div className="relative border border-dashed border-border-dark rounded-lg p-4 flex flex-col items-center justify-center bg-surface-dark/50 hover:bg-surface-dark transition-colors cursor-pointer group">
-          <input type="file" onChange={handleUploadAcumulado} className="absolute inset-0 opacity-0 cursor-pointer" accept=".xlsx,.xls"/>
-          <span className="material-symbols-outlined text-border-dark group-hover:text-primary mb-1 text-sm">upload_file</span>
-          <p className="text-xs text-center text-text-muted group-hover:text-white transition-colors">DRE Acumulado<br />(Timeline Mensal)</p>
         </div>
       </div>
     </div>
