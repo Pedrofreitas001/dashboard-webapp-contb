@@ -24,87 +24,82 @@ const DREFilters: React.FC = () => {
   const isDark = theme === 'dark';
 
   return (
-    <div className={`${isDark ? 'bg-[#1c2720] border-[#3b5445]' : 'bg-white border-gray-200'} border rounded-xl p-6 space-y-6`}>
-      <h3 className={`${isDark ? 'text-white' : 'text-gray-900'} font-bold text-lg mb-4`}>Filtros</h3>
+    <div className={`${isDark ? 'bg-[#1c2720] border-[#3b5445]' : 'bg-white border-gray-200'} border rounded-xl p-5`}>
+      <div className="flex items-center gap-6 flex-wrap">
+        <h3 className={`${isDark ? 'text-white' : 'text-gray-900'} font-bold text-base`}>Filtros DRE</h3>
 
-      {/* Seletor de Ano */}
-      <div>
-        <label className={`text-sm font-medium ${isDark ? 'text-[#9db9a8]' : 'text-gray-600'} mb-2 block`}>Ano</label>
-        <select
-          value={anoSelecionado}
-          onChange={(e) => setAnoSelecionado(Number(e.target.value))}
-          className={`w-full px-3 py-2 rounded-lg border ${isDark ? 'bg-[#111814] border-[#3b5445] text-white' : 'bg-gray-50 border-gray-300 text-gray-900'} focus:ring-2 focus:ring-primary focus:border-primary`}
-        >
-          {[2024, 2025, 2026].map(ano => (
-            <option key={ano} value={ano}>{ano}</option>
-          ))}
-        </select>
-      </div>
-
-      {/* Seletor de Mês */}
-      <div>
-        <label className={`text-sm font-medium ${isDark ? 'text-[#9db9a8]' : 'text-gray-600'} mb-2 block`}>Mês (para visualização mensal)</label>
-        <select
-          value={mesSelecionado}
-          onChange={(e) => setMesSelecionado(Number(e.target.value))}
-          className={`w-full px-3 py-2 rounded-lg border ${isDark ? 'bg-[#111814] border-[#3b5445] text-white' : 'bg-gray-50 border-gray-300 text-gray-900'} focus:ring-2 focus:ring-primary focus:border-primary`}
-        >
-          {mesesNomes.map((nome, idx) => (
-            <option key={idx} value={idx + 1}>{nome}</option>
-          ))}
-        </select>
-      </div>
-
-      {/* Seletor de Período */}
-      <div>
-        <label className={`text-sm font-medium ${isDark ? 'text-[#9db9a8]' : 'text-gray-600'} mb-2 block`}>Período (para acumulado)</label>
-        <div className="grid grid-cols-2 gap-2">
-          <div>
-            <label className={`text-xs ${isDark ? 'text-[#9db9a8]' : 'text-gray-500'} mb-1 block`}>De</label>
-            <select
-              value={periodoInicio}
-              onChange={(e) => setPeriodoInicio(Number(e.target.value))}
-              className={`w-full px-3 py-2 rounded-lg border ${isDark ? 'bg-[#111814] border-[#3b5445] text-white' : 'bg-gray-50 border-gray-300 text-gray-900'} focus:ring-2 focus:ring-primary focus:border-primary text-sm`}
-            >
-              {mesesNomes.map((nome, idx) => (
-                <option key={idx} value={idx + 1}>{nome.slice(0, 3)}</option>
-              ))}
-            </select>
-          </div>
-          <div>
-            <label className={`text-xs ${isDark ? 'text-[#9db9a8]' : 'text-gray-500'} mb-1 block`}>Até</label>
-            <select
-              value={periodoFim}
-              onChange={(e) => setPeriodoFim(Number(e.target.value))}
-              className={`w-full px-3 py-2 rounded-lg border ${isDark ? 'bg-[#111814] border-[#3b5445] text-white' : 'bg-gray-50 border-gray-300 text-gray-900'} focus:ring-2 focus:ring-primary focus:border-primary text-sm`}
-            >
-              {mesesNomes.map((nome, idx) => (
-                <option key={idx} value={idx + 1}>{nome.slice(0, 3)}</option>
-              ))}
-            </select>
-          </div>
+        {/* Seletor de Ano */}
+        <div className="flex items-center gap-2">
+          <label className={`text-sm font-medium ${isDark ? 'text-[#9db9a8]' : 'text-gray-600'}`}>Ano:</label>
+          <select
+            value={anoSelecionado}
+            onChange={(e) => setAnoSelecionado(Number(e.target.value))}
+            className={`px-3 py-1.5 rounded-lg border ${isDark ? 'bg-[#111814] border-[#3b5445] text-white' : 'bg-gray-50 border-gray-300 text-gray-900'} focus:ring-2 focus:ring-primary focus:border-primary text-sm`}
+          >
+            {[2024, 2025, 2026].map(ano => (
+              <option key={ano} value={ano}>{ano}</option>
+            ))}
+          </select>
         </div>
-      </div>
 
-      {/* Toggle Regime */}
-      <div>
-        <label className={`text-sm font-medium ${isDark ? 'text-[#9db9a8]' : 'text-gray-600'} mb-2 block`}>Regime</label>
-        <div className="flex flex-col gap-2">
-          {['caixa', 'competencia', 'ambos'].map((regime) => (
-            <label key={regime} className="flex items-center cursor-pointer">
-              <input
-                type="radio"
-                name="regime"
-                value={regime}
-                checked={regimeSelecionado === regime}
-                onChange={(e) => setRegimeSelecionado(e.target.value as any)}
-                className="mr-2 text-primary focus:ring-primary"
-              />
-              <span className={`text-sm ${isDark ? 'text-white' : 'text-gray-900'} capitalize`}>
-                {regime === 'ambos' ? 'Comparativo' : `Regime de ${regime}`}
-              </span>
-            </label>
-          ))}
+        {/* Seletor de Mês */}
+        <div className="flex items-center gap-2">
+          <label className={`text-sm font-medium ${isDark ? 'text-[#9db9a8]' : 'text-gray-600'}`}>Mês:</label>
+          <select
+            value={mesSelecionado}
+            onChange={(e) => setMesSelecionado(Number(e.target.value))}
+            className={`px-3 py-1.5 rounded-lg border ${isDark ? 'bg-[#111814] border-[#3b5445] text-white' : 'bg-gray-50 border-gray-300 text-gray-900'} focus:ring-2 focus:ring-primary focus:border-primary text-sm min-w-[130px]`}
+          >
+            {mesesNomes.map((nome, idx) => (
+              <option key={idx} value={idx + 1}>{nome}</option>
+            ))}
+          </select>
+        </div>
+
+        {/* Seletor de Período */}
+        <div className="flex items-center gap-2">
+          <label className={`text-sm font-medium ${isDark ? 'text-[#9db9a8]' : 'text-gray-600'}`}>Período:</label>
+          <select
+            value={periodoInicio}
+            onChange={(e) => setPeriodoInicio(Number(e.target.value))}
+            className={`px-3 py-1.5 rounded-lg border ${isDark ? 'bg-[#111814] border-[#3b5445] text-white' : 'bg-gray-50 border-gray-300 text-gray-900'} focus:ring-2 focus:ring-primary focus:border-primary text-sm`}
+          >
+            {mesesNomes.map((nome, idx) => (
+              <option key={idx} value={idx + 1}>{nome.slice(0, 3)}</option>
+            ))}
+          </select>
+          <span className={`${isDark ? 'text-[#9db9a8]' : 'text-gray-500'} text-sm`}>até</span>
+          <select
+            value={periodoFim}
+            onChange={(e) => setPeriodoFim(Number(e.target.value))}
+            className={`px-3 py-1.5 rounded-lg border ${isDark ? 'bg-[#111814] border-[#3b5445] text-white' : 'bg-gray-50 border-gray-300 text-gray-900'} focus:ring-2 focus:ring-primary focus:border-primary text-sm`}
+          >
+            {mesesNomes.map((nome, idx) => (
+              <option key={idx} value={idx + 1}>{nome.slice(0, 3)}</option>
+            ))}
+          </select>
+        </div>
+
+        {/* Toggle Regime */}
+        <div className="flex items-center gap-2">
+          <label className={`text-sm font-medium ${isDark ? 'text-[#9db9a8]' : 'text-gray-600'}`}>Regime:</label>
+          <div className="flex gap-4">
+            {['caixa', 'competencia', 'ambos'].map((regime) => (
+              <label key={regime} className="flex items-center cursor-pointer">
+                <input
+                  type="radio"
+                  name="regime"
+                  value={regime}
+                  checked={regimeSelecionado === regime}
+                  onChange={(e) => setRegimeSelecionado(e.target.value as any)}
+                  className="mr-1.5 text-primary focus:ring-primary"
+                />
+                <span className={`text-sm ${isDark ? 'text-white' : 'text-gray-900'} capitalize`}>
+                  {regime === 'ambos' ? 'Comparativo' : regime}
+                </span>
+              </label>
+            ))}
+          </div>
         </div>
       </div>
     </div>
