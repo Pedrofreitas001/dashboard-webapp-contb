@@ -17,8 +17,8 @@ const DREDashboard: React.FC = () => {
   return (
     <main className={`flex-1 overflow-y-auto p-4 md:p-8 custom-scrollbar ${isDark ? 'bg-background-dark' : 'bg-gray-50'}`}>
       <div className="max-w-[1600px] mx-auto">
-        {/* Filtros Horizontais - Sticky no Topo */}
-        <div className={`sticky top-0 z-20 pb-4 ${isDark ? 'bg-background-dark' : 'bg-gray-50'}`}>
+        {/* Filtros Horizontais */}
+        <div className="mb-6">
           <DREFilters />
 
           {error && (
@@ -28,8 +28,8 @@ const DREDashboard: React.FC = () => {
           )}
         </div>
 
-        {/* Cabeçalho - Sticky Abaixo dos Filtros */}
-        <div className={`sticky top-[100px] z-10 py-4 ${isDark ? 'bg-background-dark' : 'bg-gray-50'}`}>
+        {/* Cabeçalho */}
+        <div className="mb-6">
           <h1 className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'} mb-2`}>
             Tabelas DRE
           </h1>
@@ -38,8 +38,8 @@ const DREDashboard: React.FC = () => {
           </p>
         </div>
 
-        {/* Tabs de Visualização - Sticky Abaixo do Header */}
-        <div className={`sticky top-[190px] z-10 flex gap-2 mb-8 ${isDark ? 'bg-[#1c2720] border-[#3b5445]' : 'bg-white border-gray-200'} border rounded-lg p-1`}>
+        {/* Tabs de Visualização */}
+        <div className={`flex gap-2 mb-6 ${isDark ? 'bg-[#1c2720] border-[#3b5445]' : 'bg-white border-gray-200'} border rounded-lg p-1`}>
             {[
               { id: 'mensal' as ViewType, label: 'Projetado vs Real', icon: 'calendar_month' },
               { id: 'acumulado' as ViewType, label: 'Acumulado Mensal', icon: 'trending_up' },
