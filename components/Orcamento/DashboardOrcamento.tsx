@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { useTheme } from '../../context/ThemeContext';
 import { useOrcamento } from '../../context/OrcamentoContext/OrcamentoContext';
 
 interface KPIOrcamentoCardProps {
@@ -12,13 +13,16 @@ interface KPIOrcamentoCardProps {
 }
 
 const KPIOrcamentoCard: React.FC<KPIOrcamentoCardProps> = ({ titulo, valor, percentual, unidade, cor, status }) => {
+    const { theme } = useTheme();
+    const isDarkCard = theme === 'dark';
+
     // Garantir que valor é um número válido
     const valorValido = isNaN(valor) ? 0 : valor;
     const percentualValido = percentual !== undefined && isNaN(percentual) ? 0 : percentual;
 
     return (
-        <div className={`bg-surface-dark rounded-lg p-4 border border-border-dark shadow-sm`}>
-            <p className="text-gray-400 text-sm">{titulo}</p>
+        <div className={`${isDarkCard ? 'bg-surface-dark border-border-dark' : 'bg-white border-gray-300'} rounded-lg p-4 border shadow-sm`}>
+            <p className={`${isDarkCard ? 'text-gray-400' : 'text-gray-600'} text-sm`}>{titulo}</p>
             <p className={`text-2xl font-bold ${cor}`}>
                 {unidade === '%' ? `${valorValido.toFixed(1)}%` : `R$ ${(valorValido / 1000).toFixed(1)}k`}
             </p>
@@ -34,6 +38,8 @@ const KPIOrcamentoCard: React.FC<KPIOrcamentoCardProps> = ({ titulo, valor, perc
 
 const DashboardOrcamento: React.FC = () => {
     const { dados, empresas } = useOrcamento();
+    const { theme } = useTheme();
+    const isDark = theme === 'dark';
     const [selectedEmpresa, setSelectedEmpresa] = useState<string>('');
     const [chartData, setChartData] = useState<any[]>([]);
     const [desviosPorCategoria, setDesviosPorCategoria] = useState<any[]>([]);
@@ -92,55 +98,55 @@ const DashboardOrcamento: React.FC = () => {
 
     if (dados.length === 0) {
         return (
-            <main className="flex-1 overflow-y-auto p-4 md:p-8 custom-scrollbar bg-background-dark min-h-screen">
+            <main className={`flex-1 overflow-y-auto p-4 md:p-8 custom-scrollbar ${isDark ? 'bg-background-dark' : 'bg-gray-50'} min-h-screen`}>
                 <div className="max-w-[1400px] mx-auto">
                     <div className="flex flex-col items-center justify-center min-h-[60vh]">
 
-                        <h2 className="text-white text-2xl font-bold mb-4">Nenhum dado carregado</h2>
-                        <p className="text-text-muted mb-8">Baixe o arquivo Excel modelo e carregue na barra lateral para visualização</p>
+                        <h2 className={`${isDark ? 'text-white' : 'text-gray-900'} text-2xl font-bold mb-4`}>Nenhum dado carregado</h2>
+                        <p className={`${isDark ? 'text-text-muted' : 'text-gray-600'} mb-8`}>Baixe o arquivo Excel modelo e carregue na barra lateral para visualização</p>
 
                         {/* Formato Esperado */}
-                        <div className="bg-surface-dark rounded-xl border border-border-dark p-6 w-full max-w-2xl">
-                            <h3 className="text-white font-bold mb-4 flex items-center gap-2">
+                        <div className={`${isDark ? 'bg-surface-dark border-border-dark' : 'bg-white border-gray-300'} rounded-xl border p-6 w-full max-w-2xl`}>
+                            <h3 className={`${isDark ? 'text-white' : 'text-gray-900'} font-bold mb-4 flex items-center gap-2`}>
                                 <span className="material-symbols-outlined text-primary">description</span>
                                 Formato Esperado: orcamento_template.xlsx
                             </h3>
-                            <div className="bg-background-dark rounded-lg p-4 mb-4 overflow-x-auto">
-                                <table className="text-xs w-full">
+                            <div className={`${isDark ? 'bg-background-dark' : 'bg-gray-50'} rounded-lg p-4 mb-4 overflow-x-auto`}>
+                                <table className={`text-xs w-full ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
                                     <thead>
-                                        <tr className="text-text-muted border-b border-border-dark">
+                                        <tr className={`${isDark ? 'text-text-muted border-border-dark' : 'text-gray-600 border-gray-300'} border-b`}>
                                             <th className="text-left py-2">Coluna</th>
                                             <th className="text-left py-2">Tipo</th>
                                             <th className="text-left py-2">Exemplo</th>
                                         </tr>
                                     </thead>
-                                    <tbody className="text-gray-300">
-                                        <tr className="border-b border-border-dark/50">
+                                    <tbody className={isDark ? 'text-gray-300' : 'text-gray-700'}>
+                                        <tr className={`${isDark ? 'border-border-dark/50' : 'border-gray-300/50'} border-b`}>
                                             <td className="py-2 font-mono text-primary">mes</td>
                                             <td>número</td>
                                             <td>1, 2, 3...</td>
                                         </tr>
-                                        <tr className="border-b border-border-dark/50">
+                                        <tr className={`${isDark ? 'border-border-dark/50' : 'border-gray-300/50'} border-b`}>
                                             <td className="py-2 font-mono text-primary">empresa</td>
                                             <td>texto</td>
                                             <td>Alpha, Beta, Gamma...</td>
                                         </tr>
-                                        <tr className="border-b border-border-dark/50">
+                                        <tr className={`${isDark ? 'border-border-dark/50' : 'border-gray-300/50'} border-b`}>
                                             <td className="py-2 font-mono text-primary">categoria</td>
                                             <td>texto</td>
                                             <td>Folha, Aluguel, Fornecedores...</td>
                                         </tr>
-                                        <tr className="border-b border-border-dark/50">
+                                        <tr className={`${isDark ? 'border-border-dark/50' : 'border-gray-300/50'} border-b`}>
                                             <td className="py-2 font-mono text-primary">orcado</td>
                                             <td>número (R$)</td>
                                             <td>80000, 120000...</td>
                                         </tr>
-                                        <tr className="border-b border-border-dark/50">
+                                        <tr className={`${isDark ? 'border-border-dark/50' : 'border-gray-300/50'} border-b`}>
                                             <td className="py-2 font-mono text-primary">realizado</td>
                                             <td>número (R$)</td>
                                             <td>82000, 118000...</td>
                                         </tr>
-                                        <tr className="border-b border-border-dark/50">
+                                        <tr className={`${isDark ? 'border-border-dark/50' : 'border-gray-300/50'} border-b`}>
                                             <td className="py-2 font-mono text-primary">responsavel</td>
                                             <td>texto (opcional)</td>
                                             <td>RH, Compras, Admin...</td>
@@ -153,7 +159,7 @@ const DashboardOrcamento: React.FC = () => {
                                     </tbody>
                                 </table>
                             </div>
-                            <p className="text-xs text-text-muted mb-4">Arquivo: <span className="text-primary font-mono">Orcamento_Exemplo.xlsx</span></p>
+                            <p className={`text-xs ${isDark ? 'text-text-muted' : 'text-gray-600'} mb-4`}>Arquivo: <span className="text-primary font-mono">Orcamento_Exemplo.xlsx</span></p>
 
                             {/* Botão Download */}
                             <a href="https://docs.google.com/spreadsheets/d/1pjEyn5Jy43kC3og11hjU1Co7peBn11EH8EwfuEHxk_M/export?format=xlsx" download className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm font-semibold transition-colors w-full">
@@ -168,11 +174,11 @@ const DashboardOrcamento: React.FC = () => {
     }
 
     return (
-        <main className="flex-1 overflow-y-auto p-4 md:p-8 custom-scrollbar bg-background-dark min-h-screen">
+        <main className={`flex-1 overflow-y-auto p-4 md:p-8 custom-scrollbar ${isDark ? 'bg-background-dark' : 'bg-gray-50'} min-h-screen`}>
             <div className="max-w-[1400px] mx-auto pb-8">
                 <div className="mb-8">
-                    <h1 className="text-3xl font-bold text-gray-100">Budgeting vs Realizado</h1>
-                    <p className="text-gray-400 text-sm mt-2">Análise de desvios orçamentários e controle de gastos</p>
+                    <h1 className={`text-3xl font-bold ${isDark ? 'text-gray-100' : 'text-gray-900'}`}>Budgeting vs Realizado</h1>
+                    <p className={`${isDark ? 'text-gray-400' : 'text-gray-600'} text-sm mt-2`}>Análise de desvios orçamentários e controle de gastos</p>
                 </div>
 
                 {/* KPIs */}
