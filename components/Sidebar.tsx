@@ -3,6 +3,9 @@ import React from 'react';
 import { useFinance } from '../context/FinanceContext';
 import { useDespesas } from '../context/DespesasContext';
 import { useDRE } from '../context/DREContext';
+import { useCashFlow } from '../context/CashFlowContext/CashFlowContext';
+import { useIndicadores } from '../context/IndicadoresContext/IndicadoresContext';
+import { useOrcamento } from '../context/OrcamentoContext/OrcamentoContext';
 import { useTheme } from '../context/ThemeContext';
 import * as XLSX from 'xlsx';
 
@@ -24,6 +27,9 @@ const Sidebar: React.FC<SidebarProps> = ({ onExport, visible = true, currentPage
     carregarDadosDespesas
   } = useDespesas();
   const { carregarDREMensal } = useDRE();
+  const { setDados: setCashFlowDados } = useCashFlow();
+  const { setDados: setIndicadoresDados } = useIndicadores();
+  const { setDados: setOrcamentoDados } = useOrcamento();
   const { theme, toggleTheme } = useTheme();
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -63,6 +69,54 @@ const Sidebar: React.FC<SidebarProps> = ({ onExport, visible = true, currentPage
     if (file) {
       carregarDREMensal(file);
     }
+  };
+
+  const handleCashFlowUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (evt) => {
+      const bstr = evt.target?.result;
+      const wb = XLSX.read(bstr, { type: 'binary' });
+      const wsname = wb.SheetNames[0];
+      const ws = wb.Sheets[wsname];
+      const data = XLSX.utils.sheet_to_json(ws);
+      setCashFlowDados(data as any);
+    };
+    reader.readAsBinaryString(file);
+  };
+
+  const handleIndicadoresUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (evt) => {
+      const bstr = evt.target?.result;
+      const wb = XLSX.read(bstr, { type: 'binary' });
+      const wsname = wb.SheetNames[0];
+      const ws = wb.Sheets[wsname];
+      const data = XLSX.utils.sheet_to_json(ws);
+      setIndicadoresDados(data as any);
+    };
+    reader.readAsBinaryString(file);
+  };
+
+  const handleOrcamentoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (evt) => {
+      const bstr = evt.target?.result;
+      const wb = XLSX.read(bstr, { type: 'binary' });
+      const wsname = wb.SheetNames[0];
+      const ws = wb.Sheets[wsname];
+      const data = XLSX.utils.sheet_to_json(ws);
+      setOrcamentoDados(data as any);
+    };
+    reader.readAsBinaryString(file);
   };
 
   const toggleMonth = (month: string) => {
@@ -135,46 +189,6 @@ const Sidebar: React.FC<SidebarProps> = ({ onExport, visible = true, currentPage
               table_chart
             </span>
             <p className="text-sm font-medium">Tabelas DRE</p>
-          </button>
-        </nav>
-
-        <nav className="flex flex-col gap-2">
-          <p className="px-2 text-xs font-bold text-text-muted uppercase">Novas Páginas</p>
-          <button
-            onClick={() => onNavigate?.('cashflow')}
-            className={`flex items-center gap-3 rounded-xl border p-3 transition-all ${currentPage === 'cashflow'
-              ? 'bg-surface-dark border-primary text-white'
-              : 'bg-transparent border-border-dark text-text-muted hover:border-primary/50'
-              }`}
-          >
-            <span className={`material-symbols-outlined ${currentPage === 'cashflow' ? 'text-primary' : ''}`}>
-              trending_up
-            </span>
-            <p className="text-sm font-medium">Fluxo de Caixa</p>
-          </button>
-          <button
-            onClick={() => onNavigate?.('indicadores')}
-            className={`flex items-center gap-3 rounded-xl border p-3 transition-all ${currentPage === 'indicadores'
-              ? 'bg-surface-dark border-primary text-white'
-              : 'bg-transparent border-border-dark text-text-muted hover:border-primary/50'
-              }`}
-          >
-            <span className={`material-symbols-outlined ${currentPage === 'indicadores' ? 'text-primary' : ''}`}>
-              analytics
-            </span>
-            <p className="text-sm font-medium">Indicadores</p>
-          </button>
-          <button
-            onClick={() => onNavigate?.('orcamento')}
-            className={`flex items-center gap-3 rounded-xl border p-3 transition-all ${currentPage === 'orcamento'
-              ? 'bg-surface-dark border-primary text-white'
-              : 'bg-transparent border-border-dark text-text-muted hover:border-primary/50'
-              }`}
-          >
-            <span className={`material-symbols-outlined ${currentPage === 'orcamento' ? 'text-primary' : ''}`}>
-              balance
-            </span>
-            <p className="text-sm font-medium">Budgeting</p>
           </button>
         </nav>
 
@@ -252,6 +266,30 @@ const Sidebar: React.FC<SidebarProps> = ({ onExport, visible = true, currentPage
             <input type="file" onChange={handleDREUpload} className="absolute inset-0 opacity-0 cursor-pointer" accept=".xlsx,.xls" />
             <span className="material-symbols-outlined text-border-dark group-hover:text-primary mb-2">table_chart</span>
             <p className="text-xs text-center text-text-muted group-hover:text-white transition-colors leading-tight">Carregar Excel DRE<br />(4 abas completas)</p>
+          </div>
+        )}
+
+        {currentPage === 'cashflow' && (
+          <div className="relative border border-dashed border-border-dark rounded-xl p-6 flex flex-col items-center justify-center bg-surface-dark/50 hover:bg-surface-dark transition-colors cursor-pointer group">
+            <input type="file" onChange={handleCashFlowUpload} className="absolute inset-0 opacity-0 cursor-pointer" accept=".xlsx,.xls" />
+            <span className="material-symbols-outlined text-border-dark group-hover:text-primary mb-2">cloud_upload</span>
+            <p className="text-xs text-center text-text-muted group-hover:text-white transition-colors">Carregar Excel Fluxo de Caixa</p>
+          </div>
+        )}
+
+        {currentPage === 'indicadores' && (
+          <div className="relative border border-dashed border-border-dark rounded-xl p-6 flex flex-col items-center justify-center bg-surface-dark/50 hover:bg-surface-dark transition-colors cursor-pointer group">
+            <input type="file" onChange={handleIndicadoresUpload} className="absolute inset-0 opacity-0 cursor-pointer" accept=".xlsx,.xls" />
+            <span className="material-symbols-outlined text-border-dark group-hover:text-primary mb-2">cloud_upload</span>
+            <p className="text-xs text-center text-text-muted group-hover:text-white transition-colors">Carregar Excel Indicadores</p>
+          </div>
+        )}
+
+        {currentPage === 'orcamento' && (
+          <div className="relative border border-dashed border-border-dark rounded-xl p-6 flex flex-col items-center justify-center bg-surface-dark/50 hover:bg-surface-dark transition-colors cursor-pointer group">
+            <input type="file" onChange={handleOrcamentoUpload} className="absolute inset-0 opacity-0 cursor-pointer" accept=".xlsx,.xls" />
+            <span className="material-symbols-outlined text-border-dark group-hover:text-primary mb-2">cloud_upload</span>
+            <p className="text-xs text-center text-text-muted group-hover:text-white transition-colors">Carregar Excel Orçamento</p>
           </div>
         )}
       </div>
