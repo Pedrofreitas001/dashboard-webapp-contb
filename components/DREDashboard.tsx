@@ -73,12 +73,12 @@ const DREDashboard: React.FC = () => {
               <p className={`text-xs ${isDark ? 'text-text-muted' : 'text-gray-600'}`}>Arquivo: <span className={`${isDark ? 'text-primary' : 'text-primary'} font-mono`}>Dashboard_Financeiro_Exemplo.xlsx</span></p>
 
               {/* Botões Google Sheets */}
-              <div className="mt-6 flex gap-3">
-                <a href="#" className="inline-flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm font-semibold transition-colors">
+              <div className="mt-6 flex flex-col sm:flex-row gap-3 w-full">
+                <a href="https://docs.google.com/spreadsheets/d/1najlHXbyJLlXJSB12xPWHXi4rRS0kWDtMew301HjitQ/edit?usp=sharing" target="_blank" rel="noopener noreferrer" className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm font-semibold transition-colors">
                   <span className="material-symbols-outlined text-base">open_in_new</span>
                   Visualizar Modelo
                 </a>
-                <a href="#" className="inline-flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm font-semibold transition-colors">
+                <a href="https://docs.google.com/spreadsheets/d/1najlHXbyJLlXJSB12xPWHXi4rRS0kWDtMew301HjitQ/edit?usp=sharing" target="_blank" rel="noopener noreferrer" className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm font-semibold transition-colors">
                   <span className="material-symbols-outlined text-base">download</span>
                   Baixar Arquivo
                 </a>
