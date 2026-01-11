@@ -197,7 +197,7 @@ const DashboardOrcamento: React.FC = () => {
                 </div>
 
                 {/* Gráficos */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
                     <div className="bg-surface-dark rounded-xl p-6 border border-border-dark">
                         <h2 className="text-base font-bold text-white mb-4">Orçado vs Realizado</h2>
                         <ResponsiveContainer width="100%" height={280}>
@@ -207,8 +207,8 @@ const DashboardOrcamento: React.FC = () => {
                                 <YAxis tickFormatter={formatCurrency} width={75} tick={{ fontSize: 12 }} />
                                 <Tooltip formatter={(value: any) => formatCurrency(value)} contentStyle={{ backgroundColor: '#1a1a1a', border: 'none', borderRadius: '8px' }} />
                                 <Legend />
-                                <Bar dataKey="orcado" fill="#3b82f6" name="Orçado" />
-                                <Bar dataKey="realizado" fill="#10b981" name="Realizado" />
+                                <Bar dataKey="orcado" fill="#3b82f6" name="Orçado" isAnimationActive={false} />
+                                <Bar dataKey="realizado" fill="#10b981" name="Realizado" isAnimationActive={false} />
                             </BarChart>
                         </ResponsiveContainer>
                     </div>
@@ -222,7 +222,7 @@ const DashboardOrcamento: React.FC = () => {
                                 <YAxis tickFormatter={formatCurrency} width={75} tick={{ fontSize: 12 }} />
                                 <Tooltip formatter={(value: any) => formatCurrency(value)} contentStyle={{ backgroundColor: '#1a1a1a', border: 'none', borderRadius: '8px' }} />
                                 <Legend />
-                                <Bar dataKey="variancia" fill={(entry: any) => entry.variancia > 0 ? '#ef4444' : '#10b981'} name="Variância" />
+                                <Bar dataKey="variancia" fill="#8b5cf6" name="Variância" isAnimationActive={false} />
                             </BarChart>
                         </ResponsiveContainer>
                     </div>

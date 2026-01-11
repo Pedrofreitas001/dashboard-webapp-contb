@@ -202,7 +202,7 @@ const DashboardIndicadores: React.FC = () => {
                 </div>
 
                 {/* Gráficos */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
                     <div className="bg-surface-dark rounded-xl p-6 border border-border-dark">
                         <h2 className="text-base font-bold text-white mb-4">Evolução de Indicadores</h2>
                         <ResponsiveContainer width="100%" height={280}>
@@ -212,9 +212,9 @@ const DashboardIndicadores: React.FC = () => {
                                 <YAxis width={75} tick={{ fontSize: 12 }} />
                                 <Tooltip formatter={(value: any) => value.toFixed(2)} contentStyle={{ backgroundColor: '#1a1a1a', border: 'none', borderRadius: '8px' }} />
                                 <Legend />
-                                <Line type="monotone" dataKey="roe" stroke="#3b82f6" name="ROE %" strokeWidth={2} />
-                                <Line type="monotone" dataKey="roa" stroke="#10b981" name="ROA %" strokeWidth={2} />
-                                <Line type="monotone" dataKey="margemLiquida" stroke="#a855f7" name="Margem %" strokeWidth={2} />
+                                <Line type="monotone" dataKey="roe" stroke="#3b82f6" name="ROE %" strokeWidth={2} isAnimationActive={false} />
+                                <Line type="monotone" dataKey="roa" stroke="#10b981" name="ROA %" strokeWidth={2} isAnimationActive={false} />
+                                <Line type="monotone" dataKey="margemLiquida" stroke="#a855f7" name="Margem %" strokeWidth={2} isAnimationActive={false} />
                             </LineChart>
                         </ResponsiveContainer>
                     </div>

@@ -154,7 +154,7 @@ const DashboardCashFlow: React.FC = () => {
                 </div>
 
                 {/* Gráficos */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
                     <div className="bg-surface-dark rounded-xl p-6 border border-border-dark">
                         <h2 className="text-base font-bold text-white mb-4">Receitas vs Despesas</h2>
                         <ResponsiveContainer width="100%" height={280}>
@@ -164,8 +164,8 @@ const DashboardCashFlow: React.FC = () => {
                                 <YAxis tickFormatter={formatCurrency} width={75} tick={{ fontSize: 12 }} />
                                 <Tooltip formatter={(value: any) => formatCurrency(value)} contentStyle={{ backgroundColor: '#1a1a1a', border: 'none', borderRadius: '8px' }} />
                                 <Legend />
-                                <Bar dataKey="receitas" stackId="a" fill="#10b981" name="Receitas" />
-                                <Bar dataKey="despesas" stackId="a" fill="#ef4444" name="Despesas" />
+                                <Bar dataKey="receitas" stackId="a" fill="#10b981" name="Receitas" isAnimationActive={false} />
+                                <Bar dataKey="despesas" stackId="a" fill="#ef4444" name="Despesas" isAnimationActive={false} />
                             </BarChart>
                         </ResponsiveContainer>
                     </div>
