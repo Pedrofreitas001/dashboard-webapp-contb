@@ -28,8 +28,8 @@ const DashboardIndicadores: React.FC = () => {
     const [radarData, setRadarData] = useState<any[]>([]);
 
     useEffect(() => {
-        const empresa = selectedEmpresa || empresas[0];
-        const filtered = dados.filter(d => d.empresa === empresa);
+        const empresa = selectedEmpresa || (empresas.length > 0 ? empresas[0] : '');
+        const filtered = empresa ? dados.filter(d => d.empresa === empresa) : [];
 
         // Dados para gráfico de linha
         setChartData(filtered.map(d => ({

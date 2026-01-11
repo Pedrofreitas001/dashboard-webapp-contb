@@ -116,19 +116,19 @@ const Sidebar: React.FC<SidebarProps> = ({ onExport, visible = true, currentPage
 
       // Converter dados para o formato correto
       const convertedData = data.map((row: any) => ({
-        mes: Number(row.mes || row.Mes || 0),
-        empresa: String(row.empresa || row.Empresa || ''),
-        roe: Number(row.roe || row.ROE || row.Roe || 0),
-        roa: Number(row.roa || row.ROA || row.Roa || 0),
-        margemLiquida: Number(row.margemLiquida || row.margemLíquida || row.Margem_Liquida || 0),
-        margemOperacional: Number(row.margemOperacional || row.Margem_Operacional || 0),
-        liquidezCorrente: Number(row.liquidezCorrente || row.Liquidez_Corrente || 0),
-        liquidezSeca: Number(row.liquidezSeca || row.Liquidez_Seca || 0),
-        endividamento: Number(row.endividamento || row.Endividamento || 0),
-        alavancagem: Number(row.alavancagem || row.Alavancagem || 0),
-        giroAtivo: Number(row.giroAtivo || row.Giro_Ativo || 0),
-        prazoRecebimento: Number(row.prazoRecebimento || row.Prazo_Recebimento || 0),
-        prazoPagamento: Number(row.prazoPagamento || row.Prazo_Pagamento || 0)
+        mes: Number(row['Mês'] || row.mes || row.Mes || 0),
+        empresa: String(row['Empresa'] || row.empresa || row.Empresa || ''),
+        roe: Number(row['ROE %'] || row.roe || row.ROE || row.Roe || 0),
+        roa: Number(row['ROA %'] || row.roa || row.ROA || row.Roa || 0),
+        margemLiquida: Number(row['Margem Líquida %'] || row.margemLiquida || row.margemLíquida || row.Margem_Liquida || 0),
+        margemOperacional: Number(row['Margem Operacional %'] || row.margemOperacional || row.Margem_Operacional || 0),
+        liquidezCorrente: Number(row['Liquidez Corrente'] || row.liquidezCorrente || row.Liquidez_Corrente || 0),
+        liquidezSeca: Number(row['Liquidez Seca'] || row.liquidezSeca || row.Liquidez_Seca || 0),
+        endividamento: Number(row['Endividamento %'] || row.endividamento || row.Endividamento || 0),
+        alavancagem: Number(row['Alavancagem'] || row.alavancagem || row.Alavancagem || 0),
+        giroAtivo: Number(row['Giro Ativo'] || row.giroAtivo || row.Giro_Ativo || 0),
+        prazoRecebimento: Number(row['Prazo Recebimento'] || row.prazoRecebimento || row.Prazo_Recebimento || 0),
+        prazoPagamento: Number(row['Prazo Pagamento'] || row.prazoPagamento || row.Prazo_Pagamento || 0)
       }));
 
       setIndicadoresDados(convertedData);
@@ -150,13 +150,13 @@ const Sidebar: React.FC<SidebarProps> = ({ onExport, visible = true, currentPage
 
       // Converter dados para o formato correto
       const convertedData = data.map((row: any) => ({
-        mes: Number(row.mes || row.Mes || 0),
-        empresa: String(row.empresa || row.Empresa || ''),
-        categoria: String(row.categoria || row.Categoria || ''),
-        orcado: Number(row.orcado || row.Orcado || 0),
-        realizado: Number(row.realizado || row.Realizado || 0),
-        responsavel: String(row.responsavel || row.Responsavel || ''),
-        observacoes: String(row.observacoes || row.Observacoes || '')
+        mes: Number(row['Mês'] || row.mes || row.Mes || 0),
+        empresa: String(row['Empresa'] || row.empresa || row.Empresa || ''),
+        categoria: String(row['Categoria'] || row.categoria || row.Categoria || ''),
+        orcado: Number(row['Orçado'] || row.orcado || row.Orcado || 0),
+        realizado: Number(row['Realizado'] || row.realizado || row.Realizado || 0),
+        responsavel: String(row['Responsável'] || row.responsavel || row.Responsavel || ''),
+        observacoes: String(row['Observações'] || row.observacoes || row.Observacoes || '')
       }));
 
       setOrcamentoDados(convertedData);

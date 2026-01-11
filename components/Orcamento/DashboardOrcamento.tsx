@@ -33,14 +33,16 @@ const KPIOrcamentoCard: React.FC<KPIOrcamentoCardProps> = ({ titulo, valor, perc
 };
 
 const DashboardOrcamento: React.FC = () => {
-    const { dados, totalOrcado, totalRealizado, varianciaTotal, varianciaPercentual, empresas, obterDesviosPorCategoria } = useOrcamento();
+    const { dados, empresas } = useOrcamento();
     const [selectedEmpresa, setSelectedEmpresa] = useState<string>('');
     const [chartData, setChartData] = useState<any[]>([]);
     const [desviosPorCategoria, setDesviosPorCategoria] = useState<any[]>([]);
+    const [totalOrcadoFiltrado, setTotalOrcadoFiltrado] = useState(0);
+    const [totalRealizadoFiltrado, setTotalRealizadoFiltrado] = useState(0);
 
     useEffect(() => {
-        const empresa = selectedEmpresa || empresas[0];
-        const filtered = dados.filter(d => d.empresa === empresa);
+        const empresa = selectedEmpresa || (empresas.length > 0 ? empresas[0] : '');
+        const filtered = empresa ? dados.filter(d => d.empresa === empresa) : [];
 
         // Agrupar por categoria
         const agrupado = new Map();
@@ -71,13 +73,22 @@ const DashboardOrcamento: React.FC = () => {
             percentual: item.varianciaPercentual
         }));
         setDesviosPorCategoria(desvios);
+
+        // Calcular totais filtr ados
+        const totalOrcado = filtered.reduce((acc, item) => acc + item.orcado, 0);
+        const totalRealizado = filtered.reduce((acc, item) => acc + item.realizado, 0);
+        setTotalOrcadoFiltrado(totalOrcado);
+        setTotalRealizadoFiltrado(totalRealizado);
     }, [selectedEmpresa, dados, empresas]);
 
     const formatCurrency = (value: number) => {
         const validValue = isNaN(value) ? 0 : value;
         return `R$ ${(validValue / 1000).toFixed(1)}k`;
     };
-    const statusVariancia = varianciaPercentual > 5 ? 'negativo' : varianciaPercentual < -5 ? 'positivo' : 'neutro';
+
+    const varianciaFiltrадa = totalRealizadoFiltrado - totalOrcadoFiltrado;
+    const varianciaPercentualFiltrada = totalOrcadoFiltrado > 0 ? (varianciaFiltrадa / totalOrcadoFiltrado) * 100 : 0;
+    const statusVarianciaFiltrada = varianciaPercentualFiltrada > 5 ? 'negativo' : varianciaPercentualFiltrada < -5 ? 'positivo' : 'neutro';
 
     if (dados.length === 0) {
         return (
@@ -174,39 +185,39 @@ const DashboardOrcamento: React.FC = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-6">
                     <KPIOrcamentoCard
                         titulo="Total Orçado"
-                        valor={totalOrcado}
+                        valor={totalOrcadoFiltrado}
                         unidade="R$"
                         cor="text-blue-400"
                         status="neutro"
                     />
                     <KPIOrcamentoCard
                         titulo="Total Realizado"
-                        valor={totalRealizado}
+                        valor={totalRealizadoFiltrado}
                         unidade="R$"
-                        cor={totalRealizado > totalOrcado ? "text-red-400" : "text-green-400"}
-                        status={totalRealizado > totalOrcado ? "negativo" : "positivo"}
+                        cor={totalRealizadoFiltrado > totalOrcadoFiltrado ? "text-red-400" : "text-green-400"}
+                        status={totalRealizadoFiltrado > totalOrcadoFiltrado ? "negativo" : "positivo"}
                     />
                     <KPIOrcamentoCard
                         titulo="Variância Total"
-                        valor={varianciaTotal}
+                        valor={varianciaFiltrадa}
                         unidade="R$"
-                        cor={varianciaTotal > 0 ? "text-red-400" : "text-green-400"}
-                        status={varianciaTotal > 0 ? "negativo" : "positivo"}
+                        cor={varianciaFiltrадa > 0 ? "text-red-400" : "text-green-400"}
+                        status={varianciaFiltrадa > 0 ? "negativo" : "positivo"}
                     />
                     <KPIOrcamentoCard
                         titulo="Variância %"
-                        valor={Math.abs(varianciaPercentual)}
-                        percentual={varianciaPercentual}
+                        valor={Math.abs(varianciaPercentualFiltrada)}
+                        percentual={varianciaPercentualFiltrada}
                         unidade="%"
-                        cor={varianciaPercentual > 0 ? "text-red-400" : "text-green-400"}
-                        status={statusVariancia}
+                        cor={varianciaPercentualFiltrada > 0 ? "text-red-400" : "text-green-400"}
+                        status={statusVarianciaFiltrada}
                     />
                     <KPIOrcamentoCard
                         titulo="Status"
-                        valor={Math.abs(varianciaPercentual)}
+                        valor={Math.abs(varianciaPercentualFiltrada)}
                         unidade="%"
-                        cor={Math.abs(varianciaPercentual) > 5 ? "text-red-400" : "text-green-400"}
-                        status={statusVariancia}
+                        cor={Math.abs(varianciaPercentualFiltrada) > 5 ? "text-red-400" : "text-green-400"}
+                        status={statusVarianciaFiltrada}
                     />
                 </div>
 
