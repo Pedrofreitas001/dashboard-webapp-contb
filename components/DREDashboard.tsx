@@ -22,7 +22,7 @@ const DREDashboard: React.FC = () => {
           <div className="flex flex-col items-center justify-center min-h-[60vh]">
             <h2 className={`text-2xl font-bold mb-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>Nenhum dado carregado</h2>
             <p className={`mb-8 ${isDark ? 'text-text-muted' : 'text-gray-600'}`}>
-              Carregue um arquivo Excel com as 4 abas DRE na barra lateral
+              Baixe o arquivo Excel modelo e carregue na barra lateral para visualização
             </p>
 
             {/* Formato Esperado */}

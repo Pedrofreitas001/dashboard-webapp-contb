@@ -20,7 +20,7 @@ const Dashboard: React.FC = () => {
           <div className="flex flex-col items-center justify-center min-h-[60vh]">
             <h2 className="text-white text-2xl font-bold mb-2">Nenhum dado carregado</h2>
             <p className="text-text-muted mb-8">
-              Carregue um arquivo Excel na barra lateral para visualizar o dashboard financeiro
+              Baixe o arquivo Excel modelo e carregue na barra lateral para visualização
             </p>
 
             {/* Formato Esperado */}

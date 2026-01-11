@@ -17,7 +17,7 @@ const DashboardDespesas: React.FC = () => {
                 <div className="max-w-[900px] mx-auto">
                     <div className="flex flex-col items-center justify-center py-8">
                         <h2 className="text-white text-2xl font-bold mb-2">Nenhum dado carregado</h2>
-                        <p className="text-text-muted mb-6">Use o uploader na barra lateral para carregar dados de despesas</p>
+                        <p className="text-text-muted mb-6">Baixe o arquivo Excel modelo e carregue na barra lateral para visualização</p>
 
                         {/* Formato Esperado */}
                         <div className="bg-surface-dark rounded-xl border border-border-dark p-6 w-full">

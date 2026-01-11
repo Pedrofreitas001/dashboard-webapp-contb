@@ -64,7 +64,7 @@ const DashboardIndicadores: React.FC = () => {
                 <div className="max-w-[1400px] mx-auto">
                     <div className="flex flex-col items-center justify-center min-h-[60vh]">
                         <h2 className="text-white text-2xl font-bold mb-4">Nenhum dado carregado</h2>
-                        <p className="text-text-muted mb-8">Use o uploader na barra lateral para carregar dados de indicadores</p>
+                        <p className="text-text-muted mb-8">Baixe o arquivo Excel modelo e carregue na barra lateral para visualização</p>
 
                         {/* Formato Esperado */}
                         <div className="bg-surface-dark rounded-xl border border-border-dark p-6 w-full max-w-2xl">
