@@ -80,7 +80,7 @@ const EvolucaoDespesasMensal: React.FC = () => {
 
             <div className="h-[350px]">
                 <ResponsiveContainer width="100%" height="100%">
-                    <LineChart data={agregadoDespesasMensal} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
+                    <LineChart data={agregadoDespesasMensal} margin={{ top: 20, right: 30, left: 70, bottom: 20 }}>
                         <CartesianGrid strokeDasharray="3 3" stroke={isDark ? '#1f2937' : '#e5e7eb'} />
                         <XAxis
                             dataKey="month"
@@ -92,7 +92,7 @@ const EvolucaoDespesasMensal: React.FC = () => {
                         <YAxis
                             tick={{ fill: isDark ? '#9ca3af' : '#6b7280', fontSize: 12 }}
                             tickFormatter={(value) => `R$ ${(value / 1000000).toFixed(1)}M`}
-                            width={60}
+                            width={75}
                         />
                         <Tooltip content={<CustomTooltip />} />
                         <Line
