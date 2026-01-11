@@ -123,13 +123,9 @@ const DashboardIndicadores: React.FC = () => {
                             <p className="text-xs text-text-muted">Arquivo: <span className="text-primary font-mono">Indicadores_Exemplo.xlsx</span></p>
                         </div>
 
-                        {/* Botões Google Sheets */}
-                        <div className="mt-6 flex flex-col sm:flex-row gap-3 w-full">
-                            <a href="https://docs.google.com/spreadsheets/d/127Nqx8umUkgpoT1UxIoZlXpfr-KUYP6dJcz5uTfOSok/edit?usp=sharing" target="_blank" rel="noopener noreferrer" className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm font-semibold transition-colors">
-                                <span className="material-symbols-outlined text-base">open_in_new</span>
-                                Visualizar Modelo
-                            </a>
-                            <a href="https://docs.google.com/spreadsheets/d/127Nqx8umUkgpoT1UxIoZlXpfr-KUYP6dJcz5uTfOSok/edit?usp=sharing" target="_blank" rel="noopener noreferrer" className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm font-semibold transition-colors">
+                        {/* Botão Download */}
+                        <div className="mt-6">
+                            <a href="https://docs.google.com/spreadsheets/d/127Nqx8umUkgpoT1UxIoZlXpfr-KUYP6dJcz5uTfOSok/export?format=xlsx" download className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm font-semibold transition-colors w-full">
                                 <span className="material-symbols-outlined text-base">download</span>
                                 Baixar Arquivo
                             </a>

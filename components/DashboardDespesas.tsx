@@ -25,28 +25,6 @@ const DashboardDespesas: React.FC = () => {
                                 <span className="material-symbols-outlined text-primary">table_chart</span>
                                 Formato Esperado: Analise_despesas_Exemplo.xlsx
                             </h3>
-                            <div className="bg-background-dark rounded-lg p-4 mb-4">
-                                <p className="text-xs text-text-muted mb-3 font-semibold">📊 Estrutura: 4 Abas de Análise de Resultados</p>
-                                <div className="space-y-2 mb-4">
-                                    <div className="flex items-start gap-2 text-xs">
-                                        <span className="text-primary font-bold min-w-[100px]">Aba 1:</span>
-                                        <span className="text-gray-300">Regime de Caixa - Período Atual com Projetado vs Real e Análise Vertical</span>
-                                    </div>
-                                    <div className="flex items-start gap-2 text-xs">
-                                        <span className="text-primary font-bold min-w-[100px]">Aba 2:</span>
-                                        <span className="text-gray-300">Regime de Competência - Período Atual com Projetado vs Real e Análise Vertical</span>
-                                    </div>
-                                    <div className="flex items-start gap-2 text-xs">
-                                        <span className="text-primary font-bold min-w-[100px]">Aba 3:</span>
-                                        <span className="text-gray-300">Regime de Caixa Enxuto - 12 Meses + Total do Exercício</span>
-                                    </div>
-                                    <div className="flex items-start gap-2 text-xs">
-                                        <span className="text-primary font-bold min-w-[100px]">Aba 4:</span>
-                                        <span className="text-gray-300">Regime de Competência Enxuto - 12 Meses + Total do Exercício</span>
-                                    </div>
-                                </div>
-                                <p className="text-xs text-text-muted border-t border-border-dark pt-3">💡 Use as abas enxutas para série histórica completa. As abas detalhadas mostram período atual com análise variacional.</p>
-                            </div>
                             <div className="bg-background-dark rounded-lg p-4 mb-4 overflow-x-auto max-h-[200px] overflow-y-auto">
                                 <p className="text-xs text-text-muted mb-2 font-semibold">Colunas Esperadas por Aba</p>
                                 <table className="text-xs w-full">
@@ -98,17 +76,11 @@ const DashboardDespesas: React.FC = () => {
                             </div>
                             <p className="text-xs text-text-muted mb-4">Arquivo: <span className="text-primary font-mono">Analise_despesas_Exemplo.xlsx</span></p>
 
-                            {/* Botões Google Sheets */}
-                            <div className="flex flex-col sm:flex-row gap-3 w-full">
-                                <a href="https://docs.google.com/spreadsheets/d/10mrkv9tlvAXRoooNEu5NSMG5sai7gcOXFpIEh9VyR1M/edit?usp=sharing" target="_blank" rel="noopener noreferrer" className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm font-semibold transition-colors">
-                                    <span className="material-symbols-outlined text-base">open_in_new</span>
-                                    Visualizar Modelo
-                                </a>
-                                <a href="https://docs.google.com/spreadsheets/d/10mrkv9tlvAXRoooNEu5NSMG5sai7gcOXFpIEh9VyR1M/edit?usp=sharing" target="_blank" rel="noopener noreferrer" className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm font-semibold transition-colors">
-                                    <span className="material-symbols-outlined text-base">download</span>
-                                    Baixar Arquivo
-                                </a>
-                            </div>
+                            {/* Botão Download */}
+                            <a href="https://docs.google.com/spreadsheets/d/10mrkv9tlvAXRoooNEu5NSMG5sai7gcOXFpIEh9VyR1M/export?format=xlsx" download className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm font-semibold transition-colors w-full">
+                                <span className="material-symbols-outlined text-base">download</span>
+                                Baixar Arquivo
+                            </a>
                         </div>
                     </div>
                 </div>
