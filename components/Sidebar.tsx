@@ -42,7 +42,6 @@ const Sidebar: React.FC<SidebarProps> = ({ onExport, visible = true, currentPage
     reader.readAsBinaryString(file);
   };
 
-<<<<<<< HEAD
   const handleFileUploadDespesas = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -74,7 +73,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onExport, visible = true, currentPage
       } else {
         setFiltroMeses([...current, month]);
       }
-    } else {
+    } else if (currentPage === 'despesas') {
       const current = filtrosDespesas.meses;
       if (current.includes(month)) {
         setFiltroDespesasMeses(current.filter(m => m !== month));
@@ -104,8 +103,8 @@ const Sidebar: React.FC<SidebarProps> = ({ onExport, visible = true, currentPage
           <button
             onClick={() => onNavigate?.('dashboard')}
             className={`flex items-center gap-3 rounded-xl border p-3 transition-all ${currentPage === 'dashboard'
-              ? 'bg-surface-dark border-primary text-white'
-              : 'bg-transparent border-border-dark text-text-muted hover:border-primary/50'
+                ? 'bg-surface-dark border-primary text-white'
+                : 'bg-transparent border-border-dark text-text-muted hover:border-primary/50'
               }`}
           >
             <span className={`material-symbols-outlined ${currentPage === 'dashboard' ? 'text-primary' : ''}`}>
@@ -116,8 +115,8 @@ const Sidebar: React.FC<SidebarProps> = ({ onExport, visible = true, currentPage
           <button
             onClick={() => onNavigate?.('despesas')}
             className={`flex items-center gap-3 rounded-xl border p-3 transition-all ${currentPage === 'despesas'
-              ? 'bg-surface-dark border-primary text-white'
-              : 'bg-transparent border-border-dark text-text-muted hover:border-primary/50'
+                ? 'bg-surface-dark border-primary text-white'
+                : 'bg-transparent border-border-dark text-text-muted hover:border-primary/50'
               }`}
           >
             <span className={`material-symbols-outlined ${currentPage === 'despesas' ? 'text-primary' : ''}`}>
@@ -128,15 +127,14 @@ const Sidebar: React.FC<SidebarProps> = ({ onExport, visible = true, currentPage
           <button
             onClick={() => onNavigate?.('dre')}
             className={`flex items-center gap-3 rounded-xl border p-3 transition-all ${currentPage === 'dre'
-              ? 'bg-surface-dark border-primary text-white'
-              : 'bg-transparent border-border-dark text-text-muted hover:border-primary/50'
+                ? 'bg-surface-dark border-primary text-white'
+                : 'bg-transparent border-border-dark text-text-muted hover:border-primary/50'
               }`}
           >
             <span className={`material-symbols-outlined ${currentPage === 'dre' ? 'text-primary' : ''}`}>
               table_chart
             </span>
             <p className="text-sm font-medium">Tabelas DRE</p>
->>>>>>> origin/main
           </button>
         </nav>
 

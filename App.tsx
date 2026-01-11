@@ -24,12 +24,6 @@ const AppContent: React.FC = () => {
   const [sidebarVisible, setSidebarVisible] = useState(true);
   const [currentPage, setCurrentPage] = useState<PageType>('dashboard');
   const isDark = theme === 'dark';
-<<<<<<< HEAD
-  const [currentPage, setCurrentPage] = useState<'dashboard' | 'despesas'>('dashboard');
-=======
-  const [currentPage, setCurrentPage] = useState<PageType>('dashboard');
->>>>>>> origin/main
-  const isDark = theme === 'dark';
 
   const handleExportPDF = async () => {
     setIsExporting(true);
@@ -159,17 +153,13 @@ const App: React.FC = () => {
   return (
     <ThemeProvider>
       <FinanceProvider>
-<<<<<<< HEAD
-  <DespesasProvider>
-    <AppContent />
-  </DespesasProvider>
-=======
-        <DREProvider>
-          <AppContent />
-        </DREProvider>
->>>>>>> origin/main
-      </FinanceProvider >
-    </ThemeProvider >
+        <DespesasProvider>
+          <DREProvider>
+            <AppContent />
+          </DREProvider>
+        </DespesasProvider>
+      </FinanceProvider>
+    </ThemeProvider>
   );
 };
 

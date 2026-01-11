@@ -181,4 +181,50 @@ const TabelaPlanoConta: React.FC = () => {
                             );
                         })}
                     </tbody>
-                    <
+                    <tfoot>
+                        <tr className="border-t-2 border-primary bg-background-dark">
+                            <td className="py-4 px-4 sticky left-0 bg-background-dark">
+                                <span className="text-white font-bold">TOTAL GERAL</span>
+                            </td>
+                            {tabelaData.meses.map(mes => (
+                                <td key={mes} className="text-right py-4 px-3 whitespace-nowrap">
+                                    <span className="text-primary font-bold">
+                                        {formatCurrency(
+                                            tabelaComAcumulado.reduce((acc, cat) => acc + (cat.meses[mes] || 0), 0)
+                                        )}
+                                    </span>
+                                </td>
+                            ))}
+                            <td className="text-right py-4 px-4 bg-primary/10 whitespace-nowrap">
+                                <span className="text-primary font-bold">
+                                    {formatCurrency(
+                                        tabelaComAcumulado.reduce((acc, cat) => acc + cat.total, 0)
+                                    )}
+                                </span>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            {/* Legenda */}
+            <div className="mt-6 pt-4 border-t border-border-dark">
+                <p className="text-text-muted text-xs mb-3">💡 Clique em uma categoria para ver o acumulado</p>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs">
+                    {tabelaComAcumulado.slice(0, 4).map(cat => (
+                        <div key={cat.categoria} className="flex items-center gap-2">
+                            <div
+                                className="w-2 h-2 rounded-full"
+                                style={{ backgroundColor: agregadoDespesasCategoria.find(c => c.name === cat.categoria)?.color }}
+                            ></div>
+                            <span className="text-text-muted truncate">{cat.categoria}</span>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default TabelaPlanoConta;
+
