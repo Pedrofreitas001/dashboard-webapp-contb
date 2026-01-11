@@ -294,7 +294,7 @@ dashboard-webapp-contb/
 
 ### Backup Recomendado
 ```
-✅ dro_empresas_ficticias.xlsx (existente)
+✅ Dashboard_Financeiro_Exemplo.xlsx (existente)
 ✅ Todos os arquivos novos
 ✅ App.tsx (modificado)
 ✅ Sidebar.tsx (modificado)

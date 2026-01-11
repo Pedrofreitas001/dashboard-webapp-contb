@@ -12,7 +12,7 @@
 
 #### Dashboard Financeiro
 - [ ] Campo de upload muda para "Carregar Excel Financeiro"
-- [ ] Upload do `dro_empresas_ficticias.xlsx` funciona
+- [ ] Upload do `Dashboard_Financeiro_Exemplo.xlsx` funciona
 - [ ] Filtros de empresa aparecem corretamente
 - [ ] Filtros de período aparecem corretamente
 
