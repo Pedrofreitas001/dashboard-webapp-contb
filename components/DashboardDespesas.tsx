@@ -26,25 +26,26 @@ const DashboardDespesas: React.FC = () => {
                                 Formato Esperado: analise_despesas_exemplo.xlsx
                             </h3>
                             <div className="bg-background-dark rounded-lg p-4 mb-4">
-                                <p className="text-xs text-text-muted mb-3 font-semibold">Estrutura: 4 Abas de Análise de Resultados</p>
-                                <div className="space-y-2">
+                                <p className="text-xs text-text-muted mb-3 font-semibold">📊 Estrutura: 4 Abas de Análise de Resultados</p>
+                                <div className="space-y-2 mb-4">
                                     <div className="flex items-start gap-2 text-xs">
                                         <span className="text-primary font-bold min-w-[120px]">Aba 1:</span>
-                                        <span className="text-gray-300">Regime de Caixa (Período Atual + Análise)</span>
+                                        <span className="text-gray-300">Regime de Caixa - Período Atual com Projetado vs Real e Análise Vertical</span>
                                     </div>
                                     <div className="flex items-start gap-2 text-xs">
                                         <span className="text-primary font-bold min-w-[120px]">Aba 2:</span>
-                                        <span className="text-gray-300">Regime de Competência (Período Atual + Análise)</span>
+                                        <span className="text-gray-300">Regime de Competência - Período Atual com Projetado vs Real e Análise Vertical</span>
                                     </div>
                                     <div className="flex items-start gap-2 text-xs">
                                         <span className="text-primary font-bold min-w-[120px]">Aba 3:</span>
-                                        <span className="text-gray-300">Regime de Caixa Enxuto (12 Meses + Total + Análise)</span>
+                                        <span className="text-gray-300">Regime de Caixa Enxuto - 12 Meses + Total do Exercício com Análise Vertical</span>
                                     </div>
                                     <div className="flex items-start gap-2 text-xs">
                                         <span className="text-primary font-bold min-w-[120px]">Aba 4:</span>
-                                        <span className="text-gray-300">Regime de Competência Enxuto (12 Meses + Total + Análise)</span>
+                                        <span className="text-gray-300">Regime de Competência Enxuto - 12 Meses + Total do Exercício com Análise Vertical</span>
                                     </div>
                                 </div>
+                                <p className="text-xs text-text-muted border-t border-border-dark pt-3">💡 Dica: Use as abas enxutas para visualizar série histórica completa. As abas detalhadas mostram período atual com análise variacional.</p>
                             </div>
                             <div className="bg-background-dark rounded-lg p-4 mb-4 overflow-x-auto">
                                 <p className="text-xs text-text-muted mb-3 font-semibold">Colunas Esperadas por Aba</p>

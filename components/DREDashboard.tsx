@@ -31,15 +31,6 @@ const DREDashboard: React.FC = () => {
                 <span className={`material-symbols-outlined ${isDark ? 'text-primary' : 'text-primary'}`}>table_chart</span>
                 Formato Esperado: Dashboard_Financeiro_Exemplo.xlsx
               </h3>
-              <div className={`rounded-lg p-4 mb-4 ${isDark ? 'bg-background-dark' : 'bg-gray-50'}`}>
-                <p className={`text-xs font-semibold mb-3 ${isDark ? 'text-text-muted' : 'text-gray-600'}`}>Estrutura: 1 Aba com Dados Completos de DRE</p>
-                <div className="space-y-2">
-                  <div className={`flex items-start gap-2 text-xs ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
-                    <span className={`${isDark ? 'text-primary' : 'text-primary'} font-bold min-w-[80px]`}>Aba Única:</span>
-                    <span>DRO 2025 (Empresa × Ano × Mês × Categoria × Valor)</span>
-                  </div>
-                </div>
-              </div>
               <div className={`rounded-lg p-4 mb-4 overflow-x-auto ${isDark ? 'bg-background-dark' : 'bg-gray-50'}`}>
                 <p className={`text-xs font-semibold mb-3 ${isDark ? 'text-text-muted' : 'text-gray-600'}`}>Colunas Esperadas</p>
                 <table className={`text-xs w-full ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
