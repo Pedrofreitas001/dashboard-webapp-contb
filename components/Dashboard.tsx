@@ -15,10 +15,10 @@ const Dashboard: React.FC = () => {
   // Se não houver dados, mostrar disclaimer
   if (dados.length === 0) {
     return (
-      <main className="flex-1 overflow-y-auto p-4 md:p-8 custom-scrollbar bg-background-dark">
+      <main className="flex-1 overflow-y-auto p-4 md:p-8 custom-scrollbar bg-background-dark min-h-screen">
         <div className="max-w-[1400px] mx-auto">
           <div className="flex flex-col items-center justify-center min-h-[60vh]">
-            <h2 className="text-white text-2xl font-bold mb-2">Nenhum dado carregado</h2>
+            <h2 className="text-white text-2xl font-bold mb-4">Nenhum dado carregado</h2>
             <p className="text-text-muted mb-8">
               Baixe o arquivo Excel modelo e carregue na barra lateral para visualização
             </p>
@@ -30,7 +30,6 @@ const Dashboard: React.FC = () => {
                 Formato Esperado: Dashboard_Financeiro_Exemplo.xlsx
               </h3>
               <div className="bg-background-dark rounded-lg p-4 mb-4 overflow-x-auto">
-                <p className="text-xs text-text-muted mb-3 font-semibold">Arquivo com 4 Abas de Análise Financeira</p>
                 <table className="text-xs w-full">
                   <thead>
                     <tr className="text-text-muted border-b border-border-dark">
@@ -68,15 +67,13 @@ const Dashboard: React.FC = () => {
                   </tbody>
                 </table>
               </div>
-              <p className="text-xs text-text-muted">Faça upload na barra lateral para visualizar gráficos e relatórios</p>
+              <p className="text-xs text-text-muted mb-4">Arquivo: <span className="text-primary font-mono">Dashboard_Financeiro_Exemplo.xlsx</span></p>
 
               {/* Botão Download */}
-              <div className="mt-6">
-                <a href="https://docs.google.com/spreadsheets/d/1QSr5027uyoLnYE-u9zzSIvJA01kTv9ciC9Ae1O5HywQ/export?format=xlsx" download className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm font-semibold transition-colors w-full">
-                  <span className="material-symbols-outlined text-base">download</span>
-                  Baixar Arquivo
-                </a>
-              </div>
+              <a href="https://docs.google.com/spreadsheets/d/1QSr5027uyoLnYE-u9zzSIvJA01kTv9ciC9Ae1O5HywQ/export?format=xlsx" download className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm font-semibold transition-colors w-full">
+                <span className="material-symbols-outlined text-base">download</span>
+                Baixar Arquivo
+              </a>
             </div>
           </div>
         </div>

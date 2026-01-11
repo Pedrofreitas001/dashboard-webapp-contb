@@ -13,63 +13,62 @@ const DashboardDespesas: React.FC = () => {
     // Se não houver dados, mostrar mensagem
     if (dadosDespesas.length === 0) {
         return (
-            <main className="flex-1 overflow-y-auto p-4 md:p-8 custom-scrollbar bg-background-dark">
-                <div className="max-w-[900px] mx-auto">
-                    <div className="flex flex-col items-center justify-center py-8">
-                        <h2 className="text-white text-2xl font-bold mb-2">Nenhum dado carregado</h2>
-                        <p className="text-text-muted mb-6">Baixe o arquivo Excel modelo e carregue na barra lateral para visualização</p>
+            <main className="flex-1 overflow-y-auto p-4 md:p-8 custom-scrollbar bg-background-dark min-h-screen">
+                <div className="max-w-[1400px] mx-auto">
+                    <div className="flex flex-col items-center justify-center min-h-[60vh]">
+                        <h2 className="text-white text-2xl font-bold mb-4">Nenhum dado carregado</h2>
+                        <p className="text-text-muted mb-8">Baixe o arquivo Excel modelo e carregue na barra lateral para visualização</p>
 
                         {/* Formato Esperado */}
-                        <div className="bg-surface-dark rounded-xl border border-border-dark p-6 w-full">
+                        <div className="bg-surface-dark rounded-xl border border-border-dark p-6 w-full max-w-2xl">
                             <h3 className="text-white font-bold mb-4 flex items-center gap-2">
-                                <span className="material-symbols-outlined text-primary">table_chart</span>
+                                <span className="material-symbols-outlined text-primary">description</span>
                                 Formato Esperado: Analise_despesas_Exemplo.xlsx
                             </h3>
                             <div className="bg-background-dark rounded-lg p-4 mb-4 overflow-x-auto">
-                                <p className="text-xs text-text-muted mb-2 font-semibold">Colunas Esperadas por Aba</p>
                                 <table className="text-xs w-full">
                                     <thead>
                                         <tr className="text-text-muted border-b border-border-dark">
-                                            <th className="text-left py-1 px-1">Coluna</th>
-                                            <th className="text-left py-1 px-1">Formato</th>
-                                            <th className="text-left py-1 px-1">Exemplo</th>
+                                            <th className="text-left py-2">Coluna</th>
+                                            <th className="text-left py-2">Tipo</th>
+                                            <th className="text-left py-2">Exemplo</th>
                                         </tr>
                                     </thead>
                                     <tbody className="text-gray-300">
                                         <tr className="border-b border-border-dark/50">
-                                            <td className="py-1 px-1 font-mono text-primary">Ano (A1)</td>
-                                            <td className="py-1 px-1">número</td>
-                                            <td className="py-1 px-1">2025</td>
+                                            <td className="py-2 font-mono text-primary">Ano</td>
+                                            <td>número</td>
+                                            <td>2025</td>
                                         </tr>
                                         <tr className="border-b border-border-dark/50">
-                                            <td className="py-1 px-1 font-mono text-primary">Mês/Meses</td>
-                                            <td className="py-1 px-1">texto</td>
-                                            <td className="py-1 px-1">NOVEMBRO, JAN, FEV...</td>
+                                            <td className="py-2 font-mono text-primary">Mês/Meses</td>
+                                            <td>texto</td>
+                                            <td>NOVEMBRO, JAN, FEV...</td>
                                         </tr>
                                         <tr className="border-b border-border-dark/50">
-                                            <td className="py-1 px-1 font-mono text-primary">Empresa</td>
-                                            <td className="py-1 px-1">texto</td>
-                                            <td className="py-1 px-1">Empresa 1, Empresa 2</td>
+                                            <td className="py-2 font-mono text-primary">Empresa</td>
+                                            <td>texto</td>
+                                            <td>Empresa 1, Empresa 2</td>
                                         </tr>
                                         <tr className="border-b border-border-dark/50">
-                                            <td className="py-1 px-1 font-mono text-primary">Projetado</td>
-                                            <td className="py-1 px-1">número (R$)</td>
-                                            <td className="py-1 px-1">3.500.000</td>
+                                            <td className="py-2 font-mono text-primary">Projetado</td>
+                                            <td>número (R$)</td>
+                                            <td>3.500.000</td>
                                         </tr>
                                         <tr className="border-b border-border-dark/50">
-                                            <td className="py-1 px-1 font-mono text-primary">Real</td>
-                                            <td className="py-1 px-1">número (R$)</td>
-                                            <td className="py-1 px-1">2.322.419</td>
+                                            <td className="py-2 font-mono text-primary">Real</td>
+                                            <td>número (R$)</td>
+                                            <td>2.322.419</td>
                                         </tr>
                                         <tr className="border-b border-border-dark/50">
-                                            <td className="py-1 px-1 font-mono text-primary">Variação</td>
-                                            <td className="py-1 px-1">percentual</td>
-                                            <td className="py-1 px-1">-33,65%</td>
+                                            <td className="py-2 font-mono text-primary">Variação</td>
+                                            <td>percentual</td>
+                                            <td>-33,65%</td>
                                         </tr>
                                         <tr>
-                                            <td className="py-1 px-1 font-mono text-primary">Análise Vertical</td>
-                                            <td className="py-1 px-1">percentual</td>
-                                            <td className="py-1 px-1">46,55%</td>
+                                            <td className="py-2 font-mono text-primary">Análise Vertical</td>
+                                            <td>percentual</td>
+                                            <td>46,55%</td>
                                         </tr>
                                     </tbody>
                                 </table>
