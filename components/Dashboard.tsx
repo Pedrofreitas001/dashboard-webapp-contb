@@ -27,9 +27,10 @@ const Dashboard: React.FC = () => {
             <div className="bg-surface-dark rounded-xl border border-border-dark p-6 w-full max-w-2xl">
               <h3 className="text-white font-bold mb-4 flex items-center gap-2">
                 <span className="material-symbols-outlined text-primary">description</span>
-                Formato Esperado: Excel Financeiro
+                Formato Esperado: Dashboard_Financeiro_Exemplo.xlsx
               </h3>
               <div className="bg-background-dark rounded-lg p-4 mb-4 overflow-x-auto">
+                <p className="text-xs text-text-muted mb-3 font-semibold">Arquivo com 4 Abas de Análise Financeira</p>
                 <table className="text-xs w-full">
                   <thead>
                     <tr className="text-text-muted border-b border-border-dark">
@@ -40,29 +41,29 @@ const Dashboard: React.FC = () => {
                   </thead>
                   <tbody className="text-gray-300">
                     <tr className="border-b border-border-dark/50">
+                      <td className="py-2 font-mono text-primary">Empresa</td>
+                      <td>texto</td>
+                      <td>Alpha, Beta, Gamma...</td>
+                    </tr>
+                    <tr className="border-b border-border-dark/50">
                       <td className="py-2 font-mono text-primary">Ano</td>
                       <td>número</td>
                       <td>2024, 2025...</td>
                     </tr>
                     <tr className="border-b border-border-dark/50">
-                      <td className="py-2 font-mono text-primary">Mes</td>
+                      <td className="py-2 font-mono text-primary">Mês</td>
                       <td>texto</td>
-                      <td>Janeiro, Fevereiro...</td>
+                      <td>Janeiro, Fevereiro, Março...</td>
                     </tr>
                     <tr className="border-b border-border-dark/50">
                       <td className="py-2 font-mono text-primary">Categoria</td>
                       <td>texto</td>
-                      <td>Faturamento, Custo Variável...</td>
-                    </tr>
-                    <tr className="border-b border-border-dark/50">
-                      <td className="py-2 font-mono text-primary">Empresa</td>
-                      <td>texto</td>
-                      <td>Alpha, Beta, Gamma...</td>
+                      <td>Faturamento, Custo, Margem, Lucro...</td>
                     </tr>
                     <tr>
                       <td className="py-2 font-mono text-primary">Valor</td>
-                      <td>número (R$)</td>
-                      <td>50000, 120000...</td>
+                      <td>moeda (R$)</td>
+                      <td>50000, 120000, 250000...</td>
                     </tr>
                   </tbody>
                 </table>

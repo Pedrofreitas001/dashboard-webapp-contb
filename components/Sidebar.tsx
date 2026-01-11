@@ -261,6 +261,47 @@ const Sidebar: React.FC<SidebarProps> = ({ onExport, visible = true, currentPage
           </button>
         </nav>
 
+        {/* Upload sections - positioned above Aparência */}
+        {currentPage === 'dashboard' && (
+          <div className="relative border border-dashed border-border-dark rounded-xl p-6 flex flex-col items-center justify-center bg-surface-dark/50 hover:bg-surface-dark transition-colors cursor-pointer group">
+            <input type="file" onChange={handleFileUpload} className="absolute inset-0 opacity-0 cursor-pointer" accept=".xlsx,.xls" />
+            <span className="material-symbols-outlined text-border-dark group-hover:text-primary mb-2">cloud_upload</span>
+            <p className="text-xs text-center text-text-muted group-hover:text-white transition-colors">Carregar Excel Financeiro</p>
+          </div>
+        )}
+
+        {currentPage === 'despesas' && (
+          <div className="relative border border-dashed border-border-dark rounded-xl p-6 flex flex-col items-center justify-center bg-surface-dark/50 hover:bg-surface-dark transition-colors cursor-pointer group">
+            <input type="file" onChange={handleFileUploadDespesas} className="absolute inset-0 opacity-0 cursor-pointer" accept=".xlsx,.xls" />
+            <span className="material-symbols-outlined text-border-dark group-hover:text-primary mb-2">cloud_upload</span>
+            <p className="text-xs text-center text-text-muted group-hover:text-white transition-colors">Carregar Excel de Despesas</p>
+          </div>
+        )}
+
+        {currentPage === 'dre' && (
+          <div className="relative border border-dashed border-border-dark rounded-xl p-6 flex flex-col items-center justify-center bg-surface-dark/50 hover:bg-surface-dark transition-colors cursor-pointer group">
+            <input type="file" onChange={handleDREUpload} className="absolute inset-0 opacity-0 cursor-pointer" accept=".xlsx,.xls" />
+            <span className="material-symbols-outlined text-border-dark group-hover:text-primary mb-2">table_chart</span>
+            <p className="text-xs text-center text-text-muted group-hover:text-white transition-colors leading-tight">Carregar Excel DRE<br />(4 abas completas)</p>
+          </div>
+        )}
+
+        {currentPage === 'indicadores' && (
+          <div className="relative border border-dashed border-border-dark rounded-xl p-6 flex flex-col items-center justify-center bg-surface-dark/50 hover:bg-surface-dark transition-colors cursor-pointer group">
+            <input type="file" onChange={handleIndicadoresUpload} className="absolute inset-0 opacity-0 cursor-pointer" accept=".xlsx,.xls" />
+            <span className="material-symbols-outlined text-border-dark group-hover:text-primary mb-2">cloud_upload</span>
+            <p className="text-xs text-center text-text-muted group-hover:text-white transition-colors">Carregar Excel Indicadores</p>
+          </div>
+        )}
+
+        {currentPage === 'orcamento' && (
+          <div className="relative border border-dashed border-border-dark rounded-xl p-6 flex flex-col items-center justify-center bg-surface-dark/50 hover:bg-surface-dark transition-colors cursor-pointer group">
+            <input type="file" onChange={handleOrcamentoUpload} className="absolute inset-0 opacity-0 cursor-pointer" accept=".xlsx,.xls" />
+            <span className="material-symbols-outlined text-border-dark group-hover:text-primary mb-2">cloud_upload</span>
+            <p className="text-xs text-center text-text-muted group-hover:text-white transition-colors">Carregar Excel Orçamento</p>
+          </div>
+        )}
+
         <div className="flex flex-col gap-2">
           <p className="px-2 text-xs font-bold text-text-muted uppercase">Aparência</p>
           <button
@@ -313,46 +354,6 @@ const Sidebar: React.FC<SidebarProps> = ({ onExport, visible = true, currentPage
             </div>
           </div>
         </div>
-
-        {currentPage === 'dashboard' && (
-          <div className="relative border border-dashed border-border-dark rounded-xl p-6 flex flex-col items-center justify-center bg-surface-dark/50 hover:bg-surface-dark transition-colors cursor-pointer group">
-            <input type="file" onChange={handleFileUpload} className="absolute inset-0 opacity-0 cursor-pointer" accept=".xlsx,.xls" />
-            <span className="material-symbols-outlined text-border-dark group-hover:text-primary mb-2">cloud_upload</span>
-            <p className="text-xs text-center text-text-muted group-hover:text-white transition-colors">Carregar Excel Financeiro</p>
-          </div>
-        )}
-
-        {currentPage === 'despesas' && (
-          <div className="relative border border-dashed border-border-dark rounded-xl p-6 flex flex-col items-center justify-center bg-surface-dark/50 hover:bg-surface-dark transition-colors cursor-pointer group">
-            <input type="file" onChange={handleFileUploadDespesas} className="absolute inset-0 opacity-0 cursor-pointer" accept=".xlsx,.xls" />
-            <span className="material-symbols-outlined text-border-dark group-hover:text-primary mb-2">cloud_upload</span>
-            <p className="text-xs text-center text-text-muted group-hover:text-white transition-colors">Carregar Excel de Despesas</p>
-          </div>
-        )}
-
-        {currentPage === 'dre' && (
-          <div className="relative border border-dashed border-border-dark rounded-xl p-6 flex flex-col items-center justify-center bg-surface-dark/50 hover:bg-surface-dark transition-colors cursor-pointer group">
-            <input type="file" onChange={handleDREUpload} className="absolute inset-0 opacity-0 cursor-pointer" accept=".xlsx,.xls" />
-            <span className="material-symbols-outlined text-border-dark group-hover:text-primary mb-2">table_chart</span>
-            <p className="text-xs text-center text-text-muted group-hover:text-white transition-colors leading-tight">Carregar Excel DRE<br />(4 abas completas)</p>
-          </div>
-        )}
-
-        {currentPage === 'indicadores' && (
-          <div className="relative border border-dashed border-border-dark rounded-xl p-6 flex flex-col items-center justify-center bg-surface-dark/50 hover:bg-surface-dark transition-colors cursor-pointer group">
-            <input type="file" onChange={handleIndicadoresUpload} className="absolute inset-0 opacity-0 cursor-pointer" accept=".xlsx,.xls" />
-            <span className="material-symbols-outlined text-border-dark group-hover:text-primary mb-2">cloud_upload</span>
-            <p className="text-xs text-center text-text-muted group-hover:text-white transition-colors">Carregar Excel Indicadores</p>
-          </div>
-        )}
-
-        {currentPage === 'orcamento' && (
-          <div className="relative border border-dashed border-border-dark rounded-xl p-6 flex flex-col items-center justify-center bg-surface-dark/50 hover:bg-surface-dark transition-colors cursor-pointer group">
-            <input type="file" onChange={handleOrcamentoUpload} className="absolute inset-0 opacity-0 cursor-pointer" accept=".xlsx,.xls" />
-            <span className="material-symbols-outlined text-border-dark group-hover:text-primary mb-2">cloud_upload</span>
-            <p className="text-xs text-center text-text-muted group-hover:text-white transition-colors">Carregar Excel Orçamento</p>
-          </div>
-        )}
       </div>
 
       <div className="p-4 border-t border-border-dark">

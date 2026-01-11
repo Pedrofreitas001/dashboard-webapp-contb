@@ -28,43 +28,58 @@ const DREDashboard: React.FC = () => {
             {/* Formato Esperado */}
             <div className={`rounded-xl border p-6 w-full max-w-2xl ${isDark ? 'bg-surface-dark border-border-dark' : 'bg-white border-gray-200'}`}>
               <h3 className={`font-bold mb-4 flex items-center gap-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>
-                <span className={`material-symbols-outlined ${isDark ? 'text-primary' : 'text-primary'}`}>description</span>
-                Formato Esperado: DRE com 4 Abas
+                <span className={`material-symbols-outlined ${isDark ? 'text-primary' : 'text-primary'}`}>table_chart</span>
+                Formato Esperado: Dashboard_Financeiro_Exemplo.xlsx
               </h3>
+              <div className={`rounded-lg p-4 mb-4 ${isDark ? 'bg-background-dark' : 'bg-gray-50'}`}>
+                <p className={`text-xs font-semibold mb-3 ${isDark ? 'text-text-muted' : 'text-gray-600'}`}>Estrutura: 1 Aba com Dados Completos de DRE</p>
+                <div className="space-y-2">
+                  <div className={`flex items-start gap-2 text-xs ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                    <span className={`${isDark ? 'text-primary' : 'text-primary'} font-bold min-w-[80px]`}>Aba Única:</span>
+                    <span>DRO 2025 (Empresa × Ano × Mês × Categoria × Valor)</span>
+                  </div>
+                </div>
+              </div>
               <div className={`rounded-lg p-4 mb-4 overflow-x-auto ${isDark ? 'bg-background-dark' : 'bg-gray-50'}`}>
+                <p className={`text-xs font-semibold mb-3 ${isDark ? 'text-text-muted' : 'text-gray-600'}`}>Colunas Esperadas</p>
                 <table className={`text-xs w-full ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
                   <thead>
                     <tr className={`border-b ${isDark ? 'text-text-muted border-border-dark' : 'text-gray-600 border-gray-200'}`}>
-                      <th className="text-left py-2">Aba</th>
-                      <th className="text-left py-2">Descrição</th>
-                      <th className="text-left py-2">Colunas Principais</th>
+                      <th className="text-left py-2">Coluna</th>
+                      <th className="text-left py-2">Tipo</th>
+                      <th className="text-left py-2">Exemplo</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr className={`border-b ${isDark ? 'border-border-dark/50' : 'border-gray-200/50'}`}>
-                      <td className={`py-2 font-mono ${isDark ? 'text-primary' : 'text-primary'}`}>DRE Mensal</td>
-                      <td>Projetado vs Real</td>
-                      <td>Receita, Custo, EBITDA, Lucro</td>
+                      <td className={`py-2 font-mono ${isDark ? 'text-primary' : 'text-primary'}`}>Empresa</td>
+                      <td>texto</td>
+                      <td>CloudTech Industries, TechSolutions...</td>
                     </tr>
                     <tr className={`border-b ${isDark ? 'border-border-dark/50' : 'border-gray-200/50'}`}>
-                      <td className={`py-2 font-mono ${isDark ? 'text-primary' : 'text-primary'}`}>DRE Acumulado</td>
-                      <td>Acumulado Mensal</td>
-                      <td>Receita, Custo, EBITDA, Lucro</td>
+                      <td className={`py-2 font-mono ${isDark ? 'text-primary' : 'text-primary'}`}>Ano</td>
+                      <td>número</td>
+                      <td>2025</td>
                     </tr>
                     <tr className={`border-b ${isDark ? 'border-border-dark/50' : 'border-gray-200/50'}`}>
-                      <td className={`py-2 font-mono ${isDark ? 'text-primary' : 'text-primary'}`}>DRE Comparativo</td>
-                      <td>Regimes Diferentes</td>
-                      <td>Receita, Custo, EBITDA, Lucro</td>
+                      <td className={`py-2 font-mono ${isDark ? 'text-primary' : 'text-primary'}`}>Mês</td>
+                      <td>texto</td>
+                      <td>Janeiro, Fevereiro, Março...</td>
+                    </tr>
+                    <tr className={`border-b ${isDark ? 'border-border-dark/50' : 'border-gray-200/50'}`}>
+                      <td className={`py-2 font-mono ${isDark ? 'text-primary' : 'text-primary'}`}>Categoria</td>
+                      <td>texto</td>
+                      <td>Custo Fixo, Faturamento, Imposto, Margem, RESULTADO...</td>
                     </tr>
                     <tr>
-                      <td className={`py-2 font-mono ${isDark ? 'text-primary' : 'text-primary'}`}>Indicadores</td>
-                      <td>Métricas Financeiras</td>
-                      <td>Margem, ROE, Índices</td>
+                      <td className={`py-2 font-mono ${isDark ? 'text-primary' : 'text-primary'}`}>Valor</td>
+                      <td>moeda (R$)</td>
+                      <td>R$ 381.305,69</td>
                     </tr>
                   </tbody>
                 </table>
               </div>
-              <p className={`text-xs ${isDark ? 'text-text-muted' : 'text-gray-600'}`}>Cada aba deve conter os dados mensais estruturados para análise detalhada</p>
+              <p className={`text-xs ${isDark ? 'text-text-muted' : 'text-gray-600'}`}>Arquivo: <span className={`${isDark ? 'text-primary' : 'text-primary'} font-mono`}>Dashboard_Financeiro_Exemplo.xlsx</span></p>
 
               {/* Botões Google Sheets */}
               <div className="mt-6 flex gap-3">

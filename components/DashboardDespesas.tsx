@@ -22,53 +22,80 @@ const DashboardDespesas: React.FC = () => {
                         {/* Formato Esperado */}
                         <div className="bg-surface-dark rounded-xl border border-border-dark p-6 w-full max-w-2xl">
                             <h3 className="text-white font-bold mb-4 flex items-center gap-2">
-                                <span className="material-symbols-outlined text-primary">description</span>
-                                Formato Esperado: despesas_template.xlsx
+                                <span className="material-symbols-outlined text-primary">table_chart</span>
+                                Formato Esperado: analise_despesas_exemplo.xlsx
                             </h3>
+                            <div className="bg-background-dark rounded-lg p-4 mb-4">
+                                <p className="text-xs text-text-muted mb-3 font-semibold">Estrutura: 4 Abas de Análise de Resultados</p>
+                                <div className="space-y-2">
+                                    <div className="flex items-start gap-2 text-xs">
+                                        <span className="text-primary font-bold min-w-[120px]">Aba 1:</span>
+                                        <span className="text-gray-300">Regime de Caixa (Período Atual + Análise)</span>
+                                    </div>
+                                    <div className="flex items-start gap-2 text-xs">
+                                        <span className="text-primary font-bold min-w-[120px]">Aba 2:</span>
+                                        <span className="text-gray-300">Regime de Competência (Período Atual + Análise)</span>
+                                    </div>
+                                    <div className="flex items-start gap-2 text-xs">
+                                        <span className="text-primary font-bold min-w-[120px]">Aba 3:</span>
+                                        <span className="text-gray-300">Regime de Caixa Enxuto (12 Meses + Total + Análise)</span>
+                                    </div>
+                                    <div className="flex items-start gap-2 text-xs">
+                                        <span className="text-primary font-bold min-w-[120px]">Aba 4:</span>
+                                        <span className="text-gray-300">Regime de Competência Enxuto (12 Meses + Total + Análise)</span>
+                                    </div>
+                                </div>
+                            </div>
                             <div className="bg-background-dark rounded-lg p-4 mb-4 overflow-x-auto">
+                                <p className="text-xs text-text-muted mb-3 font-semibold">Colunas Esperadas por Aba</p>
                                 <table className="text-xs w-full">
                                     <thead>
                                         <tr className="text-text-muted border-b border-border-dark">
                                             <th className="text-left py-2">Coluna</th>
-                                            <th className="text-left py-2">Tipo</th>
+                                            <th className="text-left py-2">Formato</th>
                                             <th className="text-left py-2">Exemplo</th>
                                         </tr>
                                     </thead>
                                     <tbody className="text-gray-300">
                                         <tr className="border-b border-border-dark/50">
-                                            <td className="py-2 font-mono text-primary">ano</td>
+                                            <td className="py-2 font-mono text-primary">Ano (A1)</td>
                                             <td>número</td>
-                                            <td>2024</td>
+                                            <td>2025</td>
                                         </tr>
                                         <tr className="border-b border-border-dark/50">
-                                            <td className="py-2 font-mono text-primary">mes</td>
-                                            <td>número</td>
-                                            <td>1, 2, 3...</td>
-                                        </tr>
-                                        <tr className="border-b border-border-dark/50">
-                                            <td className="py-2 font-mono text-primary">empresa</td>
+                                            <td className="py-2 font-mono text-primary">Mês/Meses (B1+)</td>
                                             <td>texto</td>
-                                            <td>Alpha, Beta, Gamma...</td>
+                                            <td>NOVEMBRO ou JAN, FEV, MAR...</td>
                                         </tr>
                                         <tr className="border-b border-border-dark/50">
-                                            <td className="py-2 font-mono text-primary">categoria</td>
+                                            <td className="py-2 font-mono text-primary">Empresa (A2)</td>
                                             <td>texto</td>
-                                            <td>Folha, Aluguel, Fornecedores...</td>
+                                            <td>Empresa 1, Empresa 2...</td>
                                         </tr>
                                         <tr className="border-b border-border-dark/50">
-                                            <td className="py-2 font-mono text-primary">subcategoria</td>
-                                            <td>texto</td>
-                                            <td>Salários, Energia, Insumos...</td>
+                                            <td className="py-2 font-mono text-primary">Projetado (B2)</td>
+                                            <td>número (R$)</td>
+                                            <td>3.500.000, 1.481.962...</td>
+                                        </tr>
+                                        <tr className="border-b border-border-dark/50">
+                                            <td className="py-2 font-mono text-primary">Real (C2)</td>
+                                            <td>número (R$)</td>
+                                            <td>2.322.419, 1.884.086...</td>
+                                        </tr>
+                                        <tr className="border-b border-border-dark/50">
+                                            <td className="py-2 font-mono text-primary">Variação (D2)</td>
+                                            <td>percentual</td>
+                                            <td>-33,65%, -4,55%...</td>
                                         </tr>
                                         <tr>
-                                            <td className="py-2 font-mono text-primary">valor</td>
-                                            <td>número (R$)</td>
-                                            <td>5000, 50000, 150000...</td>
+                                            <td className="py-2 font-mono text-primary">Análise Vertical (E2)</td>
+                                            <td>percentual</td>
+                                            <td>46,55%, -4,55%...</td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
-                            <p className="text-xs text-text-muted">Arquivo: <span className="text-primary font-mono">Despesas_Exemplo.xlsx</span></p>
+                            <p className="text-xs text-text-muted">Arquivo: <span className="text-primary font-mono">analise_despesas_exemplo.xlsx</span></p>
 
                             {/* Botões Google Sheets */}
                             <div className="mt-6 flex gap-3">

@@ -232,8 +232,8 @@ const DashboardOrcamento: React.FC = () => {
                                 <YAxis tickFormatter={formatCurrency} width={75} tick={{ fontSize: 12 }} />
                                 <Tooltip formatter={(value: any) => formatCurrency(value)} contentStyle={{ backgroundColor: '#1a1a1a', border: 'none', borderRadius: '8px' }} />
                                 <Legend />
-                                <Bar dataKey="orcado" fill="#3b82f6" name="Orçado" isAnimationActive={false} />
-                                <Bar dataKey="realizado" fill="#10b981" name="Realizado" isAnimationActive={false} />
+                                <Bar dataKey="orcado" fill="#6366f1" name="Orçado" isAnimationActive={false} />
+                                <Bar dataKey="realizado" fill="#14b8a6" name="Realizado" isAnimationActive={false} />
                             </BarChart>
                         </ResponsiveContainer>
                     </div>
