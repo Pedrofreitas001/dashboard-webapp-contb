@@ -153,11 +153,9 @@ const DashboardOrcamento: React.FC = () => {
                                     </tbody>
                                 </table>
                             </div>
-                            <p className="text-xs text-text-muted">Arquivo: <span className="text-primary font-mono">Orcamento_Exemplo.xlsx</span></p>
-                        </div>
+                            <p className="text-xs text-text-muted mb-4">Arquivo: <span className="text-primary font-mono">Orcamento_Exemplo.xlsx</span></p>
 
-                        {/* Botão Download */}
-                        <div className="mt-6">
+                            {/* Botão Download */}
                             <a href="https://docs.google.com/spreadsheets/d/1pjEyn5Jy43kC3og11hjU1Co7peBn11EH8EwfuEHxk_M/export?format=xlsx" download className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm font-semibold transition-colors w-full">
                                 <span className="material-symbols-outlined text-base">download</span>
                                 Baixar Arquivo

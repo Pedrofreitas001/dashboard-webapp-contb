@@ -25,11 +25,11 @@ const DashboardDespesas: React.FC = () => {
                                 <span className="material-symbols-outlined text-primary">table_chart</span>
                                 Formato Esperado: Analise_despesas_Exemplo.xlsx
                             </h3>
-                            <div className="bg-background-dark rounded-lg p-4 mb-4 overflow-x-auto max-h-[200px] overflow-y-auto">
+                            <div className="bg-background-dark rounded-lg p-4 mb-4 overflow-x-auto">
                                 <p className="text-xs text-text-muted mb-2 font-semibold">Colunas Esperadas por Aba</p>
                                 <table className="text-xs w-full">
                                     <thead>
-                                        <tr className="text-text-muted border-b border-border-dark sticky top-0 bg-background-dark">
+                                        <tr className="text-text-muted border-b border-border-dark">
                                             <th className="text-left py-1 px-1">Coluna</th>
                                             <th className="text-left py-1 px-1">Formato</th>
                                             <th className="text-left py-1 px-1">Exemplo</th>
