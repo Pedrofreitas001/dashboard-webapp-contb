@@ -17,7 +17,7 @@ const DREDashboard: React.FC = () => {
   // Se não houver dados, mostrar disclaimer
   if (!dreData || (dreData && Object.keys(dreData).length === 0)) {
     return (
-      <main className="flex-1 overflow-y-auto p-4 md:p-8 custom-scrollbar bg-background-dark min-h-screen">
+      <main className={`flex-1 overflow-y-auto p-4 md:p-8 custom-scrollbar ${isDark ? 'bg-background-dark' : 'bg-gray-50'} min-h-screen`}>
         <div className="max-w-[1400px] mx-auto">
           <div className="flex flex-col items-center justify-center min-h-[60vh]">
             <h2 className="text-white text-2xl font-bold mb-4">Nenhum dado carregado</h2>
