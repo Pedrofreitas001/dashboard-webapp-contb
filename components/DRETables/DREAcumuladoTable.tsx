@@ -10,6 +10,23 @@ const formatValor = (valor: number): string => {
   }).format(valor);
 };
 
+// Estilos para scroll customizado
+const scrollStyles = `
+  .dre-scroll-container::-webkit-scrollbar {
+    height: 8px;
+  }
+  .dre-scroll-container::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .dre-scroll-container::-webkit-scrollbar-thumb {
+    background: #22c55e;
+    border-radius: 10px;
+  }
+  .dre-scroll-container::-webkit-scrollbar-thumb:hover {
+    background: #16a34a;
+  }
+`;
+
 const mesesAbrev = ['JAN', 'FEV', 'MAR', 'ABR', 'MAI', 'JUN', 'JUL', 'AGO', 'SET', 'OUT', 'NOV', 'DEZ'];
 
 const DREAcumuladoTable: React.FC = () => {
@@ -38,7 +55,8 @@ const DREAcumuladoTable: React.FC = () => {
           </p>
         </div>
 
-        <div className="overflow-x-auto">
+        <style>{scrollStyles}</style>
+        <div className="dre-scroll-container overflow-x-auto">
           <table className="w-full">
             <thead>
               <tr className={`${isDark ? 'bg-background-dark border-border-dark' : 'bg-gray-100 border-gray-200'} border-b`}>
@@ -84,9 +102,9 @@ const DREAcumuladoTable: React.FC = () => {
                     key={idx}
                     className={`${rowClass} border-b ${isDark ? 'border-border-dark/20' : 'border-gray-200'} hover:${isDark ? 'bg-gray-800/50' : 'bg-gray-50/80'} transition-colors`}
                   >
-                    <td className={`px-5 py-2 text-xs ${fontWeight} ${textColor} sticky left-0 z-50 border-r ${isDark ? 'border-border-dark' : 'border-gray-200'} ${linha.linha.isFinal ? (isDark ? 'bg-primary/15' : 'bg-primary/10') :
-                      linha.linha.isResultado && !linha.linha.isPercentual ? (isDark ? 'bg-gray-800/30' : 'bg-gray-100/50') :
-                        (isDark ? 'bg-surface-dark' : 'bg-white')
+                    <td className={`px-5 py-2 text-xs ${fontWeight} ${textColor} sticky left-0 z-50 border-r ${isDark ? 'border-border-dark' : 'border-gray-200'} ${linha.linha.isFinal ? (isDark ? 'bg-[#164e3b]' : 'bg-[#dcfce7]') :
+                      linha.linha.isResultado && !linha.linha.isPercentual ? (isDark ? 'bg-[#1e293b]' : 'bg-[#f1f5f9]') :
+                        (isDark ? 'bg-[#0f172a]' : 'bg-white')
                       }`}>
                       {linha.linha.descricao}
                     </td>
