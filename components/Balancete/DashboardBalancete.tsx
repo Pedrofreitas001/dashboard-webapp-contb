@@ -43,9 +43,20 @@ const DashboardBalancete: React.FC = () => {
     const { theme } = useTheme();
     const isDark = theme === 'dark';
 
+    const [empresaSelecionada, setEmpresaSelecionada] = useState<string>('');
     const [filtroGrupo, setFiltroGrupo] = useState<string>('Todos');
     const [filtroSubgrupo, setFiltroSubgrupo] = useState<string>('Todos');
     const [ordenacao, setOrdenacao] = useState<'conta' | 'saldo'>('conta');
+
+    // Inicializar empresa selecionada
+    useEffect(() => {
+        if (dados && dados.length > 0 && !empresaSelecionada) {
+            const empresasUnicas = Array.from(new Set(dados.map(d => d.empresa)));
+            if (empresasUnicas.length > 0) {
+                setEmpresaSelecionada(empresasUnicas[0]);
+            }
+        }
+    }, [dados, empresaSelecionada]);
 
     // Se não houver dados, mostrar disclaimer
     if (!dados || dados.length === 0) {
@@ -126,27 +137,92 @@ const DashboardBalancete: React.FC = () => {
         );
     }
 
+    // Função auxiliar para filtrar dados por empresa
+    const filtrarPorEmpresa = (dados: any[]) => {
+        return empresaSelecionada
+            ? dados.filter(d => d.empresa === empresaSelecionada)
+            : dados;
+    };
+
+    // Calcular totais com filtro de empresa
+    const obterTotalAtivoFiltrado = (): number => {
+        return filtrarPorEmpresa(dados)
+            .filter(c => c.grupo === 'Ativo')
+            .reduce((acc, c) => acc + c.saldo, 0);
+    };
+
+    const obterTotalPassivoFiltrado = (): number => {
+        return Math.abs(
+            filtrarPorEmpresa(dados)
+                .filter(c => c.grupo === 'Passivo')
+                .reduce((acc, c) => acc + c.saldo, 0)
+        );
+    };
+
+    const obterTotalPLFiltrado = (): number => {
+        return Math.abs(
+            filtrarPorEmpresa(dados)
+                .filter(c => c.grupo === 'PL')
+                .reduce((acc, c) => acc + c.saldo, 0)
+        );
+    };
+
+    const obterAtivoCirculanteFiltrado = (): number => {
+        return filtrarPorEmpresa(dados)
+            .filter(c => c.grupo === 'Ativo' && c.subgrupo === 'Circulante')
+            .reduce((acc, c) => acc + c.saldo, 0);
+    };
+
+    const obterAtivoNaoCirculanteFiltrado = (): number => {
+        return filtrarPorEmpresa(dados)
+            .filter(c => c.grupo === 'Ativo' && c.subgrupo === 'Não Circulante')
+            .reduce((acc, c) => acc + c.saldo, 0);
+    };
+
+    const obterPassivoCirculanteFiltrado = (): number => {
+        return Math.abs(
+            filtrarPorEmpresa(dados)
+                .filter(c => c.grupo === 'Passivo' && c.subgrupo === 'Circulante')
+                .reduce((acc, c) => acc + c.saldo, 0)
+        );
+    };
+
+    const obterPassivoNaoCirculanteFiltrado = (): number => {
+        return Math.abs(
+            filtrarPorEmpresa(dados)
+                .filter(c => c.grupo === 'Passivo' && c.subgrupo === 'Não Circulante')
+                .reduce((acc, c) => acc + c.saldo, 0)
+        );
+    };
+
+    const obterBalanceteOkFiltrado = (): boolean => {
+        const totalAtivo = obterTotalAtivoFiltrado();
+        const totalPassivo = obterTotalPassivoFiltrado();
+        const totalPL = obterTotalPLFiltrado();
+        return Math.abs(totalAtivo - (totalPassivo + totalPL)) < 1;
+    };
+
     // Dados para gráfico de distribuição do Ativo
-    const ativoCirculante = obterAtivoCirculante();
-    const ativoNaoCirculante = obterAtivoNaoCirculante();
-    const totalAtivo = obterTotalAtivo();
+    const ativoCirculante = obterAtivoCirculanteFiltrado();
+    const ativoNaoCirculante = obterAtivoNaoCirculanteFiltrado();
+    const totalAtivo = obterTotalAtivoFiltrado();
     const dataAtivoDistribuicao = [
         { name: 'Circulante', value: ativoCirculante, color: '#10b981' },
         { name: 'Não Circulante', value: ativoNaoCirculante, color: '#3b82f6' }
     ];
 
     // Dados para gráfico de distribuição do Passivo
-    const passivoCirculante = obterPassivoCirculante();
-    const passivoNaoCirculante = obterPassivoNaoCirculante();
-    const totalPassivo = obterTotalPassivo();
+    const passivoCirculante = obterPassivoCirculanteFiltrado();
+    const passivoNaoCirculante = obterPassivoNaoCirculanteFiltrado();
+    const totalPassivo = obterTotalPassivoFiltrado();
     const dataPassivoDistribuicao = [
         { name: 'Circulante', value: passivoCirculante, color: '#f59e0b' },
         { name: 'Não Circulante', value: passivoNaoCirculante, color: '#8b5cf6' }
     ];
 
     // Dados para gráfico de Proporção Passivo x PL
-    const totalPL = obterTotalPL();
-    const balanceteOk = obterBalanceteOk();
+    const totalPL = obterTotalPLFiltrado();
+    const balanceteOk = obterBalanceteOkFiltrado();
     const dataProportao = [
         { name: 'Passivo', value: totalPassivo, color: '#ef4444' },
         { name: 'PL', value: totalPL, color: '#06b6d4' }
@@ -214,6 +290,27 @@ const DashboardBalancete: React.FC = () => {
             {/* Conteúdo Principal */}
             <div className="flex-1 overflow-y-auto custom-scrollbar">
                 <div className="p-8 space-y-8">
+                    {/* Selector de Empresa */}
+                    {dados && dados.length > 0 && Array.from(new Set(dados.map(d => d.empresa))).length > 1 && (
+                        <div className="flex items-center gap-4">
+                            <label className={`text-sm font-semibold ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                                Selecionar Empresa:
+                            </label>
+                            <select
+                                value={empresaSelecionada}
+                                onChange={(e) => setEmpresaSelecionada(e.target.value)}
+                                className={`px-4 py-2 rounded border text-sm ${isDark
+                                    ? 'bg-surface-dark border-border-dark text-white'
+                                    : 'bg-white border-gray-300 text-gray-900'
+                                    } focus:outline-none focus:border-primary`}
+                            >
+                                {Array.from(new Set(dados.map(d => d.empresa))).map(empresa => (
+                                    <option key={empresa} value={empresa}>{empresa}</option>
+                                ))}
+                            </select>
+                        </div>
+                    )}
+
                     {/* KPIs Principais */}
                     <div>
                         <h2 className={`text-lg font-bold mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}>

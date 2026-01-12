@@ -150,7 +150,7 @@ const PiramideSolidez: React.FC<PiramideSolidezProps> = ({ empresas, totais }) =
                             }}
                         >
                             <div className="text-xs font-bold">Patrimônio Líquido</div>
-                            <div className="text-lg font-black mt-1">
+                            <div className="text-lg font-black mt-1 text-black">
                                 {camadas[0].percentualAtivo.toFixed(0)}%
                             </div>
                             <div className="text-xs text-white/80 mt-0.5">R$ {(camadas[0].valor / 1000000).toFixed(2)}M</div>
@@ -167,7 +167,7 @@ const PiramideSolidez: React.FC<PiramideSolidezProps> = ({ empresas, totais }) =
                             }}
                         >
                             <div className="text-xs font-bold">Passivo Não Circulante</div>
-                            <div className="text-lg font-black mt-1">
+                            <div className="text-lg font-black mt-1 text-black">
                                 {camadas[1].percentualAtivo.toFixed(0)}%
                             </div>
                             <div className="text-xs text-white/80 mt-0.5">R$ {(camadas[1].valor / 1000000).toFixed(2)}M</div>
@@ -184,7 +184,7 @@ const PiramideSolidez: React.FC<PiramideSolidezProps> = ({ empresas, totais }) =
                             }}
                         >
                             <div className="text-xs font-bold">Passivo Circulante</div>
-                            <div className="text-lg font-black mt-1">
+                            <div className="text-lg font-black mt-1 text-black">
                                 {camadas[2].percentualAtivo.toFixed(0)}%
                             </div>
                             <div className="text-xs text-white/80 mt-0.5">R$ {(camadas[2].valor / 1000000).toFixed(2)}M</div>
