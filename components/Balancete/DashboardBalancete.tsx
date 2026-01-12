@@ -39,24 +39,13 @@ const KPIBalanceteCard: React.FC<KPIBalanceteCardProps> = ({ titulo, valor, unid
 };
 
 const DashboardBalancete: React.FC = () => {
-    const { dados, obterTotalAtivo, obterTotalPassivo, obterTotalPL, obterBalanceteOk, obterAtivoCirculante, obterAtivoNaoCirculante, obterPassivoCirculante, obterPassivoNaoCirculante } = useBalancete();
+    const { dados, obterTotalAtivo, obterTotalPassivo, obterTotalPL, obterBalanceteOk, obterAtivoCirculante, obterAtivoNaoCirculante, obterPassivoCirculante, obterPassivoNaoCirculante, empresas, empresaSelecionada, setEmpresaSelecionada } = useBalancete();
     const { theme } = useTheme();
     const isDark = theme === 'dark';
 
-    const [empresaSelecionada, setEmpresaSelecionada] = useState<string>('');
     const [filtroGrupo, setFiltroGrupo] = useState<string>('Todos');
     const [filtroSubgrupo, setFiltroSubgrupo] = useState<string>('Todos');
     const [ordenacao, setOrdenacao] = useState<'conta' | 'saldo'>('conta');
-
-    // Inicializar empresa selecionada
-    useEffect(() => {
-        if (dados && dados.length > 0 && !empresaSelecionada) {
-            const empresasUnicas = Array.from(new Set(dados.map(d => d.empresa)));
-            if (empresasUnicas.length > 0) {
-                setEmpresaSelecionada(empresasUnicas[0]);
-            }
-        }
-    }, [dados, empresaSelecionada]);
 
     // Se não houver dados, mostrar disclaimer
     if (!dados || dados.length === 0) {
@@ -137,93 +126,37 @@ const DashboardBalancete: React.FC = () => {
         );
     }
 
-    // Função auxiliar para filtrar dados por empresa
-    const filtrarPorEmpresa = (dados: any[]) => {
-        if (!empresaSelecionada || empresaSelecionada === '') {
-            return [];
+    // Função auxiliar para formatar valores (K para mil, M para milhão)
+    const formatarValor = (valor: number): string => {
+        if (Math.abs(valor) >= 1000000) {
+            return `R$ ${(valor / 1000000).toFixed(2)}M`;
+        } else if (Math.abs(valor) >= 1000) {
+            return `R$ ${(valor / 1000).toFixed(0)}k`;
         }
-        return dados.filter(d => d.empresa === empresaSelecionada);
+        return `R$ ${valor.toFixed(2)}`;
     };
 
-    // Calcular totais com filtro de empresa
-    const obterTotalAtivoFiltrado = (): number => {
-        return filtrarPorEmpresa(dados)
-            .filter(c => c.grupo === 'Ativo')
-            .reduce((acc, c) => acc + c.saldo, 0);
-    };
-
-    const obterTotalPassivoFiltrado = (): number => {
-        return Math.abs(
-            filtrarPorEmpresa(dados)
-                .filter(c => c.grupo === 'Passivo')
-                .reduce((acc, c) => acc + c.saldo, 0)
-        );
-    };
-
-    const obterTotalPLFiltrado = (): number => {
-        return Math.abs(
-            filtrarPorEmpresa(dados)
-                .filter(c => c.grupo === 'PL')
-                .reduce((acc, c) => acc + c.saldo, 0)
-        );
-    };
-
-    const obterAtivoCirculanteFiltrado = (): number => {
-        return filtrarPorEmpresa(dados)
-            .filter(c => c.grupo === 'Ativo' && c.subgrupo === 'Circulante')
-            .reduce((acc, c) => acc + c.saldo, 0);
-    };
-
-    const obterAtivoNaoCirculanteFiltrado = (): number => {
-        return filtrarPorEmpresa(dados)
-            .filter(c => c.grupo === 'Ativo' && c.subgrupo === 'Não Circulante')
-            .reduce((acc, c) => acc + c.saldo, 0);
-    };
-
-    const obterPassivoCirculanteFiltrado = (): number => {
-        return Math.abs(
-            filtrarPorEmpresa(dados)
-                .filter(c => c.grupo === 'Passivo' && c.subgrupo === 'Circulante')
-                .reduce((acc, c) => acc + c.saldo, 0)
-        );
-    };
-
-    const obterPassivoNaoCirculanteFiltrado = (): number => {
-        return Math.abs(
-            filtrarPorEmpresa(dados)
-                .filter(c => c.grupo === 'Passivo' && c.subgrupo === 'Não Circulante')
-                .reduce((acc, c) => acc + c.saldo, 0)
-        );
-    };
-
-    const obterBalanceteOkFiltrado = (): boolean => {
-        const totalAtivo = obterTotalAtivoFiltrado();
-        const totalPassivo = obterTotalPassivoFiltrado();
-        const totalPL = obterTotalPLFiltrado();
-        return Math.abs(totalAtivo - (totalPassivo + totalPL)) < 1;
-    };
-
-    // Dados para gráfico de distribuição do Ativo
-    const ativoCirculante = obterAtivoCirculanteFiltrado();
-    const ativoNaoCirculante = obterAtivoNaoCirculanteFiltrado();
-    const totalAtivo = obterTotalAtivoFiltrado();
+    // Usar dados já filtrados do contexto
+    const totalAtivo = obterTotalAtivo();
+    const totalPassivo = obterTotalPassivo();
+    const totalPL = obterTotalPL();
+    const ativoCirculante = obterAtivoCirculante();
+    const ativoNaoCirculante = obterAtivoNaoCirculante();
+    const passivoCirculante = obterPassivoCirculante();
+    const passivoNaoCirculante = obterPassivoNaoCirculante();
+    const balanceteOk = obterBalanceteOk();
     const dataAtivoDistribuicao = [
         { name: 'Circulante', value: ativoCirculante, color: '#10b981' },
         { name: 'Não Circulante', value: ativoNaoCirculante, color: '#3b82f6' }
     ];
 
     // Dados para gráfico de distribuição do Passivo
-    const passivoCirculante = obterPassivoCirculanteFiltrado();
-    const passivoNaoCirculante = obterPassivoNaoCirculanteFiltrado();
-    const totalPassivo = obterTotalPassivoFiltrado();
     const dataPassivoDistribuicao = [
         { name: 'Circulante', value: passivoCirculante, color: '#f59e0b' },
         { name: 'Não Circulante', value: passivoNaoCirculante, color: '#8b5cf6' }
     ];
 
     // Dados para gráfico de Proporção Passivo x PL
-    const totalPL = obterTotalPLFiltrado();
-    const balanceteOk = obterBalanceteOkFiltrado();
     const dataProportao = [
         { name: 'Passivo', value: totalPassivo, color: '#ef4444' },
         { name: 'PL', value: totalPL, color: '#06b6d4' }
@@ -524,8 +457,7 @@ const DashboardBalancete: React.FC = () => {
                         {/* Snapshot Executivo */}
                         <SnapshotExecutivo
                             dados={dados}
-                            empresas={useBalancete().empresas}
-                            empresaSelecionada={empresaSelecionada}
+                            empresas={empresas}
                             totais={{
                                 ativo: totalAtivo,
                                 passivo: totalPassivo,
@@ -540,14 +472,12 @@ const DashboardBalancete: React.FC = () => {
                         {/* Mapa Patrimonial */}
                         <MapaPatrimonial
                             dados={dados}
-                            empresas={useBalancete().empresas}
-                            empresaSelecionada={empresaSelecionada}
+                            empresas={empresas}
                         />
 
                         {/* Pirâmide de Solidez */}
                         <PiramideSolidez
-                            empresas={useBalancete().empresas}
-                            empresaSelecionada={empresaSelecionada}
+                            empresas={empresas}
                             totais={{
                                 ativo: totalAtivo,
                                 passivo: totalPassivo,
@@ -560,8 +490,7 @@ const DashboardBalancete: React.FC = () => {
                         {/* Ranking de Contas Críticas */}
                         <RankingContas
                             dados={dados}
-                            empresas={useBalancete().empresas}
-                            empresaSelecionada={empresaSelecionada}
+                            empresas={empresas}
                         />
                     </div>
 

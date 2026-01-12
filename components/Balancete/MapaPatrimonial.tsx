@@ -6,7 +6,6 @@ import { ContaBalancete } from '../../context/BalanceteContext';
 interface MapaPatrimonialProps {
     dados: ContaBalancete[];
     empresas: string[];
-    empresaSelecionada: string;
 }
 
 interface WaterfallStep {
@@ -17,14 +16,12 @@ interface WaterfallStep {
     absoluteValue: number;
 }
 
-const MapaPatrimonial: React.FC<MapaPatrimonialProps> = ({ dados, empresas, empresaSelecionada }) => {
+const MapaPatrimonial: React.FC<MapaPatrimonialProps> = ({ dados, empresas }) => {
     const { theme } = useTheme();
     const isDark = theme === 'dark';
 
-    // Filtrar dados pela empresa
-    const dadosFiltrados = empresaSelecionada
-        ? dados.filter(d => d.empresa === empresaSelecionada)
-        : dados;
+    // Dados já vêm filtrados do contexto
+    const dadosFiltrados = dados;
 
     // Agregações necessárias
     const ativoTotal = dadosFiltrados

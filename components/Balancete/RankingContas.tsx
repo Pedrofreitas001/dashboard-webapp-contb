@@ -6,7 +6,6 @@ import { ContaBalancete } from '../../context/BalanceteContext';
 interface RankingContasProps {
     dados: ContaBalancete[];
     empresas: string[];
-    empresaSelecionada: string;
 }
 
 interface ContaRanking {
@@ -24,17 +23,15 @@ const colorsByGrupo: { [key: string]: string } = {
     'PL': '#06b6d4',
 };
 
-const RankingContas: React.FC<RankingContasProps> = ({ dados, empresas, empresaSelecionada }) => {
+const RankingContas: React.FC<RankingContasProps> = ({ dados, empresas }) => {
     const { theme } = useTheme();
     const isDark = theme === 'dark';
 
     const [topN, setTopN] = useState<5 | 10 | 15>(10);
     const [filtroGrupo, setFiltroGrupo] = useState<string>('Todos');
 
-    // Filtrar dados pela empresa selecionada
-    const dadosFiltrados = empresaSelecionada
-        ? dados.filter(d => d.empresa === empresaSelecionada)
-        : dados;
+    // Dados já vêm filtrados do contexto
+    const dadosFiltrados = dados;
 
     // Calcular largura dinâmica do YAxis baseado no tamanho das legendas
     const calcularLarguraYAxis = (dados: any[]): number => {

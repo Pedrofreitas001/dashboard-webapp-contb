@@ -18,7 +18,9 @@ export interface ContaBalancete {
 export interface BalanceteContextType {
     dados: ContaBalancete[];
     empresas: string[];
+    empresaSelecionada: string;
     setDados: (dados: ContaBalancete[]) => void;
+    setEmpresaSelecionada: (empresa: string) => void;
     obterTotalAtivo: () => number;
     obterTotalPassivo: () => number;
     obterTotalPL: () => number;
@@ -34,23 +36,33 @@ const BalanceteContext = createContext<BalanceteContextType | undefined>(undefin
 export const BalanceteProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [dados, setDados] = useState<ContaBalancete[]>([]);
     const [empresas, setEmpresas] = useState<string[]>([]);
+    const [empresaSelecionada, setEmpresaSelecionada] = useState<string>('');
 
     // Atualizar empresas quando dados mudarem
     useEffect(() => {
         const empresasUnicas = Array.from(new Set(dados.map(d => d.empresa)));
         setEmpresas(empresasUnicas);
+        // Se não há empresa selecionada e há empresas disponíveis, seleciona a primeira
+        if (!empresaSelecionada && empresasUnicas.length > 0) {
+            setEmpresaSelecionada(empresasUnicas[0]);
+        }
         console.log('BalanceteContext atualizado com', dados.length, 'registros e', empresasUnicas.length, 'empresas');
-    }, [dados]);
+    }, [dados, empresaSelecionada]);
+
+    // Filtrar dados pela empresa selecionada
+    const dadosFiltrados = empresaSelecionada
+        ? dados.filter(d => d.empresa === empresaSelecionada)
+        : dados;
 
     const obterTotalAtivo = (): number => {
-        return dados
+        return dadosFiltrados
             .filter(c => c.grupo === 'Ativo')
             .reduce((acc, c) => acc + c.saldo, 0);
     };
 
     const obterTotalPassivo = (): number => {
         return Math.abs(
-            dados
+            dadosFiltrados
                 .filter(c => c.grupo === 'Passivo')
                 .reduce((acc, c) => acc + c.saldo, 0)
         );
@@ -58,27 +70,27 @@ export const BalanceteProvider: React.FC<{ children: React.ReactNode }> = ({ chi
 
     const obterTotalPL = (): number => {
         return Math.abs(
-            dados
+            dadosFiltrados
                 .filter(c => c.grupo === 'PL')
                 .reduce((acc, c) => acc + c.saldo, 0)
         );
     };
 
     const obterAtivoCirculante = (): number => {
-        return dados
+        return dadosFiltrados
             .filter(c => c.grupo === 'Ativo' && c.subgrupo === 'Circulante')
             .reduce((acc, c) => acc + c.saldo, 0);
     };
 
     const obterAtivoNaoCirculante = (): number => {
-        return dados
+        return dadosFiltrados
             .filter(c => c.grupo === 'Ativo' && c.subgrupo === 'Não Circulante')
             .reduce((acc, c) => acc + c.saldo, 0);
     };
 
     const obterPassivoCirculante = (): number => {
         return Math.abs(
-            dados
+            dadosFiltrados
                 .filter(c => c.grupo === 'Passivo' && c.subgrupo === 'Circulante')
                 .reduce((acc, c) => acc + c.saldo, 0)
         );
@@ -86,7 +98,7 @@ export const BalanceteProvider: React.FC<{ children: React.ReactNode }> = ({ chi
 
     const obterPassivoNaoCirculante = (): number => {
         return Math.abs(
-            dados
+            dadosFiltrados
                 .filter(c => c.grupo === 'Passivo' && c.subgrupo === 'Não Circulante')
                 .reduce((acc, c) => acc + c.saldo, 0)
         );
@@ -102,9 +114,11 @@ export const BalanceteProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     };
 
     const value: BalanceteContextType = {
-        dados,
+        dados: dadosFiltrados,
         empresas,
+        empresaSelecionada,
         setDados,
+        setEmpresaSelecionada,
         obterTotalAtivo,
         obterTotalPassivo,
         obterTotalPL,

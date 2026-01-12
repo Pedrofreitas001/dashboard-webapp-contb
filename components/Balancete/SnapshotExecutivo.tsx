@@ -5,7 +5,6 @@ import { ContaBalancete } from '../../context/BalanceteContext';
 interface SnapshotExecutivoProps {
     dados: ContaBalancete[];
     empresas: string[];
-    empresaSelecionada: string;
     totais: {
         ativo: number;
         passivo: number;
@@ -24,15 +23,13 @@ interface InsightItem {
     icone: string;
 }
 
-const SnapshotExecutivo: React.FC<SnapshotExecutivoProps> = ({ dados, empresas, empresaSelecionada, totais }) => {
+const SnapshotExecutivo: React.FC<SnapshotExecutivoProps> = ({ dados, empresas, totais }) => {
     const { theme } = useTheme();
     const isDark = theme === 'dark';
     const [expandido, setExpandido] = useState<boolean>(false);
 
-    // Filtrar dados pela empresa
-    const dadosFiltrados = empresaSelecionada
-        ? dados.filter(d => d.empresa === empresaSelecionada)
-        : dados;
+    // Dados já vêm filtrados do contexto
+    const dadosFiltrados = dados;
 
     // Calcular indicadores
     const liquidezGeral = totais.ativoCirculante > 0
