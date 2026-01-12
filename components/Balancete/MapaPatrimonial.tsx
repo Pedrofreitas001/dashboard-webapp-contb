@@ -1,5 +1,5 @@
 import React from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell, ReferenceLine } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell, ReferenceLine, LabelList } from 'recharts';
 import { useTheme } from '../../context/ThemeContext';
 import { ContaBalancete } from '../../context/BalanceteContext';
 
@@ -84,6 +84,26 @@ const MapaPatrimonial: React.FC<MapaPatrimonialProps> = ({ dados, empresas, tota
         return `R$ ${Math.abs(valor / 1000000).toFixed(2)}M`;
     };
 
+    const formatYAxis = (value: number) => {
+        const absValue = Math.abs(value);
+        if (absValue >= 1000000) {
+            return `R$${(value / 1000000).toFixed(0)}M`;
+        } else if (absValue >= 1000) {
+            return `R$${(value / 1000).toFixed(0)}k`;
+        }
+        return `R$${value.toFixed(0)}`;
+    };
+
+    const formatLabel = (value: number) => {
+        const absValue = Math.abs(value);
+        if (absValue >= 1000000) {
+            return `${(value / 1000000).toFixed(1)}M`;
+        } else if (absValue >= 1000) {
+            return `${(value / 1000).toFixed(0)}k`;
+        }
+        return value.toFixed(0);
+    };
+
     return (
         <div className={`${isDark ? 'bg-surface-dark border-border-dark' : 'bg-white border-gray-300'} rounded-2xl border shadow-lg p-6`}>
             <div className="flex items-center justify-between mb-6">
@@ -106,7 +126,7 @@ const MapaPatrimonial: React.FC<MapaPatrimonialProps> = ({ dados, empresas, tota
                     >
                         <CartesianGrid strokeDasharray="3 3" stroke={isDark ? '#374151' : '#e5e7eb'} />
                         <XAxis dataKey="name" tick={{ fontSize: 12, fill: isDark ? '#9ca3af' : '#6b7280' }} />
-                        <YAxis tick={{ fontSize: 12, fill: isDark ? '#9ca3af' : '#6b7280' }} />
+                        <YAxis tick={{ fontSize: 12, fill: isDark ? '#9ca3af' : '#6b7280' }} tickFormatter={formatYAxis} />
                         <Tooltip content={handleCustomTooltip} />
                         <Bar
                             dataKey="value"
@@ -116,6 +136,12 @@ const MapaPatrimonial: React.FC<MapaPatrimonialProps> = ({ dados, empresas, tota
                             {waterfallData.map((entry, index) => (
                                 <Cell key={`cell-${index}`} fill={entry.fill} />
                             ))}
+                            <LabelList
+                                dataKey="value"
+                                position="center"
+                                formatter={formatLabel}
+                                style={{ fill: isDark ? '#ffffff' : '#ffffff', fontSize: '11px', fontWeight: 'bold' }}
+                            />
                         </Bar>
                         <ReferenceLine y={0} stroke={isDark ? '#6b7280' : '#d1d5db'} strokeWidth={2} />
                     </BarChart>

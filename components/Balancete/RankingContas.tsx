@@ -33,6 +33,16 @@ const RankingContas: React.FC<RankingContasProps> = ({ dados, empresas }) => {
     // Dados já vêm filtrados do contexto
     const dadosFiltrados = dados;
 
+    const formatYAxis = (value: number) => {
+        const absValue = Math.abs(value);
+        if (absValue >= 1000000) {
+            return `R$${(value / 1000000).toFixed(0)}M`;
+        } else if (absValue >= 1000) {
+            return `R$${(value / 1000).toFixed(0)}k`;
+        }
+        return `R$${value.toFixed(0)}`;
+    };
+
     // Calcular largura dinâmica do YAxis baseado no tamanho das legendas
     const calcularLarguraYAxis = (dados: any[]): number => {
         if (!dados || dados.length === 0) return 100;
@@ -155,7 +165,7 @@ const RankingContas: React.FC<RankingContasProps> = ({ dados, empresas }) => {
                         margin={{ top: 5, right: 30, left: -10, bottom: 5 }}
                     >
                         <CartesianGrid strokeDasharray="3 3" stroke={isDark ? '#374151' : '#e5e7eb'} />
-                        <XAxis type="number" />
+                        <XAxis type="number" tickFormatter={formatYAxis} />
                         <YAxis
                             type="category"
                             dataKey="nome"
