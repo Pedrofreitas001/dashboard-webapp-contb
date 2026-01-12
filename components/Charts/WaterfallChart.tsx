@@ -42,7 +42,7 @@ const WaterfallChart: React.FC = () => {
             <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: colors.tickFill, fontSize: 12 }} dy={10} />
             <YAxis axisLine={false} tickLine={false} tick={{ fill: colors.tickFill, fontSize: 12 }} />
             <Tooltip
-              content={<CustomTooltip formatter={(value: any, name: any, props: any) => new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(props.payload.value)} />}
+               content={<CustomTooltip formatter={(value: any) => new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value)} />}
             />
             {/* The transparent spacer bar */}
             <Bar dataKey="start" stackId="a" fill="transparent" />

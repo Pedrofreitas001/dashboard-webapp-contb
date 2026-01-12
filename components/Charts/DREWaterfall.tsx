@@ -98,7 +98,7 @@ const DREWaterfall: React.FC = () => {
               tickFormatter={formatYAxis}
             />
             <Tooltip
-              content={<CustomTooltip formatter={(value: any, name: any, props: any) => new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(props.payload.actual)} />}
+              content={<CustomTooltip formatter={(value: any) => new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value)} />}
               cursor={{ fill: '#ffffff0a' }}
             />
             <Bar dataKey="start" stackId="a" fill="transparent" />
