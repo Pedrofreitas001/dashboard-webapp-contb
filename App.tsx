@@ -8,6 +8,7 @@ import DREDashboard from './components/DREDashboard.tsx';
 import DashboardCashFlow from './components/CashFlow/DashboardCashFlow.tsx';
 import DashboardIndicadores from './components/Indicadores/DashboardIndicadores.tsx';
 import DashboardOrcamento from './components/Orcamento/DashboardOrcamento.tsx';
+import DashboardBalancete from './components/Balancete/DashboardBalancete.tsx';
 import ReportCover from './components/ReportCover.tsx';
 import AIChat from './components/AIChat.tsx';
 import { FinanceProvider, useFinance } from './context/FinanceContext.tsx';
@@ -16,11 +17,12 @@ import { DREProvider } from './context/DREContext.tsx';
 import { CashFlowProvider } from './context/CashFlowContext/CashFlowContext.tsx';
 import { IndicadoresProvider } from './context/IndicadoresContext/IndicadoresContext.tsx';
 import { OrcamentoProvider } from './context/OrcamentoContext/OrcamentoContext.tsx';
+import { BalanceteProvider } from './context/BalanceteContext.tsx';
 import { ThemeProvider, useTheme } from './context/ThemeContext.tsx';
 import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
 
-type PageType = 'dashboard' | 'despesas' | 'dre' | 'cashflow' | 'indicadores' | 'orcamento';
+type PageType = 'dashboard' | 'despesas' | 'dre' | 'cashflow' | 'indicadores' | 'orcamento' | 'balancete';
 
 const AppContent: React.FC = () => {
   const { filtros, kpis } = useFinance();
@@ -127,6 +129,7 @@ const AppContent: React.FC = () => {
         {currentPage === 'cashflow' && <DashboardCashFlow />}
         {currentPage === 'indicadores' && <DashboardIndicadores />}
         {currentPage === 'orcamento' && <DashboardOrcamento />}
+        {currentPage === 'balancete' && <DashboardBalancete />}
 
         {/* Hidden Cover Component for Capture */}
         <ReportCover
@@ -167,7 +170,9 @@ const App: React.FC = () => {
             <CashFlowProvider>
               <IndicadoresProvider>
                 <OrcamentoProvider>
-                  <AppContent />
+                  <BalanceteProvider>
+                    <AppContent />
+                  </BalanceteProvider>
                 </OrcamentoProvider>
               </IndicadoresProvider>
             </CashFlowProvider>

@@ -6,14 +6,15 @@ import { useDRE } from '../context/DREContext';
 import { useCashFlow } from '../context/CashFlowContext/CashFlowContext';
 import { useIndicadores } from '../context/IndicadoresContext/IndicadoresContext';
 import { useOrcamento } from '../context/OrcamentoContext/OrcamentoContext';
+import { useBalancete } from '../context/BalanceteContext';
 import { useTheme } from '../context/ThemeContext';
 import * as XLSX from 'xlsx';
 
 interface SidebarProps {
   onExport?: () => void;
   visible?: boolean;
-  currentPage?: 'dashboard' | 'despesas' | 'dre' | 'cashflow' | 'indicadores' | 'orcamento';
-  onNavigate?: (page: 'dashboard' | 'despesas' | 'dre' | 'cashflow' | 'indicadores' | 'orcamento') => void;
+  currentPage?: 'dashboard' | 'despesas' | 'dre' | 'cashflow' | 'indicadores' | 'orcamento' | 'balancete';
+  onNavigate?: (page: 'dashboard' | 'despesas' | 'dre' | 'cashflow' | 'indicadores' | 'orcamento' | 'balancete') => void;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ onExport, visible = true, currentPage = 'dashboard', onNavigate }) => {
@@ -30,6 +31,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onExport, visible = true, currentPage
   const { setDados: setCashFlowDados } = useCashFlow();
   const { setDados: setIndicadoresDados } = useIndicadores();
   const { setDados: setOrcamentoDados } = useOrcamento();
+  const { setDados: setBalanceteDados } = useBalancete();
   const { theme, toggleTheme } = useTheme();
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -164,6 +166,52 @@ const Sidebar: React.FC<SidebarProps> = ({ onExport, visible = true, currentPage
     reader.readAsBinaryString(file);
   };
 
+  const handleBalanceteUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (evt) => {
+      try {
+        const bstr = evt.target?.result;
+        const wb = XLSX.read(bstr, { type: 'binary' });
+        const wsname = wb.SheetNames[0];
+        const ws = wb.Sheets[wsname];
+        const data = XLSX.utils.sheet_to_json(ws);
+
+        // Converter dados para o formato correto
+        const convertedData = data.map((row: any) => {
+          // Debug: mostrar primeira linha
+          if (data.indexOf(row) === 0) {
+            console.log('Primeira linha do Excel:', row);
+          }
+
+          return {
+            data: String(row['Data'] || row.data || row.Data || '2024-12-31'),
+            contaContabil: String(row['Conta Contábil'] || row['Conta_Contábil'] || row['conta_contabil'] || row.contaContabil || ''),
+            nomeContaContabil: String(row['Nome Conta'] || row['Nome_Conta'] || row['nome_conta'] || row.nomeContaContabil || ''),
+            grupo: String(row['Grupo'] || row.grupo || row.Grupo || '') as 'Ativo' | 'Passivo' | 'PL',
+            subgrupo: String(row['Subgrupo'] || row.subgrupo || row.Subgrupo || '') as any,
+            tipoContaContabil: String(row['Tipo Conta'] || row['Tipo_Conta'] || row['tipo_conta'] || row.tipoContaContabil || ''),
+            totalDebitos: Number(row['Total Débitos'] || row['Total_Débitos'] || row['total_debitos'] || row.totalDebitos || 0),
+            totalCreditos: Number(row['Total Créditos'] || row['Total_Créditos'] || row['total_creditos'] || row.totalCreditos || 0),
+            saldo: Number(row['Saldo'] || row.saldo || row.Saldo || 0),
+            status: String(row['Status'] || row.status || row.Status || 'Normal') as 'Normal' | 'Ajuste',
+            fonte: String(row['Fonte'] || row.fonte || row.Fonte || 'Balancete Manual'),
+            empresa: String(row['Empresa'] || row.empresa || row.Empresa || 'Alpha')
+          };
+        });
+
+        console.log('Dados convertidos:', convertedData.length, 'registros');
+        setBalanceteDados(convertedData);
+      } catch (error) {
+        console.error('Erro ao processar arquivo Balancete:', error);
+        alert('Erro ao processar arquivo. Verifique o formato do Excel.');
+      }
+    };
+    reader.readAsBinaryString(file);
+  };
+
   const toggleMonth = (month: string) => {
     if (currentPage === 'dashboard') {
       const current = filtros.meses;
@@ -245,7 +293,10 @@ const Sidebar: React.FC<SidebarProps> = ({ onExport, visible = true, currentPage
             <span className={`material-symbols-outlined ${currentPage === 'indicadores' ? 'text-primary' : ''}`}>
               analytics
             </span>
-            <p className="text-sm font-medium">Indicadores</p>
+            <div className="flex items-center gap-2">
+              <p className="text-sm font-medium">Indicadores</p>
+              <span className="text-xs bg-orange-500/20 text-orange-400 px-2 py-0.5 rounded-full font-semibold">BETA</span>
+            </div>
           </button>
           <button
             onClick={() => onNavigate?.('orcamento')}
@@ -257,7 +308,22 @@ const Sidebar: React.FC<SidebarProps> = ({ onExport, visible = true, currentPage
             <span className={`material-symbols-outlined ${currentPage === 'orcamento' ? 'text-primary' : ''}`}>
               receipt_long
             </span>
-            <p className="text-sm font-medium">Orçamento</p>
+            <div className="flex items-center gap-2">
+              <p className="text-sm font-medium">Orçamento</p>
+              <span className="text-xs bg-orange-500/20 text-orange-400 px-2 py-0.5 rounded-full font-semibold">BETA</span>
+            </div>
+          </button>
+          <button
+            onClick={() => onNavigate?.('balancete')}
+            className={`flex items-center gap-3 rounded-xl border p-3 transition-all ${currentPage === 'balancete'
+              ? 'bg-surface-dark border-primary text-white'
+              : 'bg-transparent border-border-dark text-text-muted hover:border-primary/50'
+              }`}
+          >
+            <span className={`material-symbols-outlined ${currentPage === 'balancete' ? 'text-primary' : ''}`}>
+              account_balance
+            </span>
+            <p className="text-sm font-medium">Balancete</p>
           </button>
         </nav>
 
@@ -299,6 +365,14 @@ const Sidebar: React.FC<SidebarProps> = ({ onExport, visible = true, currentPage
             <input type="file" onChange={handleOrcamentoUpload} className="absolute inset-0 opacity-0 cursor-pointer" accept=".xlsx,.xls" />
             <span className="material-symbols-outlined text-border-dark group-hover:text-white mb-2 transition-colors">cloud_upload</span>
             <p className="text-xs text-center text-text-muted group-hover:text-white transition-colors">Carregar Excel Orçamento</p>
+          </div>
+        )}
+
+        {currentPage === 'balancete' && (
+          <div className="relative border border-dashed border-border-dark rounded-xl p-6 flex flex-col items-center justify-center bg-surface-dark/50 hover:bg-surface-dark transition-colors cursor-pointer group">
+            <input type="file" onChange={handleBalanceteUpload} className="absolute inset-0 opacity-0 cursor-pointer" accept=".xlsx,.xls" />
+            <span className="material-symbols-outlined text-border-dark group-hover:text-white mb-2 transition-colors">cloud_upload</span>
+            <p className="text-xs text-center text-text-muted group-hover:text-white transition-colors">Carregar Excel Balancete</p>
           </div>
         )}
 
