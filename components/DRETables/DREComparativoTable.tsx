@@ -27,9 +27,9 @@ const DREComparativoTable: React.FC = () => {
 
   return (
     <div className={`${isDark ? 'bg-surface-dark border-border-dark' : 'bg-white border-gray-300'} border rounded-2xl overflow-hidden shadow-lg`}>
-      <div className={`${isDark ? 'bg-background-dark border-border-dark' : 'bg-gray-50 border-gray-200'} px-8 py-6 border-b`}>
-        <h3 className={`${isDark ? 'text-white' : 'text-gray-900'} font-bold text-xl mb-2`}>Comparativo entre Regimes</h3>
-        <p className={`text-sm ${isDark ? 'text-text-muted' : 'text-gray-600'}`}>
+      <div className={`${isDark ? 'bg-background-dark border-border-dark' : 'bg-gray-50 border-gray-200'} px-6 py-3 border-b`}>
+        <h3 className={`${isDark ? 'text-white' : 'text-gray-900'} font-bold text-lg mb-1`}>Comparativo entre Regimes</h3>
+        <p className={`text-xs ${isDark ? 'text-text-muted' : 'text-gray-600'}`}>
           Regime de Caixa vs Regime de Competência - Ano {dreData.ano}
         </p>
       </div>
@@ -38,11 +38,11 @@ const DREComparativoTable: React.FC = () => {
         <table className="w-full">
           <thead>
             <tr className={`${isDark ? 'bg-background-dark border-border-dark' : 'bg-gray-100 border-gray-200'} border-b`}>
-              <th className={`px-8 py-4 text-left text-xs font-bold ${isDark ? 'text-text-muted' : 'text-gray-600'} uppercase tracking-widest sticky left-0 ${isDark ? 'bg-background-dark' : 'bg-gray-100'}`}>Descrição</th>
-              <th className={`px-8 py-4 text-right text-xs font-bold ${isDark ? 'text-text-muted' : 'text-gray-600'} uppercase tracking-widest bg-blue-500/15`}>Caixa (Real)</th>
-              <th className={`px-8 py-4 text-right text-xs font-bold ${isDark ? 'text-text-muted' : 'text-gray-600'} uppercase tracking-widest bg-purple-500/15`}>Competência (Real)</th>
-              <th className={`px-8 py-4 text-right text-xs font-bold ${isDark ? 'text-text-muted' : 'text-gray-600'} uppercase tracking-widest bg-primary/10`}>Diferença</th>
-              <th className={`px-8 py-4 text-right text-xs font-bold ${isDark ? 'text-primary' : 'text-primary'} uppercase tracking-widest bg-primary/10`}>Var %</th>
+              <th className={`px-5 py-2 text-left text-xs font-bold ${isDark ? 'text-text-muted' : 'text-gray-600'} uppercase tracking-widest sticky left-0 ${isDark ? 'bg-background-dark' : 'bg-gray-100'}`}>Descrição</th>
+              <th className={`px-2 py-2 text-right text-xs font-bold ${isDark ? 'text-text-muted' : 'text-gray-600'} uppercase tracking-widest bg-blue-500/15`}>Caixa</th>
+              <th className={`px-2 py-2 text-right text-xs font-bold ${isDark ? 'text-text-muted' : 'text-gray-600'} uppercase tracking-widest bg-purple-500/15`}>Compet.</th>
+              <th className={`px-2 py-2 text-right text-xs font-bold ${isDark ? 'text-text-muted' : 'text-gray-600'} uppercase tracking-widest bg-primary/10`}>Dif.</th>
+              <th className={`px-3 py-2 text-right text-xs font-bold ${isDark ? 'text-primary' : 'text-primary'} uppercase tracking-widest bg-primary/10`}>%</th>
             </tr>
           </thead>
           <tbody>
@@ -81,19 +81,19 @@ const DREComparativoTable: React.FC = () => {
                   key={idx}
                   className={`${rowClass} border-b ${isDark ? 'border-border-dark/20' : 'border-gray-200'} hover:${isDark ? 'bg-gray-800/50' : 'bg-gray-50/80'} transition-colors`}
                 >
-                  <td className={`px-8 py-5 text-sm ${fontWeight} ${textColor} sticky left-0 z-10 ${rowClass || (isDark ? 'bg-surface-dark' : 'bg-white')}`}>
+                  <td className={`px-5 py-2 text-xs ${fontWeight} ${textColor} sticky left-0 z-10 ${rowClass || (isDark ? 'bg-surface-dark' : 'bg-white')}`}>
                     {linhaCaixa.linha.descricao}
                   </td>
-                  <td className={`px-8 py-5 text-sm text-right font-medium tabular-nums whitespace-nowrap bg-blue-500/8 ${linhaCaixa.real < 0 ? 'text-red-500' : textColor}`}>
+                  <td className={`px-2 py-2 text-xs text-right font-medium tabular-nums whitespace-nowrap bg-blue-500/8 ${linhaCaixa.real < 0 ? 'text-red-500' : textColor}`}>
                     {linhaCaixa.linha.isPercentual ? linhaCaixa.real.toFixed(0) + '%' : formatValor(linhaCaixa.real)}
                   </td>
-                  <td className={`px-8 py-5 text-sm text-right font-medium tabular-nums whitespace-nowrap bg-purple-500/8 ${linhaCompetencia.real < 0 ? 'text-red-500' : textColor}`}>
+                  <td className={`px-2 py-2 text-xs text-right font-medium tabular-nums whitespace-nowrap bg-purple-500/8 ${linhaCompetencia.real < 0 ? 'text-red-500' : textColor}`}>
                     {linhaCompetencia.linha.isPercentual ? linhaCompetencia.real.toFixed(0) + '%' : formatValor(linhaCompetencia.real)}
                   </td>
-                  <td className={`px-8 py-5 text-sm text-right font-bold tabular-nums whitespace-nowrap bg-primary/10 ${diferenca < 0 ? 'text-red-600 font-bold' : diferenca > 0 ? 'text-green-600 font-bold' : textColor}`}>
+                  <td className={`px-2 py-2 text-xs text-right font-bold tabular-nums whitespace-nowrap bg-primary/10 ${diferenca < 0 ? 'text-red-600 font-bold' : diferenca > 0 ? 'text-green-600 font-bold' : textColor}`}>
                     {linhaCaixa.linha.isPercentual ? diferenca.toFixed(0) + '%' : formatValor(diferenca)}
                   </td>
-                  <td className={`px-8 py-5 text-sm text-right font-bold tabular-nums whitespace-nowrap ${diferencaSignificativa ? 'text-orange-600 font-bold' : (isDark ? 'text-text-muted' : 'text-gray-600')} bg-primary/10`}>
+                  <td className={`px-3 py-2 text-xs text-right font-bold tabular-nums whitespace-nowrap ${diferencaSignificativa ? 'text-orange-600 font-bold' : (isDark ? 'text-text-muted' : 'text-gray-600')} bg-primary/10`}>
                     {variacaoPerc}
                   </td>
                 </tr>
@@ -104,18 +104,18 @@ const DREComparativoTable: React.FC = () => {
       </div>
 
       {/* Legenda */}
-      <div className={`px-8 py-5 border-t ${isDark ? 'border-border-dark bg-background-dark' : 'border-gray-200 bg-gray-50'}`}>
-        <div className="flex gap-8 text-sm">
+      <div className={`px-6 py-3 border-t ${isDark ? 'border-border-dark bg-background-dark' : 'border-gray-200 bg-gray-50'}`}>
+        <div className="flex gap-6 text-xs">
           <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded bg-orange-500/40"></div>
+            <div className="w-2 h-2 rounded bg-orange-500/40"></div>
             <span className={isDark ? 'text-text-muted' : 'text-gray-700'}>Diferença significativa (&gt;10%)</span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded bg-blue-500/40"></div>
+            <div className="w-2 h-2 rounded bg-blue-500/40"></div>
             <span className={isDark ? 'text-text-muted' : 'text-gray-700'}>Regime de Caixa</span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded bg-purple-500/40"></div>
+            <div className="w-2 h-2 rounded bg-purple-500/40"></div>
             <span className={isDark ? 'text-text-muted' : 'text-gray-700'}>Regime de Competência</span>
           </div>
         </div>

@@ -31,9 +31,9 @@ const DREAcumuladoTable: React.FC = () => {
 
     return (
       <div className={`${isDark ? 'bg-surface-dark border-border-dark' : 'bg-white border-gray-300'} border rounded-2xl overflow-hidden shadow-lg`}>
-        <div className={`${isDark ? 'bg-background-dark border-border-dark' : 'bg-gray-50 border-gray-200'} px-8 py-6 border-b`}>
-          <h3 className={`${isDark ? 'text-white' : 'text-gray-900'} font-bold text-xl mb-2`}>{titulo}</h3>
-          <p className={`text-sm ${isDark ? 'text-text-muted' : 'text-gray-600'}`}>
+        <div className={`${isDark ? 'bg-background-dark border-border-dark' : 'bg-gray-50 border-gray-200'} px-6 py-3 border-b`}>
+          <h3 className={`${isDark ? 'text-white' : 'text-gray-900'} font-bold text-lg mb-1`}>{titulo}</h3>
+          <p className={`text-xs ${isDark ? 'text-text-muted' : 'text-gray-600'}`}>
             Ano {dreData.ano} — Período: {mesesAbrev[periodoInicio - 1]} a {mesesAbrev[periodoFim - 1]}
           </p>
         </div>
@@ -42,19 +42,19 @@ const DREAcumuladoTable: React.FC = () => {
           <table className="w-full">
             <thead>
               <tr className={`${isDark ? 'bg-background-dark border-border-dark' : 'bg-gray-100 border-gray-200'} border-b`}>
-                <th className={`px-8 py-4 text-left text-xs font-bold ${isDark ? 'text-text-muted' : 'text-gray-600'} uppercase tracking-widest sticky left-0 ${isDark ? 'bg-background-dark' : 'bg-gray-100'}`}>
+                <th className={`px-5 py-2 text-left text-xs font-bold ${isDark ? 'text-text-muted' : 'text-gray-600'} uppercase tracking-widest sticky left-0 ${isDark ? 'bg-background-dark' : 'bg-gray-100'}`}>
                   Descrição
                 </th>
                 {mesesFiltrados.map((mes) => (
-                  <th key={mes} className={`px-4 py-4 text-right text-xs font-bold ${isDark ? 'text-text-muted' : 'text-gray-600'} uppercase tracking-widest whitespace-nowrap`}>
+                  <th key={mes} className={`px-1.5 py-2 text-right text-xs font-bold ${isDark ? 'text-text-muted' : 'text-gray-600'} uppercase tracking-widest whitespace-nowrap`}>
                     {mes}
                   </th>
                 ))}
-                <th className={`px-8 py-4 text-right text-xs font-bold ${isDark ? 'text-primary' : 'text-primary'} uppercase tracking-widest bg-primary/10 border-l ${isDark ? 'border-border-dark' : 'border-gray-200'}`}>
+                <th className={`px-3 py-2 text-right text-xs font-bold ${isDark ? 'text-primary' : 'text-primary'} uppercase tracking-widest bg-primary/10 border-l ${isDark ? 'border-border-dark' : 'border-gray-200'}`}>
                   TOTAL
                 </th>
-                <th className={`px-8 py-4 text-right text-xs font-bold ${isDark ? 'text-text-muted' : 'text-gray-600'} uppercase tracking-widest`}>
-                  % TOTAL
+                <th className={`px-3 py-2 text-right text-xs font-bold ${isDark ? 'text-text-muted' : 'text-gray-600'} uppercase tracking-widest`}>
+                  %
                 </th>
               </tr>
             </thead>
@@ -84,7 +84,7 @@ const DREAcumuladoTable: React.FC = () => {
                     key={idx}
                     className={`${rowClass} border-b ${isDark ? 'border-border-dark/20' : 'border-gray-200'} hover:${isDark ? 'bg-gray-800/50' : 'bg-gray-50/80'} transition-colors`}
                   >
-                    <td className={`px-8 py-5 text-sm ${fontWeight} ${textColor} sticky left-0 z-10 ${rowClass || (isDark ? 'bg-surface-dark' : 'bg-white')}`}>
+                    <td className={`px-5 py-2 text-xs ${fontWeight} ${textColor} sticky left-0 z-10 ${rowClass || (isDark ? 'bg-surface-dark' : 'bg-white')}`}>
                       {linha.linha.descricao}
                     </td>
                     {valoresFiltrados.map((mes) => {
@@ -94,16 +94,16 @@ const DREAcumuladoTable: React.FC = () => {
                       return (
                         <td
                           key={mes}
-                          className={`px-4 py-5 text-sm text-right tabular-nums font-medium whitespace-nowrap ${isNegativo ? 'text-red-500' : textColor}`}
+                          className={`px-1.5 py-2 text-xs text-right tabular-nums font-medium whitespace-nowrap ${isNegativo ? 'text-red-500' : textColor}`}
                         >
                           {linha.linha.isPercentual ? valor.toFixed(0) + '%' : formatValor(valor)}
                         </td>
                       );
                     })}
-                    <td className={`px-8 py-5 text-sm text-right font-bold tabular-nums whitespace-nowrap ${linha.valores.total < 0 ? 'text-red-600 font-bold' : textColor} bg-primary/10 border-l ${isDark ? 'border-border-dark/20' : 'border-gray-200'}`}>
+                    <td className={`px-3 py-2 text-xs text-right font-bold tabular-nums whitespace-nowrap ${linha.valores.total < 0 ? 'text-red-600 font-bold' : textColor} bg-primary/10 border-l ${isDark ? 'border-border-dark/20' : 'border-gray-200'}`}>
                       {linha.linha.isPercentual ? linha.valores.total.toFixed(0) + '%' : formatValor(linha.valores.total)}
                     </td>
-                    <td className={`px-8 py-5 text-sm text-right tabular-nums font-semibold ${isDark ? 'text-text-muted' : 'text-gray-600'}`}>
+                    <td className={`px-3 py-2 text-xs text-right tabular-nums font-semibold ${isDark ? 'text-text-muted' : 'text-gray-600'}`}>
                       {linha.analiseVertical}
                     </td>
                   </tr>

@@ -26,9 +26,9 @@ const DREMensalTable: React.FC = () => {
 
   const renderTabela = (data: DREMensal[], titulo: string) => (
     <div className={`${isDark ? 'bg-surface-dark border-border-dark' : 'bg-white border-gray-300'} border rounded-2xl overflow-hidden shadow-lg`}>
-      <div className={`${isDark ? 'bg-background-dark border-border-dark' : 'bg-gray-50 border-gray-200'} px-8 py-6 border-b`}>
-        <h3 className={`${isDark ? 'text-white' : 'text-gray-900'} font-bold text-xl mb-2`}>{titulo}</h3>
-        <p className={`text-sm ${isDark ? 'text-text-muted' : 'text-gray-600'}`}>
+      <div className={`${isDark ? 'bg-background-dark border-border-dark' : 'bg-gray-50 border-gray-200'} px-6 py-3 border-b`}>
+        <h3 className={`${isDark ? 'text-white' : 'text-gray-900'} font-bold text-lg mb-1`}>{titulo}</h3>
+        <p className={`text-xs ${isDark ? 'text-text-muted' : 'text-gray-600'}`}>
           Ano {dreData.ano} - {dreData.empresa}
         </p>
       </div>
@@ -37,11 +37,11 @@ const DREMensalTable: React.FC = () => {
         <table className="w-full">
           <thead>
             <tr className={`${isDark ? 'bg-background-dark border-border-dark' : 'bg-gray-100 border-gray-200'} border-b`}>
-              <th className={`px-8 py-4 text-left text-xs font-bold ${isDark ? 'text-text-muted' : 'text-gray-600'} uppercase tracking-widest sticky left-0 ${isDark ? 'bg-background-dark' : 'bg-gray-100'}`}>Descrição</th>
-              <th className={`px-8 py-4 text-right text-xs font-bold ${isDark ? 'text-text-muted' : 'text-gray-600'} uppercase tracking-widest`}>Projetado</th>
-              <th className={`px-8 py-4 text-right text-xs font-bold ${isDark ? 'text-text-muted' : 'text-gray-600'} uppercase tracking-widest`}>Real</th>
-              <th className={`px-8 py-4 text-right text-xs font-bold ${isDark ? 'text-text-muted' : 'text-gray-600'} uppercase tracking-widest`}>Variação</th>
-              <th className={`px-8 py-4 text-right text-xs font-bold ${isDark ? 'text-primary' : 'text-primary'} uppercase tracking-widest bg-primary/10`}>AV%</th>
+              <th className={`px-5 py-2 text-left text-xs font-bold ${isDark ? 'text-text-muted' : 'text-gray-600'} uppercase tracking-widest sticky left-0 ${isDark ? 'bg-background-dark' : 'bg-gray-100'}`}>Descrição</th>
+              <th className={`px-2 py-2 text-right text-xs font-bold ${isDark ? 'text-text-muted' : 'text-gray-600'} uppercase tracking-widest`}>Proj.</th>
+              <th className={`px-2 py-2 text-right text-xs font-bold ${isDark ? 'text-text-muted' : 'text-gray-600'} uppercase tracking-widest`}>Real</th>
+              <th className={`px-2 py-2 text-right text-xs font-bold ${isDark ? 'text-text-muted' : 'text-gray-600'} uppercase tracking-widest`}>Var.</th>
+              <th className={`px-3 py-2 text-right text-xs font-bold ${isDark ? 'text-primary' : 'text-primary'} uppercase tracking-widest bg-primary/10`}>AV%</th>
             </tr>
           </thead>
           <tbody>
@@ -70,19 +70,19 @@ const DREMensalTable: React.FC = () => {
                   key={idx}
                   className={`${rowClass} border-b ${isDark ? 'border-border-dark/20' : 'border-gray-200'} hover:${isDark ? 'bg-gray-800/50' : 'bg-gray-50/80'} transition-colors`}
                 >
-                  <td className={`px-8 py-5 text-sm ${fontWeight} ${textColor} sticky left-0 z-10 ${rowClass || (isDark ? 'bg-surface-dark' : 'bg-white')}`}>
+                  <td className={`px-5 py-2 text-xs ${fontWeight} ${textColor} sticky left-0 z-10 ${rowClass || (isDark ? 'bg-surface-dark' : 'bg-white')}`}>
                     {linha.linha.descricao}
                   </td>
-                  <td className={`px-8 py-5 text-sm text-right font-medium tabular-nums whitespace-nowrap ${textColor}`}>
+                  <td className={`px-2 py-2 text-xs text-right font-medium tabular-nums whitespace-nowrap ${textColor}`}>
                     {linha.linha.isPercentual ? linha.projetado.toFixed(0) + '%' : formatValor(linha.projetado)}
                   </td>
-                  <td className={`px-8 py-5 text-sm text-right font-medium tabular-nums whitespace-nowrap ${isNegativo ? 'text-red-500' : textColor}`}>
+                  <td className={`px-2 py-2 text-xs text-right font-medium tabular-nums whitespace-nowrap ${isNegativo ? 'text-red-500' : textColor}`}>
                     {linha.linha.isPercentual ? linha.real.toFixed(0) + '%' : formatValor(linha.real)}
                   </td>
-                  <td className={`px-8 py-5 text-sm text-right font-bold tabular-nums whitespace-nowrap ${isVariacaoNegativa ? 'text-red-600 font-bold' : 'text-green-600 font-bold'}`}>
+                  <td className={`px-2 py-2 text-xs text-right font-bold tabular-nums whitespace-nowrap ${isVariacaoNegativa ? 'text-red-600 font-bold' : 'text-green-600 font-bold'}`}>
                     {linha.variacao}
                   </td>
-                  <td className={`px-8 py-5 text-sm text-right font-semibold tabular-nums whitespace-nowrap ${isDark ? 'text-text-muted' : 'text-gray-600'} bg-primary/10`}>
+                  <td className={`px-3 py-2 text-xs text-right font-semibold tabular-nums whitespace-nowrap ${isDark ? 'text-text-muted' : 'text-gray-600'} bg-primary/10`}>
                     {linha.analiseVertical}
                   </td>
                 </tr>
