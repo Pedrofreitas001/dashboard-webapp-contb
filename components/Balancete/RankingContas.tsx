@@ -162,7 +162,7 @@ const RankingContas: React.FC<RankingContasProps> = ({ dados, empresas }) => {
                     <BarChart
                         layout="vertical"
                         data={ranking}
-                        margin={{ top: 5, right: 30, left: 160, bottom: 5 }}
+                        margin={{ top: 5, right: 30, left: 0, bottom: 5 }}
                     >
                         <CartesianGrid strokeDasharray="3 3" stroke={isDark ? '#374151' : '#e5e7eb'} />
                         <XAxis type="number" />
@@ -170,7 +170,7 @@ const RankingContas: React.FC<RankingContasProps> = ({ dados, empresas }) => {
                             type="category"
                             dataKey="nome"
                             tick={{ fontSize: 11, fill: isDark ? '#9ca3af' : '#6b7280' }}
-                            width={155}
+                            width={0}
                         />
                         <Tooltip content={handleCustomTooltip} />
                         <Bar dataKey="valor" fill="#8884d8" radius={[0, 8, 8, 0]}>
