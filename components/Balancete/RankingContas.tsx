@@ -104,7 +104,7 @@ const RankingContas: React.FC<RankingContasProps> = ({ dados, empresas }) => {
             <div className="mb-6">
                 <div className="flex items-center justify-between mb-4">
                     <div>
-                        <h3 className={`text-sm font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                        <h3 className={`text-lg font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
                             Ranking de Contas Críticas
                         </h3>
                         <p className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-600'} mt-1`}>
@@ -165,7 +165,7 @@ const RankingContas: React.FC<RankingContasProps> = ({ dados, empresas }) => {
                         margin={{ top: 5, right: 30, left: -10, bottom: 5 }}
                     >
                         <CartesianGrid strokeDasharray="3 3" stroke={isDark ? '#374151' : '#e5e7eb'} />
-                        <XAxis type="number" tickFormatter={formatYAxis} />
+                        <XAxis type="number" tickFormatter={formatYAxis} tick={{ fontSize: 12, fill: isDark ? '#9ca3af' : '#6b7280' }} />
                         <YAxis
                             type="category"
                             dataKey="nome"

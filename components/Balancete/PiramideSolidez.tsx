@@ -110,7 +110,7 @@ const PiramideSolidez: React.FC<PiramideSolidezProps> = ({ empresas, totais }) =
         <div className={`${isDark ? 'bg-surface-dark border-border-dark' : 'bg-white border-gray-300'} rounded-2xl border shadow-lg p-6`}>
             <div className="flex items-center justify-between mb-6">
                 <div>
-                    <h3 className={`text-sm font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                    <h3 className={`text-lg font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
                         Pirâmide de Solidez Financeira
                     </h3>
                     <p className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-600'} mt-1`}>
@@ -159,8 +159,8 @@ const PiramideSolidez: React.FC<PiramideSolidezProps> = ({ empresas, totais }) =
                                 textAlign: 'center',
                             }}
                         >
-                            <div className="text-xs font-bold text-black">Patrimônio Líquido</div>
-                            <div className="text-lg font-black mt-1 text-black">
+                            <div className="text-xs font-bold text-white">Patrimônio Líquido</div>
+                            <div className="text-lg font-black mt-1 text-white">
                                 {camadas[0].percentualAtivo.toFixed(0)}%
                             </div>
                             <div className="text-xs text-white/80 mt-0.5">R$ {(camadas[0].valor / 1000000).toFixed(2)}M</div>
@@ -176,8 +176,8 @@ const PiramideSolidez: React.FC<PiramideSolidezProps> = ({ empresas, totais }) =
                                 textAlign: 'center',
                             }}
                         >
-                            <div className="text-xs font-bold text-black">Passivo Não Circulante</div>
-                            <div className="text-lg font-black mt-1 text-black">
+                            <div className="text-xs font-bold text-white">Passivo Não Circulante</div>
+                            <div className="text-lg font-black mt-1 text-white">
                                 {camadas[1].percentualAtivo.toFixed(0)}%
                             </div>
                             <div className="text-xs text-white/80 mt-0.5">R$ {(camadas[1].valor / 1000000).toFixed(2)}M</div>
@@ -193,8 +193,8 @@ const PiramideSolidez: React.FC<PiramideSolidezProps> = ({ empresas, totais }) =
                                 textAlign: 'center',
                             }}
                         >
-                            <div className="text-xs font-bold text-black">Passivo Circulante</div>
-                            <div className="text-lg font-black mt-1 text-black">
+                            <div className="text-xs font-bold text-white">Passivo Circulante</div>
+                            <div className="text-lg font-black mt-1 text-white">
                                 {camadas[2].percentualAtivo.toFixed(0)}%
                             </div>
                             <div className="text-xs text-white/80 mt-0.5">R$ {(camadas[2].valor / 1000000).toFixed(2)}M</div>

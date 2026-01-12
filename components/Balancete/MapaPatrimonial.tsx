@@ -108,7 +108,7 @@ const MapaPatrimonial: React.FC<MapaPatrimonialProps> = ({ dados, empresas, tota
         <div className={`${isDark ? 'bg-surface-dark border-border-dark' : 'bg-white border-gray-300'} rounded-2xl border shadow-lg p-6`}>
             <div className="flex items-center justify-between mb-6">
                 <div>
-                    <h3 className={`text-sm font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                    <h3 className={`text-lg font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
                         Formação do Patrimônio
                     </h3>
                     <p className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-600'} mt-1`}>
