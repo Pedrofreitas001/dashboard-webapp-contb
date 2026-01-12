@@ -157,12 +157,12 @@ const RankingContas: React.FC<RankingContasProps> = ({ dados, empresas }) => {
             </div>
 
             {/* Gráfico */}
-            <div className="w-full h-[480px] -mx-6 -mb-6 px-6 pb-6">
-                <ResponsiveContainer width="100%" height="100%">
+            <div className="w-full h-[380px] flex justify-center">
+                <ResponsiveContainer width="95%" height="100%">
                     <BarChart
                         layout="vertical"
                         data={ranking}
-                        margin={{ top: 5, right: 30, left: 200, bottom: 5 }}
+                        margin={{ top: 5, right: 20, left: 190, bottom: 5 }}
                     >
                         <CartesianGrid strokeDasharray="3 3" stroke={isDark ? '#374151' : '#e5e7eb'} />
                         <XAxis type="number" />
@@ -183,8 +183,9 @@ const RankingContas: React.FC<RankingContasProps> = ({ dados, empresas }) => {
             </div>
 
             {/* Resumo Estatístico */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6 pt-6 border-t border-border-dark">
-                <div>
+            <div className="flex justify-center">
+            <div className="grid grid-cols-3 gap-6 mt-6 pt-6 border-t border-border-dark w-full max-w-lg">
+                <div className="text-center">
                     <p className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
                         Total Top {topN}
                     </p>
@@ -193,7 +194,7 @@ const RankingContas: React.FC<RankingContasProps> = ({ dados, empresas }) => {
                     </p>
                 </div>
 
-                <div>
+                <div className="text-center">
                     <p className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
                         Cobertura do Patrimônio
                     </p>
@@ -202,7 +203,7 @@ const RankingContas: React.FC<RankingContasProps> = ({ dados, empresas }) => {
                     </p>
                 </div>
 
-                <div>
+                <div className="text-center">
                     <p className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
                         Média por Conta
                     </p>
@@ -210,6 +211,7 @@ const RankingContas: React.FC<RankingContasProps> = ({ dados, empresas }) => {
                         R$ {(totalRanking / topN / 1000000).toFixed(2)}M
                     </p>
                 </div>
+            </div>
             </div>
 
             {/* Tabela Detalhe */}
