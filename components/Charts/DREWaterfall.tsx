@@ -3,6 +3,7 @@ import React from 'react';
 import { ComposedChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, LabelList } from 'recharts';
 import { useFinance } from '../../context/FinanceContext';
 import { useTheme } from '../../context/ThemeContext';
+import CustomTooltip from './CustomTooltip';
 
 const DREWaterfall: React.FC = () => {
   const { dadosFiltrados } = useFinance();
@@ -97,11 +98,8 @@ const DREWaterfall: React.FC = () => {
               tickFormatter={formatYAxis}
             />
             <Tooltip
+              content={<CustomTooltip formatter={(value: any, name: any, props: any) => new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(props.payload.actual)} />}
               cursor={{ fill: '#ffffff0a' }}
-              contentStyle={{ backgroundColor: colors.tooltipBg, border: `1px solid ${colors.tooltipBorder}`, borderRadius: '8px', color: colors.tooltipText }}
-              itemStyle={{ color: colors.tooltipText }}
-              labelStyle={{ color: colors.tooltipText }}
-              formatter={(value: any, name: any, props: any) => [new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(props.payload.actual), 'Valor']}
             />
             <Bar dataKey="start" stackId="a" fill="transparent" />
             <Bar dataKey="display" stackId="a" radius={[2, 2, 0, 0]}>

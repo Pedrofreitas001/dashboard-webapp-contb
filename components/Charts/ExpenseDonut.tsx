@@ -4,6 +4,7 @@ import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 import { useFinance } from '../../context/FinanceContext';
 import { useTheme } from '../../context/ThemeContext';
 import { formatBRL } from '../../utils/financeUtils';
+import CustomTooltip from './CustomTooltip';
 
 const ExpenseDonut: React.FC = () => {
   const { agregadoCategoria } = useFinance();
@@ -40,9 +41,7 @@ const ExpenseDonut: React.FC = () => {
                 ))}
               </Pie>
               <Tooltip
-                contentStyle={{ backgroundColor: colors.tooltipBg, border: `1px solid ${colors.tooltipBorder}`, borderRadius: '8px', color: colors.tooltipText }}
-                itemStyle={{ fontSize: '10px', color: colors.tooltipText }}
-                formatter={(val: any) => formatBRL(val)}
+                content={<CustomTooltip formatter={(val: any) => formatBRL(val)} />}
               />
             </PieChart>
           </ResponsiveContainer>

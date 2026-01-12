@@ -3,6 +3,7 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 import { useFinance } from '../../context/FinanceContext';
 import { useTheme } from '../../context/ThemeContext';
 import { getMesNumero } from '../../utils/financeUtils';
+import CustomTooltip from './CustomTooltip';
 
 type MetricType = 'custoVariavel' | 'custoFixo' | 'impostoVariavel' | 'total';
 
@@ -84,8 +85,8 @@ const ExpenseEvolution: React.FC = () => {
               key={metric.key}
               onClick={() => setSelectedMetric(metric.key)}
               className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${selectedMetric === metric.key
-                  ? `${isDark ? 'bg-primary/20 text-primary border-primary' : 'bg-primary/10 text-primary border-primary'} border`
-                  : `${isDark ? 'bg-[#111814] text-[#9db9a8] border-[#3b5445] hover:border-primary/50' : 'bg-gray-100 text-gray-600 border-gray-200 hover:border-primary/50'} border`
+                ? `${isDark ? 'bg-primary/20 text-primary border-primary' : 'bg-primary/10 text-primary border-primary'} border`
+                : `${isDark ? 'bg-[#111814] text-[#9db9a8] border-[#3b5445] hover:border-primary/50' : 'bg-gray-100 text-gray-600 border-gray-200 hover:border-primary/50'} border`
                 }`}
             >
               {metric.label}
@@ -111,13 +112,7 @@ const ExpenseEvolution: React.FC = () => {
               tickLine={false}
             />
             <Tooltip
-              contentStyle={{
-                backgroundColor: colors.tooltipBg,
-                border: `1px solid ${colors.tooltipBorder}`,
-                borderRadius: '8px',
-                color: colors.tooltipText,
-              }}
-              formatter={(value: any) => [formatBRL(value), currentMetric.label]}
+              content={<CustomTooltip formatter={(value: any) => [formatBRL(value), currentMetric.label]} />}
             />
             <Line
               type="monotone"

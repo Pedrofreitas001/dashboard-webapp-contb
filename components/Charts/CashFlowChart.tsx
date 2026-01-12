@@ -3,6 +3,7 @@ import React from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 import { useFinance } from '../../context/FinanceContext';
 import { useTheme } from '../../context/ThemeContext';
+import CustomTooltip from './CustomTooltip';
 
 const CashFlowChart: React.FC = () => {
   const { agregadoMensal } = useFinance();
@@ -50,11 +51,8 @@ const CashFlowChart: React.FC = () => {
               tickFormatter={formatYAxis}
             />
             <Tooltip
+              content={<CustomTooltip formatter={(value: any) => new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value)} />}
               cursor={{ fill: '#ffffff0a' }}
-              contentStyle={{ backgroundColor: colors.tooltipBg, border: `1px solid ${colors.tooltipBorder}`, borderRadius: '8px', color: colors.tooltipText }}
-              itemStyle={{ fontSize: '10px', color: colors.tooltipText, padding: '2px 0' }}
-              labelStyle={{ color: colors.tooltipText, fontSize: '11px', marginBottom: '4px' }}
-              formatter={(value: any) => new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value)}
             />
             <Legend
               verticalAlign="bottom"
