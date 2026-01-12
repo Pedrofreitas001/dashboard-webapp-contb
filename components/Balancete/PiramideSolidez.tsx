@@ -197,7 +197,7 @@ const PiramideSolidez: React.FC<PiramideSolidezProps> = ({ empresas, totais }) =
                         <BarChart
                             layout="vertical"
                             data={dadosBarras}
-                            margin={{ top: 5, right: 30, left: 120, bottom: 5 }}
+                            margin={{ top: 5, right: 30, left: 110, bottom: 5 }}
                         >
                             <CartesianGrid strokeDasharray="3 3" stroke={isDark ? '#374151' : '#e5e7eb'} />
                             <XAxis type="number" />
@@ -205,7 +205,7 @@ const PiramideSolidez: React.FC<PiramideSolidezProps> = ({ empresas, totais }) =
                                 type="category"
                                 dataKey="nome"
                                 tick={{ fontSize: 12, fill: isDark ? '#9ca3af' : '#6b7280' }}
-                                width={140}
+                                width={105}
                             />
                             <Tooltip content={handleCustomTooltip} />
                             <Bar dataKey="percentualAtivo" fill="#8884d8" radius={[0, 8, 8, 0]}>
