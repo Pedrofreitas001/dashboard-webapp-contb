@@ -4,6 +4,10 @@ import {
 } from 'recharts';
 import { useTheme } from '../../context/ThemeContext';
 import { useBalancete } from '../../context/BalanceteContext';
+import MapaPatrimonial from './MapaPatrimonial';
+import SnapshotExecutivo from './SnapshotExecutivo';
+import PiramideSolidez from './PiramideSolidez';
+import RankingContas from './RankingContas';
 
 interface KPIBalanceteCardProps {
     titulo: string;
@@ -274,7 +278,7 @@ const DashboardBalancete: React.FC = () => {
                                                     <Cell key={`cell-${index}`} fill={entry.color} />
                                                 ))}
                                             </Pie>
-                                            <Tooltip formatter={(value) => `R$ ${(value / 1000000).toFixed(2)}M`} />
+                                            <Tooltip formatter={(value: any) => `R$ ${(value / 1000000).toFixed(2)}M`} />
                                         </PieChart>
                                     </ResponsiveContainer>
                                     <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
@@ -329,7 +333,7 @@ const DashboardBalancete: React.FC = () => {
                                                     <Cell key={`cell-${index}`} fill={entry.color} />
                                                 ))}
                                             </Pie>
-                                            <Tooltip formatter={(value) => `R$ ${(value / 1000000).toFixed(2)}M`} />
+                                            <Tooltip formatter={(value: any) => `R$ ${(value / 1000000).toFixed(2)}M`} />
                                         </PieChart>
                                     </ResponsiveContainer>
                                     <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
@@ -384,7 +388,7 @@ const DashboardBalancete: React.FC = () => {
                                                     <Cell key={`cell-${index}`} fill={entry.color} />
                                                 ))}
                                             </Pie>
-                                            <Tooltip formatter={(value) => `R$ ${(value / 1000000).toFixed(2)}M`} />
+                                            <Tooltip formatter={(value: any) => `R$ ${(value / 1000000).toFixed(2)}M`} />
                                         </PieChart>
                                     </ResponsiveContainer>
                                     <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
@@ -415,6 +419,48 @@ const DashboardBalancete: React.FC = () => {
                                 </div>
                             </div>
                         </div>
+                    </div>
+
+                    {/* Novos Componentes Executivos */}
+                    <div className="space-y-8">
+                        {/* Snapshot Executivo */}
+                        <SnapshotExecutivo
+                            dados={dados}
+                            empresas={useBalancete().empresas}
+                            totais={{
+                                ativo: totalAtivo,
+                                passivo: totalPassivo,
+                                pl: totalPL,
+                                ativoCirculante: ativoCirculante,
+                                ativoNaoCirculante: ativoNaoCirculante,
+                                passivoCirculante: passivoCirculante,
+                                passivoNaoCirculante: passivoNaoCirculante,
+                            }}
+                        />
+
+                        {/* Mapa Patrimonial */}
+                        <MapaPatrimonial
+                            dados={dados}
+                            empresas={useBalancete().empresas}
+                        />
+
+                        {/* Pirâmide de Solidez */}
+                        <PiramideSolidez
+                            empresas={useBalancete().empresas}
+                            totais={{
+                                ativo: totalAtivo,
+                                passivo: totalPassivo,
+                                pl: totalPL,
+                                passivoCirculante: passivoCirculante,
+                                passivoNaoCirculante: passivoNaoCirculante,
+                            }}
+                        />
+
+                        {/* Ranking de Contas Críticas */}
+                        <RankingContas
+                            dados={dados}
+                            empresas={useBalancete().empresas}
+                        />
                     </div>
 
                     {/* Tabela de Balancete */}
