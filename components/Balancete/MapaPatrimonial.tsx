@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell, ReferenceLine } from 'recharts';
 import { useTheme } from '../../context/ThemeContext';
 import { ContaBalancete } from '../../context/BalanceteContext';
@@ -6,6 +6,7 @@ import { ContaBalancete } from '../../context/BalanceteContext';
 interface MapaPatrimonialProps {
     dados: ContaBalancete[];
     empresas: string[];
+    empresaSelecionada: string;
 }
 
 interface WaterfallStep {
@@ -16,10 +17,9 @@ interface WaterfallStep {
     absoluteValue: number;
 }
 
-const MapaPatrimonial: React.FC<MapaPatrimonialProps> = ({ dados, empresas }) => {
+const MapaPatrimonial: React.FC<MapaPatrimonialProps> = ({ dados, empresas, empresaSelecionada }) => {
     const { theme } = useTheme();
     const isDark = theme === 'dark';
-    const [empresaSelecionada, setEmpresaSelecionada] = useState<string>(empresas.length > 0 ? empresas[0] : '');
 
     // Filtrar dados pela empresa
     const dadosFiltrados = empresaSelecionada
@@ -101,21 +101,6 @@ const MapaPatrimonial: React.FC<MapaPatrimonialProps> = ({ dados, empresas }) =>
                         Ativo Total − Passivo Total = Patrimônio Líquido
                     </p>
                 </div>
-
-                {empresas.length > 1 && (
-                    <select
-                        value={empresaSelecionada}
-                        onChange={(e) => setEmpresaSelecionada(e.target.value)}
-                        className={`px-3 py-2 rounded border text-xs ${isDark
-                            ? 'bg-background-dark border-border-dark text-white'
-                            : 'bg-white border-gray-300 text-gray-900'
-                            } focus:outline-none focus:border-primary`}
-                    >
-                        {empresas.map(emp => (
-                            <option key={emp} value={emp}>{emp}</option>
-                        ))}
-                    </select>
-                )}
             </div>
 
             {/* Gráfico Waterfall */}

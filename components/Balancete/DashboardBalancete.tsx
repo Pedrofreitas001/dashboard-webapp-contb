@@ -525,6 +525,7 @@ const DashboardBalancete: React.FC = () => {
                         <SnapshotExecutivo
                             dados={dados}
                             empresas={useBalancete().empresas}
+                            empresaSelecionada={empresaSelecionada}
                             totais={{
                                 ativo: totalAtivo,
                                 passivo: totalPassivo,
@@ -540,11 +541,13 @@ const DashboardBalancete: React.FC = () => {
                         <MapaPatrimonial
                             dados={dados}
                             empresas={useBalancete().empresas}
+                            empresaSelecionada={empresaSelecionada}
                         />
 
                         {/* Pirâmide de Solidez */}
                         <PiramideSolidez
                             empresas={useBalancete().empresas}
+                            empresaSelecionada={empresaSelecionada}
                             totais={{
                                 ativo: totalAtivo,
                                 passivo: totalPassivo,
@@ -558,6 +561,7 @@ const DashboardBalancete: React.FC = () => {
                         <RankingContas
                             dados={dados}
                             empresas={useBalancete().empresas}
+                            empresaSelecionada={empresaSelecionada}
                         />
                     </div>
 

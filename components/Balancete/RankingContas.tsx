@@ -6,6 +6,7 @@ import { ContaBalancete } from '../../context/BalanceteContext';
 interface RankingContasProps {
     dados: ContaBalancete[];
     empresas: string[];
+    empresaSelecionada: string;
 }
 
 interface ContaRanking {
@@ -23,13 +24,17 @@ const colorsByGrupo: { [key: string]: string } = {
     'PL': '#06b6d4',
 };
 
-const RankingContas: React.FC<RankingContasProps> = ({ dados, empresas }) => {
+const RankingContas: React.FC<RankingContasProps> = ({ dados, empresas, empresaSelecionada }) => {
     const { theme } = useTheme();
     const isDark = theme === 'dark';
 
-    const [empresaSelecionada, setEmpresaSelecionada] = useState<string>(empresas.length > 0 ? empresas[0] : '');
     const [topN, setTopN] = useState<5 | 10 | 15>(10);
     const [filtroGrupo, setFiltroGrupo] = useState<string>('Todos');
+
+    // Filtrar dados pela empresa selecionada
+    const dadosFiltrados = empresaSelecionada
+        ? dados.filter(d => d.empresa === empresaSelecionada)
+        : dados;
 
     // Calcular largura dinâmica do YAxis baseado no tamanho das legendas
     const calcularLarguraYAxis = (dados: any[]): number => {
@@ -38,11 +43,6 @@ const RankingContas: React.FC<RankingContasProps> = ({ dados, empresas }) => {
         // Aproximadamente 7-8 pixels por caractere em fontSize 11
         return Math.min(Math.max(maiorNome * 7.5, 80), 250);
     };
-
-    // Filtrar dados
-    const dadosFiltrados = empresaSelecionada
-        ? dados.filter(d => d.empresa === empresaSelecionada)
-        : dados;
 
     // Aplicar filtro de grupo
     const dadosComFiltro = filtroGrupo === 'Todos'
@@ -104,21 +104,6 @@ const RankingContas: React.FC<RankingContasProps> = ({ dados, empresas }) => {
                             Top {topN} contas com maior impacto patrimonial
                         </p>
                     </div>
-
-                    {empresas.length > 1 && (
-                        <select
-                            value={empresaSelecionada}
-                            onChange={(e) => setEmpresaSelecionada(e.target.value)}
-                            className={`px-3 py-2 rounded border text-xs ${isDark
-                                ? 'bg-background-dark border-border-dark text-white'
-                                : 'bg-white border-gray-300 text-gray-900'
-                                } focus:outline-none focus:border-primary`}
-                        >
-                            {empresas.map(emp => (
-                                <option key={emp} value={emp}>{emp}</option>
-                            ))}
-                        </select>
-                    )}
                 </div>
 
                 {/* Controles */}

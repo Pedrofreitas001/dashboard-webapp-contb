@@ -4,6 +4,7 @@ import { useTheme } from '../../context/ThemeContext';
 
 interface PiramideSolidezProps {
     empresas: string[];
+    empresaSelecionada: string;
     totais: {
         ativo: number;
         passivo: number;
@@ -20,7 +21,7 @@ interface CamadaPiramide {
     cor: string;
 }
 
-const PiramideSolidez: React.FC<PiramideSolidezProps> = ({ empresas, totais }) => {
+const PiramideSolidez: React.FC<PiramideSolidezProps> = ({ empresas, empresaSelecionada, totais }) => {
     const { theme } = useTheme();
     const isDark = theme === 'dark';
     const [visualizacao, setVisualizacao] = useState<'piramide' | 'barras'>('piramide');

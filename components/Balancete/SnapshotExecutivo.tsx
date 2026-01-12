@@ -5,6 +5,7 @@ import { ContaBalancete } from '../../context/BalanceteContext';
 interface SnapshotExecutivoProps {
     dados: ContaBalancete[];
     empresas: string[];
+    empresaSelecionada: string;
     totais: {
         ativo: number;
         passivo: number;
@@ -23,10 +24,9 @@ interface InsightItem {
     icone: string;
 }
 
-const SnapshotExecutivo: React.FC<SnapshotExecutivoProps> = ({ dados, empresas, totais }) => {
+const SnapshotExecutivo: React.FC<SnapshotExecutivoProps> = ({ dados, empresas, empresaSelecionada, totais }) => {
     const { theme } = useTheme();
     const isDark = theme === 'dark';
-    const [empresaSelecionada, setEmpresaSelecionada] = useState<string>(empresas.length > 0 ? empresas[0] : '');
     const [expandido, setExpandido] = useState<boolean>(false);
 
     // Filtrar dados pela empresa
@@ -214,26 +214,6 @@ const SnapshotExecutivo: React.FC<SnapshotExecutivoProps> = ({ dados, empresas, 
             {/* Conteúdo Expandível */}
             {expandido && (
                 <div className={`border-t ${isDark ? 'border-border-dark' : 'border-gray-200'} p-6`}>
-                    {empresas.length > 1 && (
-                        <div className="mb-6">
-                            <label className={`text-xs font-semibold block mb-2 ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
-                                Empresa
-                            </label>
-                            <select
-                                value={empresaSelecionada}
-                                onChange={(e) => setEmpresaSelecionada(e.target.value)}
-                                className={`w-full px-3 py-2 rounded border text-xs ${isDark
-                                    ? 'bg-background-dark border-border-dark text-white'
-                                    : 'bg-white border-gray-300 text-gray-900'
-                                    } focus:outline-none focus:border-primary`}
-                            >
-                                {empresas.map(emp => (
-                                    <option key={emp} value={emp}>{emp}</option>
-                                ))}
-                            </select>
-                        </div>
-                    )}
-
                     {/* Grid de Insights */}
                     <div className="space-y-3">
                         {insights.map((insight, idx) => {
