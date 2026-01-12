@@ -139,9 +139,10 @@ const DashboardBalancete: React.FC = () => {
 
     // Função auxiliar para filtrar dados por empresa
     const filtrarPorEmpresa = (dados: any[]) => {
-        return empresaSelecionada
-            ? dados.filter(d => d.empresa === empresaSelecionada)
-            : dados;
+        if (!empresaSelecionada || empresaSelecionada === '') {
+            return [];
+        }
+        return dados.filter(d => d.empresa === empresaSelecionada);
     };
 
     // Calcular totais com filtro de empresa
