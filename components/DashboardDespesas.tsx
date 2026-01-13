@@ -32,16 +32,16 @@ const DashboardDespesas: React.FC = () => {
                                 <table className={`text-xs w-full ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
                                     <thead>
                                         <tr className={`border-b ${isDark ? 'text-text-muted border-border-dark' : 'text-gray-600 border-gray-300'}`}>
-                                            <th className="text-left py-2">Coluna</th>
-                                            <th className="text-left py-2">Tipo</th>
-                                            <th className="text-left py-2">Exemplo</th>
+                                            <th className="text-left py-2 w-1/3">Coluna</th>
+                                            <th className="text-left py-2 w-1/3">Tipo</th>
+                                            <th className="text-left py-2 w-1/3">Exemplo</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr className={`border-b ${isDark ? 'border-border-dark/50' : 'border-gray-300/50'}`}>
-                                            <td className={`py-2 font-mono ${isDark ? 'text-primary' : 'text-primary'}`}>Ano</td>
-                                            <td>número</td>
-                                            <td>2025</td>
+                                            <td className={`py-2 font-mono w-1/3 ${isDark ? 'text-primary' : 'text-primary'}`}>Ano</td>
+                                            <td className="w-1/3">número</td>
+                                            <td className="w-1/3">2025</td>
                                         </tr>
                                         <tr className={`border-b ${isDark ? 'border-border-dark/50' : 'border-gray-300/50'}`}>
                                             <td className={`py-2 font-mono ${isDark ? 'text-primary' : 'text-primary'}`}>Mês/Meses</td>

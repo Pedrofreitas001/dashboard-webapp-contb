@@ -45,16 +45,16 @@ const DashboardCashFlow: React.FC = () => {
                                 <table className="text-xs w-full text-gray-300">
                                     <thead>
                                         <tr className="text-text-muted border-b border-border-dark">
-                                            <th className="text-left py-2">Coluna</th>
-                                            <th className="text-left py-2">Tipo</th>
-                                            <th className="text-left py-2">Exemplo</th>
+                                            <th className="text-left py-2 w-1/3">Coluna</th>
+                                            <th className="text-left py-2 w-1/3">Tipo</th>
+                                            <th className="text-left py-2 w-1/3">Exemplo</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr className="border-b border-border-dark/50">
-                                            <td className="py-2 font-mono text-primary">id</td>
-                                            <td>texto</td>
-                                            <td>cf1, cf2, cf3...</td>
+                                            <td className="py-2 font-mono w-1/3 text-primary">id</td>
+                                            <td className="w-1/3">texto</td>
+                                            <td className="w-1/3">cf1, cf2, cf3...</td>
                                         </tr>
                                         <tr className="border-b border-border-dark/50">
                                             <td className="py-2 font-mono text-primary">mes</td>
