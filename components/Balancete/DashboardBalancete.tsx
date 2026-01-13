@@ -50,56 +50,50 @@ const DashboardBalancete: React.FC = () => {
     // Se não houver dados, mostrar disclaimer
     if (!dados || dados.length === 0) {
         return (
-            <div className={`flex-1 flex flex-col h-screen overflow-hidden ${isDark ? 'bg-background-dark' : 'bg-gray-50'}`}>
-                <div className={`flex-1 overflow-y-auto custom-scrollbar flex items-center justify-center ${isDark ? 'bg-background-dark' : 'bg-gray-50'}`}>
-                    <div className="max-w-2xl w-full mx-auto px-8">
-                        <div className="flex flex-col items-center justify-center text-center mb-8">
-                            <h2 className={`text-2xl font-bold mb-3 ${isDark ? 'text-white' : 'text-gray-900'}`}>
-                                Nenhum dado carregado
-                            </h2>
-                            <p className={`${isDark ? 'text-text-muted' : 'text-gray-600'}`}>
-                                Importe um arquivo Excel com dados de balancete para visualizar
-                            </p>
-                        </div>
+            <main className={`flex-1 overflow-y-auto p-4 md:p-8 custom-scrollbar ${isDark ? 'bg-background-dark' : 'bg-gray-50'} min-h-screen`}>
+                <div className="max-w-[1400px] mx-auto">
+                    <div className="flex flex-col items-center justify-center min-h-[60vh]">
+                        <h2 className={`text-2xl font-bold mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}>Nenhum dado carregado</h2>
+                        <p className={`mb-8 ${isDark ? 'text-text-muted' : 'text-gray-600'}`}>Baixe o arquivo Excel modelo e carregue na barra lateral para visualização</p>
 
-                        {/* Informações do Formato */}
-                        <div className={`${isDark ? 'bg-surface-dark border-border-dark' : 'bg-white border-gray-300'} rounded-2xl border shadow-lg p-6`}>
+                        {/* Formato Esperado */}
+                        <div className={`rounded-xl border p-6 w-full max-w-2xl ${isDark ? 'bg-surface-dark border-border-dark' : 'bg-white border-gray-300'}`}>
                             <h3 className={`font-bold mb-4 flex items-center gap-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>
-                                <span className="material-symbols-outlined text-primary">description</span>
+                                <span className={`material-symbols-outlined ${isDark ? 'text-primary' : 'text-primary'}`}>description</span>
                                 Formato Esperado: Balancete_exemplo.xlsx
                             </h3>
-                            <div className={`${isDark ? 'bg-background-dark' : 'bg-gray-50'} rounded-lg p-4 mb-4 overflow-x-auto`}>
-                                <table className="text-xs w-full">
+                            <div className={`rounded-lg p-4 mb-4 overflow-x-auto ${isDark ? 'bg-background-dark' : 'bg-gray-50'}`}>
+                                <table className={`text-xs w-full ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
                                     <thead>
-                                        <tr className={`${isDark ? 'text-text-muted border-b border-border-dark' : 'text-gray-600 border-b border-gray-300'}`}>
+                                        <tr className={`border-b ${isDark ? 'text-text-muted border-border-dark' : 'text-gray-600 border-gray-300'}`}>
                                             <th className="text-left py-2">Coluna</th>
                                             <th className="text-left py-2">Tipo</th>
                                             <th className="text-left py-2">Exemplo</th>
                                         </tr>
                                     </thead>
-                                    <tbody className={isDark ? 'text-gray-300' : 'text-gray-700'}>
-                                        <tr className={`${isDark ? 'border-b border-border-dark/50' : 'border-b border-gray-200'}`}>
-                                            <td className="py-2 font-mono text-primary">Data</td>
+                                    <tbody>
+                                        <tr className={`border-b ${isDark ? 'border-border-dark/50' : 'border-gray-300/50'}`}>
+                                            <td className={`py-2 font-mono ${isDark ? 'text-primary' : 'text-primary'}`}>Data</td>
                                             <td>data</td>
                                             <td>2024-12-31</td>
                                         </tr>
-                                        <tr className={`${isDark ? 'border-b border-border-dark/50' : 'border-b border-gray-200'}`}>
-                                            <td className="py-2 font-mono text-primary">Conta Contábil</td>
+                                        <tr className={`border-b ${isDark ? 'border-border-dark/50' : 'border-gray-300/50'}`}>
+                                            <td className={`py-2 font-mono ${isDark ? 'text-primary' : 'text-primary'}`}>Conta Contábil</td>
                                             <td>texto</td>
                                             <td>1.1.1.01, 1.1.2.01...</td>
                                         </tr>
-                                        <tr className={`${isDark ? 'border-b border-border-dark/50' : 'border-b border-gray-200'}`}>
-                                            <td className="py-2 font-mono text-primary">Nome Conta</td>
+                                        <tr className={`border-b ${isDark ? 'border-border-dark/50' : 'border-gray-300/50'}`}>
+                                            <td className={`py-2 font-mono ${isDark ? 'text-primary' : 'text-primary'}`}>Nome Conta</td>
                                             <td>texto</td>
                                             <td>Caixa, Banco, Fornecedores...</td>
                                         </tr>
-                                        <tr className={`${isDark ? 'border-b border-border-dark/50' : 'border-b border-gray-200'}`}>
-                                            <td className="py-2 font-mono text-primary">Grupo</td>
+                                        <tr className={`border-b ${isDark ? 'border-border-dark/50' : 'border-gray-300/50'}`}>
+                                            <td className={`py-2 font-mono ${isDark ? 'text-primary' : 'text-primary'}`}>Grupo</td>
                                             <td>Ativo/Passivo/PL</td>
                                             <td>Ativo, Passivo, PL</td>
                                         </tr>
-                                        <tr className={`${isDark ? 'border-b border-border-dark/50' : 'border-b border-gray-200'}`}>
-                                            <td className="py-2 font-mono text-primary">Saldo</td>
+                                        <tr>
+                                            <td className={`py-2 font-mono ${isDark ? 'text-primary' : 'text-primary'}`}>Saldo</td>
                                             <td>moeda (R$)</td>
                                             <td>150000, 450000...</td>
                                         </tr>
@@ -116,7 +110,7 @@ const DashboardBalancete: React.FC = () => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </main>
         );
     }
 
