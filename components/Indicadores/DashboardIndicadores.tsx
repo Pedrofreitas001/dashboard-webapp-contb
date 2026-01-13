@@ -199,7 +199,7 @@ const DashboardIndicadores: React.FC = () => {
                 </div>
 
                 {/* Gráficos */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                <div id="pdf-section-charts-indicadores" className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
                     <div className="bg-surface-dark rounded-xl p-6 border border-border-dark">
                         <h2 className="text-base font-bold text-white mb-4">Evolução de Indicadores</h2>
                         <ResponsiveContainer width="100%" height={280}>
@@ -230,7 +230,7 @@ const DashboardIndicadores: React.FC = () => {
                 </div>
 
                 {/* Tabela */}
-                <div className="bg-surface-dark rounded-xl p-6 border border-border-dark overflow-hidden">
+                <div id="pdf-section-table-indicadores" className="bg-surface-dark rounded-xl p-6 border border-border-dark overflow-hidden">
                     <h2 className="text-base font-bold text-white mb-4">Detalhamento</h2>
                     <div className="overflow-x-auto">
                         <table className="w-full text-sm">

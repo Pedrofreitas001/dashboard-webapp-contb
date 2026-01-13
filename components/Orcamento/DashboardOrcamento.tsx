@@ -216,7 +216,7 @@ const DashboardOrcamento: React.FC = () => {
                 </div>
 
                 {/* Gráficos */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                <div id="pdf-section-charts-orcamento" className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
                     <div className="bg-surface-dark rounded-xl p-6 border border-border-dark">
                         <h2 className="text-base font-bold text-white mb-4">Orçado vs Realizado</h2>
                         <ResponsiveContainer width="100%" height={280}>
@@ -248,7 +248,7 @@ const DashboardOrcamento: React.FC = () => {
                 </div>
 
                 {/* Tabela - Desvios Críticos */}
-                <div className="bg-surface-dark rounded-xl p-6 border border-border-dark overflow-hidden mb-6">
+                <div id="pdf-section-table-orcamento" className="bg-surface-dark rounded-xl p-6 border border-border-dark overflow-hidden mb-6">
                     <h2 className="text-base font-bold text-white mb-4">Desvios Críticos (variância &gt; 5%)</h2>
                     <div className="overflow-x-auto">
                         <table className="w-full text-sm">

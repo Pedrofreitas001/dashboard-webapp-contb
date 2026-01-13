@@ -48,6 +48,17 @@ const AppContent: React.FC = () => {
     const bgColor = isDark ? '#111814' : '#f5f5f5';
     const fillColorRGB = isDark ? [17, 24, 20] : [245, 245, 245];
 
+    // Mapeamento de seções por página
+    const sectionsByPage: Record<PageType, string[]> = {
+      dashboard: ['pdf-section-kpis', 'pdf-section-middle', 'pdf-section-waterfall', 'pdf-section-bottom', 'pdf-section-expense-evolution'],
+      despesas: ['pdf-section-kpis-despesas', 'pdf-section-charts-despesas', 'pdf-section-comparacao-despesas', 'pdf-section-tabela-despesas'],
+      dre: ['pdf-section-tables-dre'],
+      cashflow: ['pdf-section-charts-cashflow', 'pdf-section-table-cashflow'],
+      indicadores: ['pdf-section-charts-indicadores', 'pdf-section-table-indicadores'],
+      orcamento: ['pdf-section-charts-orcamento', 'pdf-section-table-orcamento'],
+      balancete: ['pdf-section-kpis-balancete', 'pdf-section-executive-balancete']
+    };
+
     try {
       const coverElement = document.getElementById('pdf-cover');
       if (coverElement) {
@@ -61,13 +72,7 @@ const AppContent: React.FC = () => {
         pdf.addImage(coverImg, 'PNG', 0, 0, pageWidth, pageHeight);
       }
 
-      const sections = [
-        'pdf-section-kpis',
-        'pdf-section-middle',
-        'pdf-section-waterfall',
-        'pdf-section-bottom',
-        'pdf-section-expense-evolution'
-      ];
+      const sections = sectionsByPage[currentPage] || [];
 
       pdf.addPage();
       pdf.setFillColor(fillColorRGB[0], fillColorRGB[1], fillColorRGB[2]);
@@ -102,7 +107,16 @@ const AppContent: React.FC = () => {
       }
 
       const timestamp = new Date().toISOString().split('T')[0];
-      const fileName = `FinanceFlow_Report_${filtros.empresa === 'Todas' ? 'Global' : filtros.empresa}_${timestamp}.pdf`;
+      const pageNames: Record<PageType, string> = {
+        dashboard: 'Dashboard_Financeiro',
+        despesas: 'Analise_Despesas',
+        dre: 'Tabelas_DRE',
+        cashflow: 'Fluxo_Caixa',
+        indicadores: 'Indicadores',
+        orcamento: 'Orcamento',
+        balancete: 'Balancete'
+      };
+      const fileName = `FinanceFlow_${pageNames[currentPage]}_${timestamp}.pdf`;
       pdf.save(fileName);
     } catch (error) {
       console.error("Erro ao gerar PDF:", error);

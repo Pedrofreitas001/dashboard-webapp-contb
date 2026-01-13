@@ -140,7 +140,7 @@ const DREDashboard: React.FC = () => {
 
         {/* Tabelas */}
         {!loading && (
-          <div className="space-y-6">
+          <div id="pdf-section-tables-dre" className="space-y-6">
             {viewType === 'mensal' && <DREMensalTable />}
             {viewType === 'acumulado' && <DREAcumuladoTable />}
             {viewType === 'comparativo' && <DREComparativoTable />}

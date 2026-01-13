@@ -232,7 +232,7 @@ const DashboardBalancete: React.FC = () => {
                 )}
 
                 {/* KPIs Principais */}
-                <div>
+                <div id="pdf-section-kpis-balancete">
                     <h2 className={`text-lg font-bold mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}>
                         Indicadores Principais
                     </h2>
@@ -439,7 +439,7 @@ const DashboardBalancete: React.FC = () => {
                 </div>
 
                 {/* Novos Componentes Executivos */}
-                <div className="space-y-8">
+                <div id="pdf-section-executive-balancete" className="space-y-8">
                     {/* Snapshot Executivo */}
                     <SnapshotExecutivo
                         dados={dados}
