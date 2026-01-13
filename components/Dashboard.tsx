@@ -22,9 +22,7 @@ const Dashboard: React.FC = () => {
         <div className="max-w-[1400px] mx-auto">
           <div className="flex flex-col items-center justify-center min-h-[60vh]">
             <h2 className={`text-2xl font-bold mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}>Nenhum dado carregado</h2>
-            <p className={`mb-8 ${isDark ? 'text-text-muted' : 'text-gray-600'}`}>
-              Baixe o arquivo Excel modelo e carregue na barra lateral para visualização
-            </p>
+            <p className={`mb-8 ${isDark ? 'text-text-muted' : 'text-gray-600'}`}>Baixe o arquivo Excel modelo e carregue na barra lateral para visualização</p>
 
             {/* Formato Esperado */}
             <div className={`rounded-xl border p-6 w-full max-w-2xl ${isDark ? 'bg-surface-dark border-border-dark' : 'bg-white border-gray-300'}`}>

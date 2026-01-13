@@ -71,64 +71,64 @@ const DashboardIndicadores: React.FC = () => {
             <main className={`flex-1 overflow-y-auto p-4 md:p-8 custom-scrollbar ${isDark ? 'bg-background-dark' : 'bg-gray-50'} min-h-screen`}>
                 <div className="max-w-[1400px] mx-auto">
                     <div className="flex flex-col items-center justify-center min-h-[60vh]">
-                        <h2 className={`${isDark ? 'text-white' : 'text-gray-900'} text-2xl font-bold mb-4`}>Nenhum dado carregado</h2>
-                        <p className={`${isDark ? 'text-text-muted' : 'text-gray-600'} mb-8`}>Baixe o arquivo Excel modelo e carregue na barra lateral para visualização</p>
+                        <h2 className={`text-2xl font-bold mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}>Nenhum dado carregado</h2>
+                        <p className={`mb-8 ${isDark ? 'text-text-muted' : 'text-gray-600'}`}>Baixe o arquivo Excel modelo e carregue na barra lateral para visualização</p>
 
                         {/* Formato Esperado */}
-                        <div className={`${isDark ? 'bg-surface-dark border-border-dark' : 'bg-white border-gray-300'} rounded-xl border p-6 w-full max-w-2xl`}>
-                            <h3 className={`${isDark ? 'text-white' : 'text-gray-900'} font-bold mb-4 flex items-center gap-2`}>
-                                <span className="material-symbols-outlined text-primary">description</span>
+                        <div className={`rounded-xl border p-6 w-full max-w-2xl ${isDark ? 'bg-surface-dark border-border-dark' : 'bg-white border-gray-300'}`}>
+                            <h3 className={`font-bold mb-4 flex items-center gap-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                                <span className={`material-symbols-outlined ${isDark ? 'text-primary' : 'text-primary'}`}>description</span>
                                 Formato Esperado: indicadores_template.xlsx
                             </h3>
-                            <div className={`${isDark ? 'bg-background-dark' : 'bg-gray-50'} rounded-lg p-4 mb-4 overflow-x-auto`}>
+                            <div className={`rounded-lg p-4 mb-4 overflow-x-auto ${isDark ? 'bg-background-dark' : 'bg-gray-50'}`}>
                                 <table className={`text-xs w-full ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
                                     <thead>
-                                        <tr className={`${isDark ? 'text-text-muted border-border-dark' : 'text-gray-600 border-gray-300'} border-b`}>
+                                        <tr className={`border-b ${isDark ? 'text-text-muted border-border-dark' : 'text-gray-600 border-gray-300'}`}>
                                             <th className="text-left py-2">Coluna</th>
                                             <th className="text-left py-2">Tipo</th>
                                             <th className="text-left py-2">Exemplo</th>
                                         </tr>
                                     </thead>
-                                    <tbody className={isDark ? 'text-gray-300' : 'text-gray-700'}>
-                                        <tr className={`${isDark ? 'border-border-dark/50' : 'border-gray-300/50'} border-b`}>
-                                            <td className="py-2 font-mono text-primary">mes</td>
+                                    <tbody>
+                                        <tr className={`border-b ${isDark ? 'border-border-dark/50' : 'border-gray-300/50'}`}>
+                                            <td className={`py-2 font-mono ${isDark ? 'text-primary' : 'text-primary'}`}>mes</td>
                                             <td>número</td>
                                             <td>1, 2, 3...</td>
                                         </tr>
-                                        <tr className={`${isDark ? 'border-border-dark/50' : 'border-gray-300/50'} border-b`}>
-                                            <td className="py-2 font-mono text-primary">empresa</td>
+                                        <tr className={`border-b ${isDark ? 'border-border-dark/50' : 'border-gray-300/50'}`}>
+                                            <td className={`py-2 font-mono ${isDark ? 'text-primary' : 'text-primary'}`}>empresa</td>
                                             <td>texto</td>
                                             <td>Alpha, Beta, Gamma...</td>
                                         </tr>
-                                        <tr className={`${isDark ? 'border-border-dark/50' : 'border-gray-300/50'} border-b`}>
-                                            <td className="py-2 font-mono text-primary">roe</td>
+                                        <tr className={`border-b ${isDark ? 'border-border-dark/50' : 'border-gray-300/50'}`}>
+                                            <td className={`py-2 font-mono ${isDark ? 'text-primary' : 'text-primary'}`}>roe</td>
                                             <td>número (%)</td>
                                             <td>15.3, 18.2...</td>
                                         </tr>
-                                        <tr className={`${isDark ? 'border-border-dark/50' : 'border-gray-300/50'} border-b`}>
-                                            <td className="py-2 font-mono text-primary">roa</td>
+                                        <tr className={`border-b ${isDark ? 'border-border-dark/50' : 'border-gray-300/50'}`}>
+                                            <td className={`py-2 font-mono ${isDark ? 'text-primary' : 'text-primary'}`}>roa</td>
                                             <td>número (%)</td>
                                             <td>8.2, 9.1...</td>
                                         </tr>
-                                        <tr className={`${isDark ? 'border-border-dark/50' : 'border-gray-300/50'} border-b`}>
-                                            <td className="py-2 font-mono text-primary">margemLiquida</td>
+                                        <tr className={`border-b ${isDark ? 'border-border-dark/50' : 'border-gray-300/50'}`}>
+                                            <td className={`py-2 font-mono ${isDark ? 'text-primary' : 'text-primary'}`}>margemLiquida</td>
                                             <td>número (%)</td>
                                             <td>12.5, 14.2...</td>
                                         </tr>
-                                        <tr className={`${isDark ? 'border-border-dark/50' : 'border-gray-300/50'} border-b`}>
-                                            <td className="py-2 font-mono text-primary">liquidezCorrente</td>
+                                        <tr className={`border-b ${isDark ? 'border-border-dark/50' : 'border-gray-300/50'}`}>
+                                            <td className={`py-2 font-mono ${isDark ? 'text-primary' : 'text-primary'}`}>liquidezCorrente</td>
                                             <td>número (x)</td>
                                             <td>1.8, 1.5...</td>
                                         </tr>
                                         <tr>
-                                            <td className="py-2 font-mono text-primary">endividamento</td>
+                                            <td className={`py-2 font-mono ${isDark ? 'text-primary' : 'text-primary'}`}>endividamento</td>
                                             <td>número (%)</td>
                                             <td>35.0, 40.5...</td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
-                            <p className={`text-xs ${isDark ? 'text-text-muted' : 'text-gray-600'} mb-4`}>Arquivo: <span className="text-primary font-mono">Indicadores_Exemplo.xlsx</span></p>
+                            <p className={`text-xs mb-4 ${isDark ? 'text-text-muted' : 'text-gray-600'}`}>Arquivo: <span className={`${isDark ? 'text-primary' : 'text-primary'} font-mono`}>Indicadores_Exemplo.xlsx</span></p>
 
                             {/* Botão Download */}
                             <a href="https://docs.google.com/spreadsheets/d/127Nqx8umUkgpoT1UxIoZlXpfr-KUYP6dJcz5uTfOSok/export?format=xlsx" download className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm font-semibold transition-colors w-full">

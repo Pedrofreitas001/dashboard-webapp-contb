@@ -283,36 +283,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onExport, visible = true, currentPage
             </span>
             <p className="text-sm font-medium">Tabelas DRE</p>
           </button>
-          <button
-            onClick={() => onNavigate?.('indicadores')}
-            className={`flex items-center gap-3 rounded-xl border p-3 transition-all ${currentPage === 'indicadores'
-              ? 'bg-surface-dark border-primary text-white'
-              : 'bg-transparent border-border-dark text-text-muted hover:border-primary/50'
-              }`}
-          >
-            <span className={`material-symbols-outlined ${currentPage === 'indicadores' ? 'text-primary' : ''}`}>
-              analytics
-            </span>
-            <div className="flex items-center gap-2">
-              <p className="text-sm font-medium">Indicadores</p>
-              <span className="text-xs bg-orange-500/20 text-orange-400 px-2 py-0.5 rounded-full font-semibold">BETA</span>
-            </div>
-          </button>
-          <button
-            onClick={() => onNavigate?.('orcamento')}
-            className={`flex items-center gap-3 rounded-xl border p-3 transition-all ${currentPage === 'orcamento'
-              ? 'bg-surface-dark border-primary text-white'
-              : 'bg-transparent border-border-dark text-text-muted hover:border-primary/50'
-              }`}
-          >
-            <span className={`material-symbols-outlined ${currentPage === 'orcamento' ? 'text-primary' : ''}`}>
-              receipt_long
-            </span>
-            <div className="flex items-center gap-2">
-              <p className="text-sm font-medium">Orçamento</p>
-              <span className="text-xs bg-orange-500/20 text-orange-400 px-2 py-0.5 rounded-full font-semibold">BETA</span>
-            </div>
-          </button>
+
           <button
             onClick={() => onNavigate?.('balancete')}
             className={`flex items-center gap-3 rounded-xl border p-3 transition-all ${currentPage === 'balancete'
